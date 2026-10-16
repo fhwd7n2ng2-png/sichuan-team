@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sichuan Team</title>
+<meta name="theme-color" content="#1d1d1f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sichuan">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<style>
+:root{--bg:#f6f5f2;--karte:#fff;--text:#1d1d1f;--leise:#6e6e73;--linie:#e3e1dc;--akzent:#9b1c1c;--akzent2:#c2410c;--ok:#15803d;--rot:#b91c1c;--radius:10px}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:14px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text)}
+button{font:inherit;cursor:pointer;border:1px solid var(--linie);background:var(--karte);border-radius:8px;padding:7px 12px;color:var(--text)}
+button:hover{border-color:#bbb}button.primaer{background:var(--akzent);border-color:var(--akzent);color:#fff}
+button.klein{padding:4px 8px;font-size:12px}button:disabled{opacity:.45;cursor:default}
+input,select,textarea{font:inherit;border:1px solid var(--linie);border-radius:8px;padding:7px 9px;background:#fff;width:100%}
+label{display:block;font-size:12px;color:var(--leise);margin:8px 0 3px}
+.zeile{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.leise{color:var(--leise)}.klein{font-size:12px}.fett{font-weight:600}
+.karte{background:var(--karte);border:1px solid var(--linie);border-radius:var(--radius);padding:14px}
+.chip{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--linie);border-radius:999px;padding:3px 10px;font-size:12px;background:#fff;cursor:pointer;white-space:nowrap}
+.chip.an{background:var(--text);color:#fff;border-color:var(--text)}
+.badge{display:inline-block;border-radius:6px;padding:1px 7px;font-size:11px;font-weight:600;white-space:nowrap}
+.s-warteliste{background:#ede9fe;color:#5b21b6}.s-angefragt{background:#fef3c7;color:#92400e}.s-bestaetigt{background:#dbeafe;color:#1e40af}
+.s-rueckbestaetigt{background:#dcfce7;color:#166534}.s-zeitvorschlag{background:#fae8ff;color:#86198f}.s-wartet_drinnen{background:#ffedd5;color:#9a3412}
+.s-eingetroffen{background:#15803d;color:#fff}.s-abgeschlossen,.s-abgereist{background:#e5e7eb;color:#374151}
+.s-storniert,.s-spaet_storniert{background:#f3f4f6;color:#9ca3af;text-decoration:line-through}.s-noShow{background:#fee2e2;color:#991b1b}
+.r-hoch{background:#fee2e2;color:#991b1b}.r-mittel{background:#fef3c7;color:#92400e}.r-niedrig{background:#f0fdf4;color:#166534}
+.versteckt{display:none!important}
+#hinweis{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:8px;z-index:50;max-width:90%}
+#hinweis.fehler{background:var(--rot)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:flex-start;justify-content:center;padding:40px 12px;z-index:40;overflow:auto}
+.modal .karte{width:min(560px,100%)}
+.team{display:grid;grid-template-rows:auto auto 1fr;height:100vh}
+.leiste{display:flex;gap:10px;align-items:center;padding:10px 14px;background:#1d1d1f;color:#fff;flex-wrap:wrap}
+.leiste button{background:#2c2c2e;border-color:#3a3a3c;color:#fff}.leiste button.primaer{background:var(--akzent);border-color:var(--akzent)}
+.leiste input,.leiste select{width:auto;background:#2c2c2e;color:#fff;border-color:#3a3a3c}
+.tabs button{border-radius:0;border-left-width:0}.tabs button:first-child{border-radius:8px 0 0 8px;border-left-width:1px}.tabs button:last-child{border-radius:0 8px 8px 0}
+.tabs button.an{background:#fff;color:#111}
+.kennzahlen{display:flex;gap:16px;padding:8px 14px;border-bottom:1px solid var(--linie);background:#fff;flex-wrap:wrap;align-items:center}
+.kennzahl b{font-size:16px}
+.haupt{display:grid;grid-template-columns:1fr 380px;min-height:0}
+.inhalt{overflow:auto;padding:12px 14px;min-height:0}.seite{border-left:1px solid var(--linie);background:#fff;overflow:auto;padding:14px;min-height:0}
+@media (max-width:900px){.haupt{grid-template-columns:1fr}.seite{border-left:0;border-top:1px solid var(--linie)}}
+@media (max-width:700px){
+.team{height:auto;min-height:100vh;min-height:100dvh}.inhalt,.seite{overflow:visible}.inhalt{overflow-x:auto}
+.leiste{gap:6px;padding:8px 10px}.leiste #suche{width:100%!important;order:9}.leiste .marke-name{display:none}
+button{padding:9px 12px}.leiste button,.leiste select,.leiste input{min-height:38px}
+.modal{padding:12px 8px}.liste td,.liste th{padding:8px 6px}}
+body.allein .leiste{padding-top:max(10px,env(safe-area-inset-top));padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+body.allein .team{height:100vh;height:100dvh}
+@media (max-width:700px){body.allein .team{height:auto}}
+.anmeldung{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;background:#1d1d1f;color:#fff;padding:24px}
+.anmeldung .box{width:min(340px,100%);text-align:center}
+.anmeldung h1{font-size:26px;margin:0 0 4px}.anmeldung p{color:#a1a1a6;margin:0 0 22px}
+.pin-punkte{display:flex;gap:14px;justify-content:center;margin:0 0 22px}
+.pin-punkte i{width:14px;height:14px;border-radius:50%;border:2px solid #a1a1a6;display:block}.pin-punkte i.voll{background:#fff;border-color:#fff}
+.pin-tasten{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pin-tasten button{background:#2c2c2e;border:0;color:#fff;font-size:26px;height:68px;border-radius:14px}
+.pin-tasten button:active{background:#48484a}.pin-tasten .leer{visibility:hidden}
+.sprachwahl{background:transparent;color:inherit;border:1px solid currentColor;opacity:.8;font-size:13px;padding:4px 10px}
+.sprachwahl.schwebend{position:fixed;top:10px;right:10px;z-index:60;background:#fff;color:var(--text);border-color:var(--linie)}
+.anmeldung .fehlertext{color:#fca5a5;min-height:20px;margin-top:14px}
+table.liste{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--linie);border-radius:var(--radius);overflow:hidden}
+.liste td,.liste th{padding:8px 10px;border-bottom:1px solid var(--linie);text-align:left;vertical-align:middle}
+.liste th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--leise);background:#fafaf8}
+.liste tr.reihe{cursor:pointer}.liste tr.reihe:hover{background:#fafaf8}.liste tr.gewaehlt{background:#fff7ed}
+.liste .zeit{font-variant-numeric:tabular-nums;font-weight:600;width:56px}
+.warnsymbol{color:var(--rot);font-weight:700}
+.tl{position:relative;background:#fff;border:1px solid var(--linie);border-radius:var(--radius);overflow:auto}
+.tl-kopf{position:sticky;top:0;background:#fafaf8;height:26px;border-bottom:1px solid var(--linie);z-index:3}
+.tl-std{position:absolute;top:5px;font-size:11px;color:var(--leise)}
+.tl-zeile{position:relative;height:34px;border-bottom:1px solid #f0efeb}
+.tl-name{position:sticky;left:0;width:64px;height:100%;display:flex;align-items:center;padding-left:8px;font-weight:600;background:#fff;z-index:2;border-right:1px solid var(--linie);font-size:12px}
+.tl-balken{position:absolute;top:4px;height:26px;border-radius:6px;padding:2px 6px;font-size:11px;overflow:hidden;white-space:nowrap;cursor:pointer;border:1px solid rgba(0,0,0,.08)}
+.tl-balken.konflikt{outline:2px solid var(--rot);outline-offset:-1px}
+.tl-jetzt{position:absolute;top:0;bottom:0;width:2px;background:var(--akzent2);z-index:2}
+.tl-gruppe{background:#f6f5f2;font-size:11px;font-weight:700;padding:4px 8px;text-transform:uppercase;letter-spacing:.05em;color:var(--leise)}
+.plan{position:relative;background:#fff;border:1px solid var(--linie);border-radius:var(--radius);overflow:auto}
+.tisch{position:absolute;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid #d4d4d8;background:#fafafa;border-radius:8px;font-size:11px;cursor:pointer;text-align:center;line-height:1.15}
+.tisch.rund{border-radius:50%}.tisch .nr{font-weight:700;font-size:13px}
+.tisch.belegt{background:#dbeafe;border-color:#3b82f6}.tisch.da{background:#dcfce7;border-color:#16a34a}.tisch.bald{background:#fef3c7;border-color:#d97706}
+.tisch.inaktiv{opacity:.35}
+.gast{max-width:620px;margin:0 auto;padding:18px 14px 40px}
+.gast h1{font-size:22px;margin:4px 0 2px}.gast h2{font-size:15px;margin:18px 0 8px}
+.raster{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}.raster>span{grid-column:1/-1}
+.raster button{padding:10px 0}.raster button.an{background:var(--akzent);color:#fff;border-color:var(--akzent)}
+.tage{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.tag{min-width:62px;text-align:center;padding:8px 4px;border:1px solid var(--linie);border-radius:10px;background:#fff;cursor:pointer}
+.tag.an{background:var(--akzent);color:#fff;border-color:var(--akzent)}.tag.voll{opacity:.4}
+.tag .wt{font-size:11px;text-transform:uppercase}.tag .nr{font-size:18px;font-weight:700}
+.marke{font-size:11px;color:var(--leise);text-align:center;margin-top:28px}
+</style>
+</head>
+<body>
+<div id="wurzel"><div class="gast leise">Lädt …</div></div>
+<div id="hinweis" class="versteckt"></div>
+<script>window.SICHUAN_KONFIG = {"api":"https://sichuan5.wixsite.com/website-1/_functions/api","website":"https://sichuan5.wixsite.com/website-1","version":"202610161222"};</script>
+<script>
+'use strict';
+/* ---------- Brücke zur Wix-Seite ---------- */
+const offen = new Map(); let laufNr = 0; let INIT = null;
+// Eigenständig = als installierbare App geöffnet (nicht in der Wix-Seite eingebettet).
+// SICHUAN_KONFIG setzt werkzeuge/pwa-bauen.mjs: Adresse der Wix-API und der Website.
+const ALLEIN = window.parent === window;
+const KONFIG = window.SICHUAN_KONFIG || {};
+const BASIS = String(KONFIG.website || location.href.replace(/\/_functions\/.*$/, '')).replace(/\/$/, '');
+const API_URL = KONFIG.api || 'api';
+const speicher = {
+  lesen(k) { try { return JSON.parse(localStorage.getItem(k) || 'null'); } catch { return null; } },
+  schreiben(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch { /* privat */ } }
+};
+let SITZUNG = ALLEIN ? speicher.lesen('sichuan.sitzung') : null;
+async function rpc(methode, ...args) {
+  if (ALLEIN) {
+    let r;
+    try {
+      // text/plain + Token im Body = einfache CORS-Anfrage ohne Preflight
+      r = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify({ methode, args, token: SITZUNG ? SITZUNG.token : '' }) });
+    } catch { throw new Error('Keine Internetverbindung.'); }
+    let d; try { d = await r.json(); } catch { throw new Error('Server antwortet nicht (' + r.status + ').'); }
+    if (d.abgemeldet) { abmeldenLokal(); throw new Error(d.fehler || 'Bitte neu anmelden.'); }
+    if (!d.ok) throw new Error(d.fehler || 'Unbekannter Fehler.');
+    return d.daten;
+  }
+  return new Promise((ok, nein) => {
+    const id = ++laufNr; offen.set(id, { ok, nein });
+    window.parent.postMessage({ typ: 'rpc', id, methode, args: JSON.parse(JSON.stringify(args)) }, '*');
+    setTimeout(() => { if (offen.has(id)) { offen.delete(id); nein(new Error('Keine Antwort vom Server.')); } }, 60000);
+  });
+}
+window.addEventListener('message', (e) => {
+  const d = e.data; if (!d || typeof d !== 'object') return;
+  if (d.typ === 'rpc-antwort' && offen.has(d.id)) { const p = offen.get(d.id); offen.delete(d.id); d.ok ? p.ok(d.daten) : p.nein(new Error(d.fehler)); }
+  if (d.typ === 'init' && !INIT) { INIT = d; start(); }
+});
+/** Wix-Seite öffnen: eingebettet über die Seite, als App in einem neuen Fenster. */
+function seiteOeffnen(ziel) {
+  if (!ALLEIN) { window.parent.postMessage({ typ: 'navigieren', ziel }, '*'); return; }
+  const seiten = (SITZUNG && SITZUNG.seiten) || {};
+  const pfad = ziel === '/reservieren' ? (seiten.buchung || ziel) : ziel.replace(/^\/meine-reservierung/, seiten.gast || '/meine-reservierung');
+  window.open(BASIS + pfad, '_blank', 'noopener');
+}
+function urlOeffnen(url) {
+  if (!ALLEIN) window.parent.postMessage({ typ: 'oeffnen', url }, '*');
+  else window.open(url, '_blank', 'noopener');
+}
+function abmeldenLokal() { SITZUNG = null; speicher.schreiben('sichuan.sitzung', null); INIT = null; anmeldungZeigen(); }
+async function abmelden() { try { await rpc('zugang.abmelden'); } catch { /* egal */ } abmeldenLokal(); }
+function anmeldungZeigen(fehler = '') {
+  let pin = '';
+  $('#wurzel').innerHTML = `<div class="anmeldung"><div class="box">
+    <h1>四川 Sichuan</h1><p>Team-App · PIN eingeben</p><p style="margin-top:-12px">${spracheKnopf()}</p>
+    <div class="pin-punkte" id="punkte"></div>
+    <div class="pin-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button data-z="${z}">${z}</button>`).join('')}<button data-z="los" style="font-size:16px">OK</button><button data-z="0">0</button><button data-z="weg" style="font-size:20px">⌫</button></div>
+    <div class="fehlertext" id="pinfehler">${esc(fehler)}</div></div></div>`;
+  const punkte = () => { $('#punkte').innerHTML = Array.from({ length: Math.max(4, pin.length) }, (_, i) => `<i class="${i < pin.length ? 'voll' : ''}"></i>`).join(''); };
+  const senden = async () => {
+    if (pin.length < 4) return;
+    $('#pinfehler').textContent = 'Prüfe …';
+    try {
+      const r = await rpc('zugang.anmelden', pin);
+      SITZUNG = { token: r.token, name: r.name, rolle: r.rolle, seiten: r.seiten };
+      speicher.schreiben('sichuan.sitzung', SITZUNG);
+      INIT = { modus: 'team' }; start();
+    } catch (f) { pin = ''; punkte(); $('#pinfehler').textContent = f.message; }
+  };
+  const taste = (z) => {
+    if (z === 'weg') pin = pin.slice(0, -1);
+    else if (z === 'los') return senden();
+    else if (pin.length < 8) pin += z;
+    punkte(); $('#pinfehler').textContent = '';
+    if (pin.length === 8) senden();
+  };
+  document.querySelectorAll('.pin-tasten button').forEach((b) => { b.onclick = () => taste(b.dataset.z); });
+  document.onkeydown = (e) => { if (!$('.anmeldung')) return; if (/^\d$/.test(e.key)) taste(e.key); else if (e.key === 'Backspace') taste('weg'); else if (e.key === 'Enter') taste('los'); };
+  punkte();
+}
+if (ALLEIN) {
+  document.body.classList.add('allein');
+  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+  setTimeout(() => { if (SITZUNG) { INIT = { modus: 'team' }; start(); } else anmeldungZeigen(); }, 0);
+} else {
+  window.parent.postMessage({ typ: 'bereit' }, '*');
+  setInterval(() => { if (!INIT) window.parent.postMessage({ typ: 'bereit' }, '*'); }, 1500);
+}
+
+/* ---------- Sprache: Deutsch / 中文 ----------
+ * Die Oberfläche wird auf Deutsch gebaut; ein Beobachter übersetzt jeden
+ * angezeigten Text anhand des Wörterbuchs. Unbekanntes bleibt Deutsch.
+ * Wahl pro Gerät (localStorage). Gäste: Browsersprache als Vorgabe.
+ */
+const ZH = {"Lädt …":"加载中 …","lädt …":"加载中 …","Prüfe …":"验证中 …","Team-App · PIN eingeben":"员工应用 · 输入 PIN","OK":"确定","PIN":"PIN","PIN stimmt nicht.":"PIN 不正确。","Bitte neu anmelden.":"请重新登录。","Keine Internetverbindung.":"没有网络连接。","Keine Antwort vom Server.":"服务器无响应。","Unbekannter Fehler.":"未知错误。","Abmelden":"退出登录","Auf diesem Gerät abmelden?":"在此设备上退出登录？","Heute":"今天","Vortag":"前一天","Folgetag":"后一天","Ganzer Tag":"全天","Mittag":"午餐","Abend":"晚餐","Liste":"列表","Timeline":"时间轴","Tischplan":"餐桌图","Suchen …":"搜索 …","Walk-in":"现场客人","+ Warteliste":"+ 候补","+ Reservierung":"+ 预订","Testdaten einrichten":"创建测试数据","Testdaten löschen":"删除测试数据","Warteliste jetzt prüfen":"立即检查候补名单","Buchungswidget öffnen":"打开预订页面","Team & PINs":"团队与 PIN","Alle":"全部","Kommend":"即将到达","Stornos":"已取消","Pers.":"人","Reservierungen":"预订","Gast":"客人","Zeit":"时间","Personen":"人数","Tisch":"餐桌","Tische":"餐桌","Status":"状态","Risiko":"风险","Quelle":"来源","Notiz":"备注","Tags":"标签","Verlauf":"记录","Warteliste":"候补","Angefragt":"待确认","Bestätigt":"已确认","Rückbestätigt":"已再次确认","Angebot offen":"待接受","Wartet drinnen":"店内等候","Am Tisch":"已入座","am Tisch":"已入座","Abgeschlossen":"已完成","Vorzeitig weg":"提前离开","Storniert":"已取消","Storniert.":"已取消。","Spät storniert":"迟取消","spät storniert":"迟取消","No-Show":"未到","No-Shows":"未到次数","Bestätigen":"确认","Ist da / am Tisch":"已到 / 入座","Abschliessen":"结账完成","Vorzeitig gegangen":"提前离开","Stornieren":"取消","Zurück auf Anfrage":"改回待确认","Neu":"新客","Gut":"良好","Sehr gut":"很好","Exzellent":"优秀","Neue Reservierung":"新预订","Datum":"日期","Uhrzeit":"时间","Freie Zeiten":"可选时间","Telefon":"电话","Vorname":"名","Nachname":"姓","Vorname *":"名 *","Nachname *":"姓 *","Mobilnummer *":"手机号 *","E-Mail":"电子邮件","Name":"姓名","Name (optional)":"姓名（可选）","Telefon (optional, fürs Gastprofil)":"电话（可选，用于客人档案）","Wünsche":"需求","Wünsche (Allergien, Anlass …)":"需求（过敏、场合 …）","Interne Notiz":"内部备注","Tags (Komma)":"标签（逗号分隔）","geburtstag, vip":"生日, vip","geburtstag, vip, geschaeftsessen":"生日, vip, 商务宴请","Vermittler":"介绍人","Hotel, Concierge, Firma":"酒店、礼宾、公司","Online":"网上","Google":"Google","Abbrechen":"取消","Speichern":"保存","Schliessen":"关闭","Anlegen":"创建","Ändern":"修改","Platzieren":"安排入座","Annehmen":"接受","Nein danke":"不用了，谢谢","Als Serie wiederholen":"按周重复","Wie viele Termine insgesamt (wöchentlich, gleiche Uhrzeit)?":"总共几次（每周，同一时间）？","Termine angelegt":"个预订已创建","Umbuchen (Zeit · Personen · Tische)":"改订（时间 · 人数 · 餐桌）","Umgebucht":"已改订","Neue Zeit vorschlagen":"建议新时间","Vorschlagen":"建议","Vorschlag verschickt":"建议已发送","Gültig für (Stunden)":"有效期（小时）","🔒 Tisch fixieren":"🔒 固定餐桌","🔓 Tisch freigeben":"🔓 解除固定","Tisch fixiert":"餐桌已固定","Gastlink öffnen":"打开客人链接","Gastseite (Test)":"客人页面（测试）","ersetzt im Test die SMS":"测试中代替短信","Noch keine Einträge.":"暂无记录。","Notiz gespeichert":"备注已保存","Tagesnotiz fürs Team":"今日团队备注","z. B. Küche: keine Ente heute · Gruppe Müller VIP":"例如：厨房今天没有鸭子 · Müller 团体 VIP","Online-Buchung":"网上预订","Mittag voll":"午餐已满","Abend voll":"晚餐已满","Ganzer Tag voll":"全天已满","Wieder öffnen":"重新开放","Online gesperrt":"网上预订已关闭","Online wieder offen":"网上预订已重新开放","„Voll\" sperrt nur das Widget. Das Team kann weiter buchen.":"“已满”只关闭网上预订，团队仍可预订。","Offene Anfragen":"待处理请求","Ohne Tisch:":"未分配餐桌：","Tischkonflikt(e)":"餐桌冲突","Klick auf eine Reservierung öffnet Details, Statusknöpfe und Verlauf.":"点击预订可查看详情、状态按钮和记录。","Keine Reservierungen für diese Auswahl.":"此筛选下没有预订。","⋯ → Testdaten einrichten":"⋯ → 创建测试数据","No-Show-Risiko":"未到风险","Besuche":"到访次数","Allergie:":"过敏：","✓ Bestehender Gast":"✓ 老客人","⏰ Überfällig":"⏰ 已超时","Überfällig – No-Show prüfen":"已超时 – 请检查是否未到","Keine Rückbestätigung – bitte anrufen":"未再次确认 – 请致电","kommt in ≤30 min":"≤30 分钟内到达","💬 Gast:":"💬 客人：","(aus Warteliste)":"（来自候补名单）","ohne freien Tisch":"无空桌","Walk-in an Tisch":"现场客人入座餐桌","Gast ohne Reservierung, sitzt ab jetzt.":"无预订客人，现在入座。","Gerade kein Tisch frei":"目前没有空桌","Auf der Warteliste":"已加入候补名单","Kein passender Platz für die Warteliste frei":"候补名单暂无合适空位","Angebot(e) an die Warteliste verschickt":"条邀请已发送给候补客人","Richte Testdaten ein …":"正在创建测试数据 …","Alle Testbuchungen und Testgäste löschen?":"删除所有测试预订和测试客人？","Gelöscht:":"已删除：","Eingerichtet:":"已创建：","Buchungen":"个预订","Wunschzeit":"希望时间","Ungefähre Wunschzeit":"大约希望的时间","Wie viele Personen?":"几位？","Wann?":"什么时候？","Personenzahl":"人数","Personenzahl verringern":"减少人数","Jede Person meldet sich in der Team-App mit ihrer eigenen PIN an (4–8 Ziffern, im Team eindeutig). App-Adresse:":"每位员工用自己的 PIN 登录员工应用（4–8 位数字，团队内唯一）。应用地址：","Neue Person":"新员工","Rolle":"角色","Team":"员工","Admin":"管理员","Neue PIN":"新 PIN","Neue PIN (4–8 Ziffern):":"新 PIN（4–8 位数字）：","Sperren":"停用","Freigeben":"启用","aktiv":"启用","gesperrt":"已停用","Gesperrt":"已停用","Freigegeben":"已启用","Angelegt":"已创建","PIN geändert – alte Anmeldungen sind beendet":"PIN 已更改 – 旧登录已失效","Noch niemand angelegt. Leg zuerst dich selbst als Admin an.":"还没有员工。请先把自己添加为管理员。","Restaurant Sichuan":"四川饭店","Restaurant Sichuan · Wien":"四川饭店 · 维也纳","四川 Sichuan":"四川饭店","Eigenes Reservierungssystem · Test":"自有预订系统 · 测试","Tisch reservieren":"预订餐桌","Reservieren ·":"预订 ·","Ihre Daten":"您的信息","Ab 9 Personen nehmen wir Ihre Reservierung gerne telefonisch entgegen: 01 263 37 13":"9 人以上请致电预订：01 263 37 13","Auf die Warteliste":"加入候补名单","Auf die Warteliste setzen":"加入候补名单","auf die Warteliste?":"加入候补名单？","Wird ein Tisch frei, bekommen Sie ihn per SMS angeboten – reserviert nur für Sie.":"有空桌时我们会通过短信通知您，并为您保留。","Wird ein Tisch frei, bekommen Sie eine SMS mit einem Link – der Tisch ist dann kurz nur für Sie reserviert.":"有空桌时您会收到带链接的短信 – 餐桌会为您短暂保留。","Warteliste – Ihre Daten":"候补名单 – 您的信息","Sie stehen auf der Warteliste":"您已在候补名单上","Danke für Ihre Anfrage!":"感谢您的预订请求！","Wir bestätigen in Kürze.":"我们会尽快确认。","Die Bestätigung kommt per SMS.":"确认将通过短信发送。","Ihr Tisch ist reserviert":"您的餐桌已预订","Danke! Wir freuen uns auf Sie.":"谢谢！期待您的光临。","Danke! Wir haben Ihren Tisch fest eingeplant.":"谢谢！您的餐桌已确定。","Wunderbar – Ihr Tisch ist bestätigt.":"太好了 – 您的餐桌已确认。","Schade. Wir geben den Tisch weiter.":"很遗憾，我们会把餐桌留给其他客人。","Ihre Reservierung":"您的预订","Reservierung ändern":"修改预订","Reservierung ansehen oder ändern":"查看或修改预订","Reservierung wirklich stornieren?":"确定要取消预订吗？","Die Frist ist abgelaufen – die Absage zählt als spät. Trotzdem stornieren?":"已超过期限 – 此次取消将记为迟取消。仍要取消吗？","Gespeichert – Sie bekommen eine neue Bestätigung.":"已保存 – 您会收到新的确认。","Ich komme ✓":"我会来 ✓","Für Sie reserviert bis":"为您保留至","Angebot gültig bis":"邀请有效至","Ihr Termin ist in weniger als":"您的预订时间不足","Stunden.":"小时。","Uhr":"点","Uhr.":"点。","Uhr ·":"点 ·","Hallo":"您好","bis":"至","keine":"无","reserviert":"已预订","Link ungültig":"链接无效","Link unvollständig":"链接不完整","Bitte öffnen Sie den Link aus Ihrer SMS oder E-Mail.":"请打开短信或电子邮件中的链接。","← Übersicht":"← 概览","Im Service":"用餐中","Offen":"待处理","Pers. Der Gast bekommt einen Link und kann annehmen oder ablehnen. Der Tisch ist so lange für ihn reserviert.":"人。客人会收到链接，可以接受或拒绝。在此期间餐桌为其保留。","An diesem Tag ist leider alles vergeben.":"很抱歉，这一天已全部订满。","An diesem Tag ist Ruhetag.":"这一天是休息日。","Bitte eine gültige Personenanzahl angeben.":"请输入有效的人数。","Bitte einen Namen eingeben.":"请输入姓名。","Der Tisch wurde gerade eben vergeben. Bitte eine andere Zeit wählen.":"这张桌子刚刚被订走了，请选择其他时间。","Der übergebene Zeitpunkt ist ungültig.":"时间无效。","Diese Funktion ist dem Team vorbehalten.":"此功能仅限员工使用。","Diese PIN ist schon vergeben.":"此 PIN 已被使用。","Diese Reservierung kann nicht mehr bestätigt werden.":"此预订无法再确认。","Diese Reservierung kann online nicht mehr geändert werden. Bitte rufen Sie uns an.":"此预订无法再在网上修改，请致电我们。","Diese Reservierung kann online nicht mehr storniert werden.":"此预订无法再在网上取消。","Dieser Link ist ungültig oder abgelaufen.":"此链接无效或已过期。","Dieses Angebot ist leider abgelaufen.":"很抱歉，此邀请已过期。","Für die gewünschte Änderung ist kein passender Tisch frei.":"没有适合此修改的空桌。","Für diesen Zeitpunkt ist kein passender Tisch mehr frei.":"此时间已没有合适的空桌。","Für so kurzfristig führen wir keine Warteliste — bitte rufen Sie uns an.":"时间太近无法候补 — 请致电我们。","Mindestens ein aktiver Admin muss bleiben.":"至少需要保留一名启用的管理员。","Mitglied nicht gefunden.":"找不到该员工。","Nur für Admins.":"仅限管理员。","Reservierung nicht gefunden.":"找不到该预订。","So kurzfristig können wir online nicht umbuchen. Bitte rufen Sie uns an.":"时间太近无法在网上改订，请致电我们。","Die PIN darf nur aus Ziffern bestehen.":"PIN 只能由数字组成。","Die PIN muss 4–8 Ziffern haben.":"PIN 必须是 4–8 位数字。","Diese PIN ist zu leicht zu erraten.":"此 PIN 太容易被猜到。","Gerade kein Tisch frei.":"目前没有空桌。","Sprache":"语言","Eintragen":"登记","Gespeichert":"已保存","Innen":"室内","Nichts frei":"没有空位","nichts frei":"没有空位","Person":"人","Reservieren":"预订","Reserviert":"已预订","System":"系统","Terrasse":"露台","Von der Warteliste nehmen":"从候补名单移除","walkin":"现场客人","telefon":"电话","online":"网上","google":"Google","Geburtstag":"生日"};
+const ZH_MUSTER = [
+  [/^(\d+) Reservierungen$/, (m) => `${m[1]} 个预订`],
+  [/^(\d+) Pers\.$/, (m) => `${m[1]} 人`],
+  [/^(Offen|Im Service|Warteliste|No-Show) \((\d+)\)$/, (m) => `${{ 'Offen': '待处理', 'Im Service': '用餐中', 'Warteliste': '候补', 'No-Show': '未到' }[m[1]]} (${m[2]})`],
+  [/^Zu viele Fehlversuche\. Bitte in (\d+) Min\. erneut versuchen\.$/, (m) => `错误次数过多，请 ${m[1]} 分钟后再试。`],
+  [/^Bitte noch ausfüllen: (.*)\.$/, (m) => `请填写：${m[1].replace('Vorname', '名').replace('Nachname', '姓').replace('Telefon', '电话')}。`],
+  [/^Gelöscht: (\d+) Buchungen$/, (m) => `已删除：${m[1]} 个预订`],
+  [/^Eingerichtet: (\d+) Tische, (\d+) Buchungen(.*)$/, (m) => `已创建：${m[1]} 张餐桌，${m[2]} 个预订${m[3]}`],
+  [/^(\d+) Angebot\(e\) an die Warteliste verschickt$/, (m) => `已向候补客人发送 ${m[1]} 条邀请`],
+  [/^(\d+) Termine angelegt$/, (m) => `已创建 ${m[1]} 个预订`],
+  [/^Für (\d+) Personen und mehr nehmen wir die Reservierung gerne persönlich entgegen\.$/, (m) => `${m[1]} 人及以上请直接联系我们预订。`],
+  [/^Server antwortet nicht \((\d+)\)\.$/, (m) => `服务器无响应（${m[1]}）。`],
+  [/^Nicht erlaubt: (.*)$/, (m) => `不允许：${m[1]}`],
+  [/^Tisch (\S+)$/, (m) => `${m[1]} 号桌`],
+  [/^Hallo (.+)$/, (m) => `${m[1]}，您好`],
+  [/^(\d+) Besuche$/, (m) => `到访 ${m[1]} 次`]
+];
+const SPRACHE = (() => {
+  try { const s = localStorage.getItem('sichuan.sprache'); if (s === 'de' || s === 'zh') return s; } catch { /* privat */ }
+  return /^zh/i.test(navigator.language || '') ? 'zh' : 'de';
+})();
+const LOC = SPRACHE === 'zh' ? 'zh-CN' : 'de-AT';
+document.documentElement.lang = SPRACHE === 'zh' ? 'zh-CN' : 'de';
+function t(s) {
+  if (SPRACHE !== 'zh' || s == null) return s;
+  const roh = String(s); const kern = roh.trim(); if (!kern) return roh;
+  let neu = ZH[kern];
+  if (neu === undefined) for (const [re, f] of ZH_MUSTER) { const m = kern.match(re); if (m) { neu = f(m); break; } }
+  if (neu === undefined) return roh;
+  return roh.replace(kern, neu);
+}
+function spracheWechseln() {
+  try { localStorage.setItem('sichuan.sprache', SPRACHE === 'zh' ? 'de' : 'zh'); } catch { /* privat */ }
+  location.reload();
+}
+const spracheKnopf = () => `<button class="sprachwahl" type="button" onclick="spracheWechseln()" title="Sprache">${SPRACHE === 'zh' ? 'Deutsch' : '中文'}</button>`;
+if (SPRACHE === 'zh') {
+  const NICHT = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT']);
+  const knoten = (n) => {
+    if (n.nodeType === 3) { if (n.parentNode && !NICHT.has(n.parentNode.nodeName)) { const neu = t(n.nodeValue); if (neu !== n.nodeValue) n.nodeValue = neu; } return; }
+    if (n.nodeType !== 1 || NICHT.has(n.nodeName) && n.nodeName !== 'INPUT') return;
+    for (const a of ['placeholder', 'title', 'aria-label']) { const v = n.getAttribute && n.getAttribute(a); if (v) { const neu = t(v); if (neu !== v) n.setAttribute(a, neu); } }
+    if (n.nodeName === 'INPUT') return;
+    n.childNodes.forEach(knoten);
+  };
+  new MutationObserver((liste) => { for (const m of liste) { if (m.type === 'characterData') knoten(m.target); else m.addedNodes.forEach(knoten); } })
+    .observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+  const alt = { confirm: window.confirm.bind(window), prompt: window.prompt.bind(window), alert: window.alert.bind(window) };
+  window.confirm = (s) => alt.confirm(t(s));
+  window.prompt = (s, v) => alt.prompt(t(s), v);
+  window.alert = (s) => alt.alert(t(s));
+  document.addEventListener('DOMContentLoaded', () => knoten(document.body));
+}
+
+/* ---------- Hilfen ---------- */
+const TZ = 'Europe/Vienna';
+const $ = (s, w = document) => w.querySelector(s);
+const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uhr = (d) => new Intl.DateTimeFormat('de-AT', { hour: '2-digit', minute: '2-digit', timeZone: TZ }).format(new Date(d));
+const datumText = (d) => new Intl.DateTimeFormat(LOC, { weekday: 'short', day: '2-digit', month: '2-digit', timeZone: TZ }).format(new Date(d));
+const isoTag = (d) => new Intl.DateTimeFormat('sv-SE', { timeZone: TZ }).format(new Date(d));
+const minuten = (d) => { const t = uhr(d).split(':'); return +t[0] * 60 + +t[1]; };
+const tagPlus = (iso, n) => { const d = new Date(iso + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+function melden(text, fehler = false) { const h = $('#hinweis'); h.textContent = text; h.className = fehler ? 'fehler' : ''; clearTimeout(melden.t); melden.t = setTimeout(() => { h.className = 'versteckt'; }, fehler ? 6000 : 2600); }
+async function sicher(fn, erfolg) { try { const r = await fn(); if (erfolg) melden(erfolg); return r; } catch (f) { melden(f.message, true); throw f; } }
+function zeitAm(tag, min) {
+  // Ortszeit Wien → UTC über den Offset dieses Tages
+  const probe = new Date(tag + 'T12:00:00Z');
+  const offset = Math.round((new Date(probe.toLocaleString('en-US', { timeZone: TZ })) - new Date(probe.toLocaleString('en-US', { timeZone: 'UTC' }))) / 60000);
+  return new Date(Date.parse(tag + 'T00:00:00Z') + (min - offset) * 60000).toISOString();
+}
+const STATUS_TEXT = { warteliste: 'Warteliste', angefragt: 'Angefragt', bestaetigt: 'Bestätigt', rueckbestaetigt: 'Rückbestätigt', zeitvorschlag: 'Angebot offen', wartet_drinnen: 'Wartet drinnen', eingetroffen: 'Am Tisch', abgeschlossen: 'Abgeschlossen', abgereist: 'Vorzeitig weg', storniert: 'Storniert', spaet_storniert: 'Spät storniert', noShow: 'No-Show' };
+const AKTION_TEXT = { bestaetigt: 'Bestätigen', rueckbestaetigt: 'Rückbestätigt', wartet_drinnen: 'Wartet drinnen', eingetroffen: 'Ist da / am Tisch', abgeschlossen: 'Abschliessen', abgereist: 'Vorzeitig gegangen', storniert: 'Stornieren', spaet_storniert: 'Spät storniert', noShow: 'No-Show', angefragt: 'Zurück auf Anfrage' };
+const STUFE_TEXT = { normal: 'Neu', gut: 'Gut', sehrGut: 'Sehr gut', exzellent: 'Exzellent' };
+const badge = (s) => `<span class="badge s-${esc(s)}">${esc(STATUS_TEXT[s] || s)}</span>`;
+const gastName = (b) => { const g = b.gastId && typeof b.gastId === 'object' ? b.gastId : {}; return [g.vorname, g.nachname].filter(Boolean).join(' ') || 'Gast'; };
+const BALKENFARBE = { angefragt: '#fde68a', bestaetigt: '#bfdbfe', rueckbestaetigt: '#bbf7d0', zeitvorschlag: '#f5d0fe', wartet_drinnen: '#fed7aa', eingetroffen: '#4ade80', abgeschlossen: '#e5e7eb', abgereist: '#e5e7eb' };
+const INAKTIV = ['storniert', 'spaet_storniert', 'noShow', 'warteliste'];
+
+function start() {
+  if (INIT.modus === 'team') teamStart();
+  else if (INIT.modus === 'gast') gastStart();
+  else buchungStart();
+}
+/** Team & PINs: Mitglieder anlegen, sperren, PIN neu vergeben (nur Admin). */
+async function teamVerwalten() {
+  let liste;
+  try { liste = await rpc('zugang.mitglieder'); } catch (f) { melden(f.message, true); return; }
+  const m = modal(`<div class="zeile" style="justify-content:space-between"><b style="font-size:16px">Team &amp; PINs</b><button id="tvZu">Schliessen</button></div>
+    <p class="klein leise">Jede Person meldet sich in der Team-App mit ihrer eigenen PIN an (4–8 Ziffern, im Team eindeutig). App-Adresse: <b>${esc(location.href.split('#')[0].split('?')[0])}</b></p>
+    <div id="tvListe"></div>
+    <div class="karte" style="margin-top:12px;background:#fafaf8"><b>Neue Person</b>
+      <div class="zeile" style="margin-top:6px"><input id="tvName" placeholder="Name" style="flex:2;min-width:140px"><input id="tvPin" placeholder="PIN" inputmode="numeric" maxlength="8" style="flex:1;min-width:90px"><select id="tvRolle" style="flex:1;min-width:100px"><option>Team</option><option>Admin</option></select><button class="primaer" id="tvNeu">Anlegen</button></div></div>`);
+  const zeichnenListe = () => {
+    $('#tvListe', m).innerHTML = liste.length ? `<table class="liste"><tr><th>Name</th><th>Rolle</th><th>Status</th><th></th></tr>${liste.map((x) => `<tr><td>${esc(x.name)}</td><td>${esc(x.rolle)}</td><td>${x.aktiv ? 'aktiv' : '<span class="leise">gesperrt</span>'}</td><td style="text-align:right;white-space:nowrap"><button class="klein" data-pin="${x._id}">Neue PIN</button> <button class="klein" data-aktiv="${x._id}">${x.aktiv ? 'Sperren' : 'Freigeben'}</button></td></tr>`).join('')}</table>` : '<p class="leise">Noch niemand angelegt. Leg zuerst dich selbst als Admin an.</p>';
+    m.querySelectorAll('[data-pin]').forEach((b) => { b.onclick = async () => { const pin = prompt('Neue PIN (4–8 Ziffern):'); if (!pin) return; await sicher(() => rpc('zugang.mitgliedAendern', b.dataset.pin, { pin }), 'PIN geändert – alte Anmeldungen sind beendet'); }; });
+    m.querySelectorAll('[data-aktiv]').forEach((b) => { b.onclick = async () => { const x = liste.find((y) => y._id === b.dataset.aktiv); const neu = await sicher(() => rpc('zugang.mitgliedAendern', x._id, { aktiv: !x.aktiv }), x.aktiv ? 'Gesperrt' : 'Freigegeben'); Object.assign(x, neu); zeichnenListe(); }; });
+  };
+  zeichnenListe();
+  $('#tvZu', m).onclick = () => m.remove();
+  $('#tvNeu', m).onclick = async () => {
+    const neu = await sicher(() => rpc('zugang.mitgliedAnlegen', { name: $('#tvName', m).value, pin: $('#tvPin', m).value, rolle: $('#tvRolle', m).value }), 'Angelegt');
+    liste.push(neu); $('#tvName', m).value = ''; $('#tvPin', m).value = ''; zeichnenListe();
+  };
+}
+function modal(html) {
+  const m = document.createElement('div'); m.className = 'modal'; m.innerHTML = `<div class="karte">${html}</div>`;
+  m.onclick = (e) => { if (e.target === m) m.remove(); };
+  document.body.appendChild(m); return m;
+}
+
+/* =====================================================================
+   TEAM-PORTAL
+   ===================================================================== */
+const T = { datum: null, ansicht: 'liste', schicht: 'alle', filter: 'alle', suche: '', buchungen: [], tische: [], timeline: null, gewaehlt: null, planZeit: null, planBereich: null, verlauf: [], notiz: '' };
+
+function teamStart() {
+  T.datum = isoTag(new Date());
+  $('#wurzel').innerHTML = `
+  <div class="team">
+    <div class="leiste">
+      <b style="font-size:15px">四川 <span class="marke-name">Sichuan</span></b>${ALLEIN && SITZUNG ? `<span class="leise klein" style="color:#a1a1a6">${esc(SITZUNG.name)}</span>` : ''}
+      <button id="zurueck" title="Vortag">‹</button><input type="date" id="datum"><button id="vor" title="Folgetag">›</button><button id="heute">Heute</button>
+      <select id="schicht"><option value="alle">Ganzer Tag</option><option value="mittag">Mittag</option><option value="abend">Abend</option></select>
+      <div class="tabs zeile" style="gap:0"><button data-a="liste">Liste</button><button data-a="timeline">Timeline</button><button data-a="plan">Tischplan</button></div>
+      <input id="suche" placeholder="Suchen …" style="width:150px">
+      <span style="flex:1"></span>
+      <button id="walkin">Walk-in</button><button id="warte">+ Warteliste</button><button class="primaer" id="neu">+ Reservierung</button>
+      <select id="mehr"><option value="">⋯</option><option value="demo">Testdaten einrichten</option><option value="demoweg">Testdaten löschen</option><option value="nachr">Warteliste jetzt prüfen</option><option value="buchung">Buchungswidget öffnen</option><option value="team">Team &amp; PINs</option><option value="sprache">${SPRACHE === 'zh' ? 'Deutsch' : '中文'}</option>${ALLEIN ? '<option value="abmelden">Abmelden</option>' : ''}</select>
+    </div>
+    <div class="kennzahlen" id="kennzahlen"></div>
+    <div class="haupt"><div class="inhalt" id="inhalt"></div><div class="seite" id="seite"></div></div>
+  </div>`;
+  $('#datum').value = T.datum;
+  const datumSetzen = (d) => { T.datum = d; $('#datum').value = d; T.planZeit = null; laden(); };
+  $('#datum').onchange = (e) => datumSetzen(e.target.value);
+  $('#zurueck').onclick = () => datumSetzen(tagPlus(T.datum, -1));
+  $('#vor').onclick = () => datumSetzen(tagPlus(T.datum, 1));
+  $('#heute').onclick = () => datumSetzen(isoTag(new Date()));
+  $('#schicht').onchange = (e) => { T.schicht = e.target.value; zeichnen(); };
+  $('#suche').oninput = (e) => { T.suche = e.target.value.toLowerCase(); zeichnen(); };
+  document.querySelectorAll('.tabs button').forEach((b) => { b.onclick = () => { T.ansicht = b.dataset.a; zeichnen(); }; });
+  $('#neu').onclick = () => neueReservierung();
+  $('#walkin').onclick = () => walkIn();
+  $('#warte').onclick = () => neueReservierung({ warteliste: true });
+  $('#mehr').onchange = async (e) => {
+    const w = e.target.value; e.target.value = '';
+    try {
+      if (w === 'demo') { melden('Richte Testdaten ein …'); const r = await rpc('testdaten.einrichten'); melden(`Eingerichtet: ${r.tische} Tische, ${r.buchungen} Buchungen${r.fehler.length ? ' · ' + r.fehler.join(', ') : ''}`); T.tische = []; laden(); }
+      if (w === 'demoweg') { if (!confirm('Alle Testbuchungen und Testgäste löschen?')) return; const r = await rpc('testdaten.loeschen'); melden(`Gelöscht: ${r.buchungen} Buchungen`); laden(); }
+      if (w === 'nachr') { const n = await rpc('team.nachruecken', T.datum); melden(n ? `${n} Angebot(e) an die Warteliste verschickt` : 'Kein passender Platz für die Warteliste frei'); laden(); }
+      if (w === 'buchung') seiteOeffnen('/reservieren');
+      if (w === 'team') teamVerwalten();
+      if (w === 'sprache') spracheWechseln();
+      if (w === 'abmelden') { if (confirm('Auf diesem Gerät abmelden?')) abmelden(); }
+    } catch (f) { melden(f.message, true); }
+  };
+  laden();
+  setInterval(() => { if (!document.querySelector('.modal')) laden(true); }, 30000);
+}
+
+async function laden(still = false) {
+  try {
+    const [buchungen, timeline, notiz, tische] = await Promise.all([
+      rpc('reservierungen.tagesliste', T.datum),
+      rpc('team.timeline', T.datum),
+      rpc('team.tagesnotizLaden', T.datum),
+      T.tische.length ? Promise.resolve(T.tische) : rpc('team.tischeLaden')
+    ]);
+    // tagesliste liefert 36 h ab Mitternacht UTC – auf den Ortstag beschränken
+    T.buchungen = buchungen.filter((b) => isoTag(b.datumZeit) === T.datum);
+    T.timeline = timeline; T.notiz = notiz.text; T.tische = tische;
+    if (T.gewaehlt && !T.buchungen.find((b) => b._id === T.gewaehlt)) T.gewaehlt = null;
+    zeichnen();
+    if (T.gewaehlt) detailZeigen(T.gewaehlt, true);
+  } catch (f) { if (!still) melden(f.message, true); }
+}
+
+function sichtbar() {
+  return T.buchungen.filter((b) => {
+    if (T.schicht !== 'alle' && b.schicht !== T.schicht) return false;
+    const f = T.filter;
+    if (f === 'offen' && b.status !== 'angefragt' && b.status !== 'zeitvorschlag') return false;
+    if (f === 'kommend' && !['bestaetigt', 'rueckbestaetigt', 'angefragt'].includes(b.status)) return false;
+    if (f === 'service' && !['wartet_drinnen', 'eingetroffen'].includes(b.status)) return false;
+    if (f === 'warteliste' && b.status !== 'warteliste') return false;
+    if (f === 'noshow' && b.status !== 'noShow' && !b.ueberfaellig) return false;
+    if (f === 'storno' && !['storniert', 'spaet_storniert'].includes(b.status)) return false;
+    if (f === 'alle' && ['storniert', 'spaet_storniert'].includes(b.status)) return false;
+    if (T.suche) { const t = (gastName(b) + ' ' + (b.tische || []).join(' ') + ' ' + (b.gastId?.telefonE164 || '')).toLowerCase(); if (!t.includes(T.suche)) return false; }
+    return true;
+  });
+}
+
+function zeichnen() {
+  document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('an', b.dataset.a === T.ansicht));
+  const aktiv = T.buchungen.filter((b) => !INAKTIV.includes(b.status));
+  const pers = (s) => aktiv.filter((b) => b.schicht === s).reduce((a, b) => a + b.personen, 0);
+  const z = (f) => T.buchungen.filter(f).length;
+  const chips = [['alle', 'Alle'], ['offen', `Offen (${z((b) => b.status === 'angefragt' || b.status === 'zeitvorschlag')})`], ['kommend', 'Kommend'], ['service', `Im Service (${z((b) => ['wartet_drinnen', 'eingetroffen'].includes(b.status))})`], ['warteliste', `Warteliste (${z((b) => b.status === 'warteliste')})`], ['noshow', `No-Show (${z((b) => b.status === 'noShow' || b.ueberfaellig)})`], ['storno', 'Stornos']];
+  $('#kennzahlen').innerHTML = `
+    <span class="kennzahl">Mittag <b>${pers('mittag')}</b> Pers.</span><span class="kennzahl">Abend <b>${pers('abend')}</b> Pers.</span>
+    <span class="kennzahl leise">${aktiv.length} Reservierungen</span>
+    ${T.timeline?.konflikte?.length ? `<span class="badge s-noShow">${T.timeline.konflikte.length} Tischkonflikt(e)</span>` : ''}
+    <span style="flex:1"></span>${chips.map(([k, t]) => `<span class="chip ${T.filter === k ? 'an' : ''}" data-f="${k}">${t}</span>`).join('')}`;
+  document.querySelectorAll('[data-f]').forEach((c) => { c.onclick = () => { T.filter = c.dataset.f; zeichnen(); }; });
+  if (T.ansicht === 'liste') listeZeichnen(); else if (T.ansicht === 'timeline') timelineZeichnen(); else planZeichnen();
+  if (!T.gewaehlt) seiteStandard();
+}
+
+function hinweisSymbole(b) {
+  const s = [];
+  if (b.ueberfaellig) s.push('<span class="warnsymbol" title="Überfällig – No-Show prüfen">⏰</span>');
+  if (b.rueckbestaetigungWarnung) s.push('<span title="Keine Rückbestätigung – bitte anrufen">📞</span>');
+  if (b.tischGesperrt) s.push('<span title="Tisch fixiert">🔒</span>');
+  if (b.gastId?.allergien) s.push(`<span title="Allergie: ${esc(b.gastId.allergien)}">⚠️</span>`);
+  if (b.gastWunsch || b.notiz) s.push(`<span title="${esc([b.gastWunsch, b.notiz].filter(Boolean).join(' · '))}">💬</span>`);
+  return s.join(' ');
+}
+
+function listeZeichnen() {
+  const reihen = sichtbar().sort((a, b) => new Date(a.datumZeit) - new Date(b.datumZeit));
+  if (!reihen.length) { $('#inhalt').innerHTML = `<div class="karte leise">Keine Reservierungen für diese Auswahl. ${T.buchungen.length ? '' : 'Tipp: oben rechts <b>⋯ → Testdaten einrichten</b>.'}</div>`; return; }
+  $('#inhalt').innerHTML = `<table class="liste"><tr><th>Zeit</th><th>Gast</th><th>Pers.</th><th>Tisch</th><th>Status</th><th>Risiko</th><th></th></tr>
+  ${reihen.map((b) => `<tr class="reihe ${T.gewaehlt === b._id ? 'gewaehlt' : ''}" data-id="${b._id}">
+    <td class="zeit">${uhr(b.datumZeit)}</td>
+    <td><div class="fett">${esc(gastName(b))}</div><div class="klein leise">${esc(STUFE_TEXT[b.gaststufe] || '')}${b.gastId?.anzahlBesuche ? ' · ' + b.gastId.anzahlBesuche + ' Besuche' : ''}${(b.tags || []).map((t) => ' · #' + esc(t)).join('')}${b.vermittler ? ' · via ' + esc(b.vermittler) : ''} · ${esc(b.quelle || '')}</div></td>
+    <td class="fett">${b.personen}</td><td>${esc((b.tische || []).join('+') || '–')}</td>
+    <td>${badge(b.status)}${b.status === 'zeitvorschlag' && b.angebotBis ? `<div class="klein leise">bis ${uhr(b.angebotBis)}</div>` : ''}</td>
+    <td>${b.risiko ? `<span class="badge r-${b.risiko.stufe}" title="${esc(b.risiko.gruende.join(', '))}">${b.risiko.punkte}</span>` : ''}</td>
+    <td>${hinweisSymbole(b)}</td></tr>`).join('')}</table>`;
+  document.querySelectorAll('tr.reihe').forEach((r) => { r.onclick = () => detailZeigen(r.dataset.id); });
+}
+
+function timelineZeichnen() {
+  const tl = T.timeline; if (!tl) return;
+  const von = T.schicht === 'abend' ? 17 * 60 : 11 * 60, bis = T.schicht === 'mittag' ? 15 * 60 : 23 * 60 + 30;
+  const pxMin = 2.2, breite = (bis - von) * pxMin + 70, x = (m) => 64 + (m - von) * pxMin;
+  const filter = new Set(sichtbar().map((b) => b._id));
+  let html = `<div class="tl" style="max-height:calc(100vh - 150px)"><div style="width:${breite}px;position:relative"><div class="tl-kopf">`;
+  for (let h = Math.ceil(von / 60); h * 60 <= bis; h++) html += `<span class="tl-std" style="left:${x(h * 60) - 12}px">${h}:00</span>`;
+  html += `</div>`;
+  let gruppe = '';
+  for (const z of tl.zeilen) {
+    if (z.bereich !== gruppe) { gruppe = z.bereich; html += `<div class="tl-gruppe">${esc(gruppe === 'terrasse' ? 'Terrasse' : gruppe === 'innen' ? 'Innen' : gruppe)}</div>`; }
+    html += `<div class="tl-zeile"><div class="tl-name">${esc(z.tisch)}<span class="leise" style="font-weight:400;margin-left:3px">${z.maxPersonen ? '·' + z.maxPersonen : ''}</span></div>`;
+    for (const b of z.balken) {
+      if (b.endeMin < von || b.startMin > bis || !filter.has(b.id)) continue;
+      const l = x(Math.max(b.startMin, von)), w = Math.max(18, (Math.min(b.endeMin, bis) - Math.max(b.startMin, von)) * pxMin - 2);
+      html += `<div class="tl-balken ${b.konflikt ? 'konflikt' : ''}" data-id="${b.id}" style="left:${l}px;width:${w}px;background:${BALKENFARBE[b.status] || '#e5e7eb'}" title="${esc(b.name)} · ${b.personen} P.">${b.gesperrt ? '🔒' : ''}<b>${b.personen}</b> ${esc(b.name)}${b.risiko >= 50 ? ' ⚠' : ''}</div>`;
+    }
+    html += `</div>`;
+  }
+  const jetzt = minuten(new Date());
+  if (T.datum === isoTag(new Date()) && jetzt >= von && jetzt <= bis) html += `<div class="tl-jetzt" style="left:${x(jetzt)}px"></div>`;
+  html += `</div></div>`;
+  if (tl.ohneTisch.length) html += `<div class="karte" style="margin-top:10px"><b>Ohne Tisch:</b> ${tl.ohneTisch.map((b) => `<span class="chip" data-id="${b.id}">${b.personen} P. ${esc(b.name)}</span>`).join(' ')}</div>`;
+  $('#inhalt').innerHTML = html;
+  document.querySelectorAll('#inhalt [data-id]').forEach((e) => { e.onclick = () => detailZeigen(e.dataset.id); });
+}
+
+function planZeichnen() {
+  if (T.planZeit === null) T.planZeit = T.datum === isoTag(new Date()) ? Math.max(11 * 60 + 30, Math.min(Math.floor(minuten(new Date()) / 15) * 15, 22 * 60)) : 19 * 60;
+  const bereiche = [...new Set(T.tische.map((t) => t.bereich))];
+  if (!T.planBereich) T.planBereich = bereiche.includes('innen') ? 'innen' : bereiche[0];
+  const tische = T.tische.filter((t) => t.bereich === T.planBereich);
+  const maxX = Math.max(...tische.map((t) => (t.positionX || 0) + (t.planBreite || 100)), 400);
+  const maxY = Math.max(...tische.map((t) => (t.positionY || 0) + (t.planHoehe || 80)), 300);
+  const faktor = Math.min(1, 900 / maxX);
+  const belegung = (nr) => T.buchungen.find((b) => (b.tische || []).map((x) => String(x).toUpperCase()).includes(String(nr).toUpperCase()) && !INAKTIV.includes(b.status) && !['abgeschlossen', 'abgereist'].includes(b.status) && minuten(b.datumZeit) <= T.planZeit + 30 && minuten(b.datumZeit) + (b.dauerMinuten || 90) > T.planZeit);
+  const hh = (m) => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+  let html = `<div class="zeile" style="margin-bottom:10px">${bereiche.map((b) => `<span class="chip ${b === T.planBereich ? 'an' : ''}" data-bereich="${esc(b)}">${b === 'innen' ? 'Innen' : b === 'terrasse' ? 'Terrasse' : esc(b)}</span>`).join('')}
+    <span style="margin-left:12px" class="fett">${hh(T.planZeit)}</span>
+    <input type="range" id="planRegler" min="${11 * 60}" max="${23 * 60}" step="15" value="${T.planZeit}" style="width:260px">
+    <span class="klein leise"><span class="badge" style="background:#dcfce7">am Tisch</span> <span class="badge" style="background:#dbeafe">reserviert</span> <span class="badge" style="background:#fef3c7">kommt in ≤30 min</span> · freien Tisch anklicken = reservieren</span></div>
+    <div class="plan" style="height:${maxY * faktor + 30}px">`;
+  for (const t of tische) {
+    const b = belegung(t.nummer);
+    const klasse = !t.aktiv ? 'inaktiv' : !b ? '' : ['eingetroffen', 'wartet_drinnen'].includes(b.status) ? 'da' : minuten(b.datumZeit) > T.planZeit ? 'bald' : 'belegt';
+    html += `<div class="tisch ${t.form === 'rund' ? 'rund' : ''} ${klasse}" data-tisch="${esc(t.nummer)}" ${b ? `data-id="${b._id}"` : ''} style="left:${(t.positionX || 0) * faktor}px;top:${(t.positionY || 0) * faktor}px;width:${(t.planBreite || 100) * faktor}px;height:${(t.planHoehe || 80) * faktor}px;transform:rotate(${t.planDrehung || 0}deg)">
+      <span class="nr">${esc(t.nummer)}</span><span class="leise">${t.minPersonen ? t.minPersonen + '–' + t.maxPersonen : ''}</span>${b ? `<span>${uhr(b.datumZeit)} · ${b.personen}P</span><span>${esc(gastName(b).split(' ')[0])}</span>` : ''}</div>`;
+  }
+  html += `</div>`;
+  $('#inhalt').innerHTML = html;
+  document.querySelectorAll('[data-bereich]').forEach((c) => { c.onclick = () => { T.planBereich = c.dataset.bereich; planZeichnen(); }; });
+  $('#planRegler').oninput = (e) => { T.planZeit = +e.target.value; planZeichnen(); };
+  document.querySelectorAll('.tisch').forEach((e) => { e.onclick = () => (e.dataset.id ? detailZeigen(e.dataset.id) : neueReservierung({ tisch: e.dataset.tisch, uhrzeit: T.planZeit })); });
+}
+
+const kurz = (b) => `<div class="karte" style="padding:8px 10px;margin-bottom:6px;cursor:pointer" data-id="${b._id}"><b>${uhr(b.datumZeit)}</b> · ${b.personen} P. · ${esc(gastName(b))} ${badge(b.status)}</div>`;
+
+function seiteStandard() {
+  const anfragen = T.buchungen.filter((b) => b.status === 'angefragt');
+  const warte = T.buchungen.filter((b) => b.status === 'warteliste' || (b.status === 'zeitvorschlag' && b.angebotArt === 'warteliste'));
+  const ueber = T.buchungen.filter((b) => b.ueberfaellig);
+  $('#seite').innerHTML = `
+    <h3 style="margin:0 0 8px">${datumText(T.datum + 'T12:00:00Z')}</h3>
+    <label>Tagesnotiz fürs Team</label>
+    <textarea id="notiz" rows="3" placeholder="z. B. Küche: keine Ente heute · Gruppe Müller VIP">${esc(T.notiz)}</textarea>
+    <div class="zeile" style="justify-content:flex-end;margin-top:6px"><button class="klein" id="notizSpeichern">Speichern</button></div>
+    <label>Online-Buchung</label>
+    <div class="zeile"><button class="klein" data-aus="mittag">Mittag voll</button><button class="klein" data-aus="abend">Abend voll</button><button class="klein" data-aus="">Ganzer Tag voll</button><button class="klein" id="wiederAuf">Wieder öffnen</button></div>
+    <p class="klein leise">„Voll" sperrt nur das Widget. Das Team kann weiter buchen.</p>
+    ${ueber.length ? `<h4>⏰ Überfällig</h4>${ueber.map(kurz).join('')}` : ''}
+    ${anfragen.length ? `<h4>Offene Anfragen</h4>${anfragen.map(kurz).join('')}` : ''}
+    ${warte.length ? `<h4>Warteliste</h4>${warte.map(kurz).join('')}` : ''}
+    <p class="klein leise" style="margin-top:20px">Klick auf eine Reservierung öffnet Details, Statusknöpfe und Verlauf.</p>`;
+  $('#notizSpeichern').onclick = () => sicher(() => rpc('team.tagesnotizSpeichern', T.datum, $('#notiz').value), 'Notiz gespeichert');
+  document.querySelectorAll('[data-aus]').forEach((b) => { b.onclick = () => sicher(() => rpc('team.ausgebuchtSchalten', T.datum, b.dataset.aus || null, true), 'Online gesperrt'); });
+  $('#wiederAuf').onclick = () => sicher(async () => { for (const s of ['mittag', 'abend', null]) await rpc('team.ausgebuchtSchalten', T.datum, s, false); }, 'Online wieder offen');
+  document.querySelectorAll('#seite [data-id]').forEach((e) => { e.onclick = () => detailZeigen(e.dataset.id); });
+}
+
+const verlaufHtml = () => (T.verlauf.length ? T.verlauf.map((v) => `<div style="padding:5px 0;border-bottom:1px solid var(--linie)"><span class="leise">${datumText(v.zeitpunkt)} ${uhr(v.zeitpunkt)}</span> · ${esc(v.text)} <span class="leise">(${esc(v.akteur === 'gast' ? 'Gast' : v.akteur === 'system' ? 'System' : 'Team')})</span></div>`).join('') : '<span class="leise">Noch keine Einträge.</span>');
+
+async function detailZeigen(id, stillesNeuladen = false) {
+  const b = T.buchungen.find((x) => x._id === id); if (!b) return;
+  const neu = T.gewaehlt !== id; T.gewaehlt = id;
+  if (!stillesNeuladen && T.ansicht === 'liste') listeZeichnen();
+  if (neu) T.verlauf = [];
+  const g = b.gastId && typeof b.gastId === 'object' ? b.gastId : {};
+  const aktionen = (b.naechsteStatus || []).filter((s) => s !== 'zeitvorschlag' && s !== 'warteliste');
+  $('#seite').innerHTML = `
+    <div class="zeile" style="justify-content:space-between"><button class="klein" id="schliessen">← Übersicht</button>${badge(b.status)}</div>
+    <h3 style="margin:10px 0 0">${esc(gastName(b))}</h3>
+    <div class="leise">${esc(g.telefonE164 || '')}${g.email ? ' · ' + esc(g.email) : ''}</div>
+    <div class="zeile" style="margin:8px 0"><span class="badge s-abgeschlossen">${esc(STUFE_TEXT[b.gaststufe] || 'Neu')}</span>
+      <span class="klein">${g.anzahlBesuche || 0} Besuche · ${g.anzahlNoShows || 0} No-Shows · ${g.anzahlSpaeteStornos || 0} spät storniert</span></div>
+    ${b.risiko ? `<div class="karte" style="padding:8px 10px"><span class="badge r-${b.risiko.stufe}">No-Show-Risiko ${b.risiko.punkte}</span> <span class="klein leise">${esc(b.risiko.gruende.join(' · ') || 'unauffällig')}</span></div>` : ''}
+    ${g.allergien ? `<p>⚠️ <b>Allergie:</b> ${esc(g.allergien)}</p>` : ''}${g.praeferenzen ? `<p class="klein">★ ${esc(g.praeferenzen)}</p>` : ''}
+    <div class="karte" style="margin:10px 0">
+      <div class="fett" style="font-size:16px">${datumText(b.datumZeit)} · ${uhr(b.datumZeit)} · ${b.personen} Pers.</div>
+      <div>Tisch <b>${esc((b.tische || []).join(' + ') || '–')}</b>${b.bereich ? ' · ' + esc(b.bereich) : ''} · ${b.dauerMinuten || 90} min · Quelle ${esc(b.quelle || '')}</div>
+      ${b.status === 'zeitvorschlag' && b.angebotBis ? `<div class="klein">Angebot gültig bis ${uhr(b.angebotBis)} Uhr${b.angebotArt === 'warteliste' ? ' (aus Warteliste)' : ''}</div>` : ''}
+      ${b.gastWunsch ? `<div class="klein">💬 Gast: ${esc(b.gastWunsch)}</div>` : ''}
+    </div>
+    <label>Status</label>
+    <div class="zeile">${aktionen.map((s) => `<button class="klein ${s === 'eingetroffen' || s === 'bestaetigt' ? 'primaer' : ''}" data-status="${s}">${esc(AKTION_TEXT[s] || STATUS_TEXT[s] || s)}</button>`).join('') || '<span class="leise klein">keine</span>'}</div>
+    <label>Umbuchen (Zeit · Personen · Tische)</label>
+    <div class="zeile" style="flex-wrap:nowrap"><input type="time" id="uZeit" value="${uhr(b.datumZeit)}" step="900"><input type="number" id="uPers" min="1" max="40" value="${b.personen}" style="width:70px"><input id="uTische" value="${esc((b.tische || []).join(','))}" placeholder="Tische" style="width:110px"><button class="klein" id="uSpeichern">OK</button></div>
+    <div class="zeile" style="margin-top:6px"><button class="klein" id="sperren">${b.tischGesperrt ? '🔓 Tisch freigeben' : '🔒 Tisch fixieren'}</button><button class="klein" id="vorschlag">Neue Zeit vorschlagen</button><button class="klein" id="serie">Als Serie wiederholen</button></div>
+    <label>Tags (Komma)</label><input id="dTags" value="${esc((b.tags || []).join(', '))}" placeholder="geburtstag, vip, geschaeftsessen">
+    <label>Vermittler</label><input id="dVerm" value="${esc(b.vermittler || '')}" placeholder="Hotel, Concierge, Firma">
+    <label>Interne Notiz</label><textarea id="dNotiz" rows="2">${esc(b.notiz || '')}</textarea>
+    <div class="zeile" style="justify-content:flex-end;margin-top:6px"><button class="klein" id="dSpeichern">Speichern</button></div>
+    <label>Gastseite (Test)</label><div class="zeile"><button class="klein" id="gastlink">Gastlink öffnen</button><span class="klein leise">ersetzt im Test die SMS</span></div>
+    <h4 style="margin:18px 0 6px">Verlauf</h4><div id="verlauf" class="klein">${T.verlauf.length ? verlaufHtml() : '<span class="leise">lädt …</span>'}</div>`;
+  $('#schliessen').onclick = () => { T.gewaehlt = null; zeichnen(); };
+  document.querySelectorAll('[data-status]').forEach((k) => { k.onclick = async () => {
+    const s = k.dataset.status;
+    if ((s === 'storniert' || s === 'noShow' || s === 'spaet_storniert') && !confirm(`${AKTION_TEXT[s]}?`)) return;
+    await sicher(() => rpc('reservierungen.statusSetzen', id, s, {}), STATUS_TEXT[s]); T.verlauf = []; laden();
+  }; });
+  $('#uSpeichern').onclick = async () => {
+    const [h, m] = $('#uZeit').value.split(':').map(Number);
+    const zeit = zeitAm(T.datum, h * 60 + m);
+    const tischeNeu = $('#uTische').value.split(',').map((s) => s.trim()).filter(Boolean);
+    const aend = {};
+    if (zeit !== new Date(b.datumZeit).toISOString()) aend.zeit = zeit;
+    if (+$('#uPers').value !== b.personen) aend.personen = +$('#uPers').value;
+    if (tischeNeu.join() !== (b.tische || []).join()) aend.tische = tischeNeu;
+    if (!Object.keys(aend).length) return;
+    await sicher(() => rpc('reservierungen.umbuchen', id, aend), 'Umgebucht'); T.verlauf = []; laden();
+  };
+  $('#sperren').onclick = async () => { await sicher(() => rpc('reservierungen.tischSperren', id, !b.tischGesperrt)); T.verlauf = []; laden(); };
+  $('#vorschlag').onclick = () => zeitVorschlagDialog(b);
+  $('#serie').onclick = async () => {
+    const n = +prompt('Wie viele Termine insgesamt (wöchentlich, gleiche Uhrzeit)?', '4'); if (!n) return;
+    const r = await sicher(() => rpc('reservierungen.serieAnlegen', { zeit: new Date(b.datumZeit).toISOString(), personen: b.personen, telefon: g.telefonE164, vorname: g.vorname, nachname: g.nachname, email: g.email, anzahl: n, quelle: 'telefon', tags: b.tags || [] }));
+    melden(`${r.angelegt.length} Termine angelegt${r.fehlgeschlagen.length ? ', ' + r.fehlgeschlagen.length + ' ohne freien Tisch' : ''}`);
+  };
+  $('#dSpeichern').onclick = async () => { await sicher(() => rpc('reservierungen.detailsSetzen', id, { tags: $('#dTags').value.split(',').map((s) => s.trim()).filter(Boolean), vermittler: $('#dVerm').value, notiz: $('#dNotiz').value }), 'Gespeichert'); T.verlauf = []; laden(); };
+  $('#gastlink').onclick = async () => { const link = await sicher(() => rpc('team.gastlinkFuerTest', id)); urlOeffnen(link); };
+  if (!T.verlauf.length) {
+    try { T.verlauf = await rpc('reservierungen.verlauf', id); if (T.gewaehlt === id && $('#verlauf')) $('#verlauf').innerHTML = verlaufHtml(); } catch (f) { /* still */ }
+  }
+}
+
+async function zeitVorschlagDialog(b) {
+  const m = modal(`<h3 style="margin-top:0">Neue Zeit vorschlagen</h3><p class="leise">${esc(gastName(b))}, ${b.personen} Pers. Der Gast bekommt einen Link und kann annehmen oder ablehnen. Der Tisch ist so lange für ihn reserviert.</p>
+    <label>Datum</label><input type="date" id="vDat" value="${isoTag(b.datumZeit)}"><div id="vSlots" class="raster" style="margin-top:10px"></div>
+    <label>Gültig für (Stunden)</label><input type="number" id="vGueltig" value="24" min="1">
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button id="vAbbr">Abbrechen</button><button class="primaer" id="vOk" disabled>Vorschlagen</button></div>`);
+  let gewaehlt = null;
+  const slotsLaden = async () => {
+    const r = await rpc('verfuegbarkeit.freieZeiten', $('#vDat', m).value, b.personen, { alsTeam: true });
+    $('#vSlots', m).innerHTML = r.slots.map((s) => `<button data-z="${s.zeit}">${uhr(s.zeit)}</button>`).join('') || `<span class="leise">${esc(r.hinweis || 'nichts frei')}</span>`;
+    m.querySelectorAll('[data-z]').forEach((k) => { k.onclick = () => { m.querySelectorAll('[data-z]').forEach((x) => x.classList.remove('an')); k.classList.add('an'); gewaehlt = k.dataset.z; $('#vOk', m).disabled = false; }; });
+  };
+  $('#vDat', m).onchange = slotsLaden; slotsLaden();
+  $('#vAbbr', m).onclick = () => m.remove();
+  $('#vOk', m).onclick = async () => { await sicher(() => rpc('reservierungen.zeitVorschlagen', b._id, gewaehlt, +$('#vGueltig', m).value * 60), 'Vorschlag verschickt'); m.remove(); T.verlauf = []; laden(); };
+}
+
+async function neueReservierung(vorgabe = {}) {
+  const istWarte = Boolean(vorgabe.warteliste);
+  const m = modal(`<h3 style="margin-top:0">${istWarte ? 'Auf die Warteliste' : 'Neue Reservierung'}</h3>
+    <div class="zeile" style="flex-wrap:nowrap"><div style="flex:1"><label>Datum</label><input type="date" id="nDat" value="${T.datum}"></div><div style="width:90px"><label>Personen</label><input type="number" id="nPers" value="2" min="1" max="40"></div><div style="width:120px"><label>Quelle</label><select id="nQuelle"><option value="telefon">Telefon</option><option value="walkin">Walk-in</option><option value="online">Online</option><option value="google">Google</option></select></div></div>
+    ${istWarte ? `<label>Wunschzeit</label><input type="time" id="nWunsch" value="19:30" step="900">` : `<label>Freie Zeiten ${vorgabe.tisch ? '(Tisch ' + esc(vorgabe.tisch) + ')' : ''}</label><div id="nSlots" class="raster"><span class="leise">lädt …</span></div>`}
+    <label>Telefon</label><input id="nTel" placeholder="0664 …" autocomplete="off"><div id="nTreffer"></div>
+    <div class="zeile" style="flex-wrap:nowrap"><div style="flex:1"><label>Vorname</label><input id="nVor"></div><div style="flex:1"><label>Nachname</label><input id="nNach"></div></div>
+    <label>E-Mail</label><input id="nMail">
+    ${istWarte ? '' : `<label>Tags</label><input id="nTags" placeholder="geburtstag, vip"><label>Notiz</label><input id="nNotiz">`}
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button id="nAbbr">Abbrechen</button><button class="primaer" id="nOk" ${istWarte ? '' : 'disabled'}>${istWarte ? 'Eintragen' : 'Reservieren'}</button></div>`);
+  let slot = null;
+  const slotsLaden = async () => {
+    if (istWarte) return;
+    slot = null; $('#nOk', m).disabled = true;
+    const r = await rpc('verfuegbarkeit.freieZeiten', $('#nDat', m).value, +$('#nPers', m).value, { alsTeam: true });
+    let slots = r.slots;
+    if (vorgabe.tisch) slots = slots.filter((s) => s.tische.map((x) => String(x).toUpperCase()).includes(String(vorgabe.tisch).toUpperCase())).map((s) => ({ ...s, tische: [vorgabe.tisch] }));
+    $('#nSlots', m).innerHTML = slots.map((s, i) => `<button data-i="${i}" title="Tisch ${esc(s.tische.join('+'))}">${uhr(s.zeit)}</button>`).join('') || `<span class="leise">${esc(r.hinweis || 'Nichts frei')} – <a href="#" id="nZurWarte">auf die Warteliste?</a></span>`;
+    m.querySelectorAll('[data-i]').forEach((k) => { k.onclick = () => { m.querySelectorAll('[data-i]').forEach((x) => x.classList.remove('an')); k.classList.add('an'); slot = slots[+k.dataset.i]; $('#nOk', m).disabled = false; }; });
+    if (vorgabe.uhrzeit) { const k = [...m.querySelectorAll('[data-i]')].find((x) => minuten(slots[+x.dataset.i].zeit) >= vorgabe.uhrzeit); if (k) k.click(); }
+    const w = $('#nZurWarte', m); if (w) w.onclick = (e) => { e.preventDefault(); m.remove(); neueReservierung({ warteliste: true }); };
+  };
+  $('#nDat', m).onchange = slotsLaden; $('#nPers', m).onchange = slotsLaden; slotsLaden();
+  let suchT;
+  const suchen = (feld) => { clearTimeout(suchT); suchT = setTimeout(async () => {
+    const wert = feld.value; if (wert.length < 3) { $('#nTreffer', m).innerHTML = ''; return; }
+    const tr = await rpc('team.gastSuchen', wert).catch(() => []);
+    $('#nTreffer', m).innerHTML = tr.map((g, i) => `<div class="karte klein" style="padding:6px 8px;margin-top:4px;cursor:pointer" data-g="${i}"><b>${esc(g.vorname)} ${esc(g.nachname)}</b> · ${esc(g.telefonE164)} · ${g.anzahlBesuche} Besuche${g.anzahlNoShows ? ' · ' + g.anzahlNoShows + ' No-Shows' : ''}${g.allergien ? ' · ⚠️ ' + esc(g.allergien) : ''}</div>`).join('');
+    m.querySelectorAll('[data-g]').forEach((k) => { k.onclick = () => { const g = tr[+k.dataset.g]; $('#nTel', m).value = g.telefonE164; $('#nVor', m).value = g.vorname || ''; $('#nNach', m).value = g.nachname || ''; $('#nMail', m).value = g.email || ''; $('#nTreffer', m).innerHTML = `<div class="klein leise" style="margin-top:4px">✓ Bestehender Gast${g.praeferenzen ? ' · ★ ' + esc(g.praeferenzen) : ''}</div>`; }; });
+  }, 300); };
+  $('#nTel', m).oninput = (e) => suchen(e.target); $('#nNach', m).oninput = (e) => suchen(e.target);
+  $('#nAbbr', m).onclick = () => m.remove();
+  $('#nOk', m).onclick = async () => {
+    const basis = { personen: +$('#nPers', m).value, telefon: $('#nTel', m).value, vorname: $('#nVor', m).value, nachname: $('#nNach', m).value, email: $('#nMail', m).value };
+    const tag = $('#nDat', m).value;
+    try {
+      if (istWarte) {
+        const [h, mi] = $('#nWunsch', m).value.split(':').map(Number);
+        await sicher(() => rpc('team.aufWarteliste', { ...basis, zeit: zeitAm(tag, h * 60 + mi) }), 'Auf der Warteliste');
+      } else {
+        await sicher(() => rpc('reservierungen.anlegen', { ...basis, zeit: slot.zeit, tische: slot.tische, quelle: $('#nQuelle', m).value, tags: $('#nTags', m).value.split(',').map((s) => s.trim()).filter(Boolean), notiz: $('#nNotiz', m).value }), 'Reserviert');
+      }
+      m.remove(); T.datum = tag; $('#datum').value = tag; laden();
+    } catch (f) { /* Meldung steht schon */ }
+  };
+}
+
+async function walkIn() {
+  const m = modal(`<h3 style="margin-top:0">Walk-in</h3><p class="leise">Gast ohne Reservierung, sitzt ab jetzt.</p>
+    <div class="zeile" style="flex-wrap:nowrap"><div style="width:100px"><label>Personen</label><input type="number" id="wPers" value="2" min="1"></div><div style="flex:1"><label>Name (optional)</label><input id="wName"></div></div>
+    <label>Telefon (optional, fürs Gastprofil)</label><input id="wTel">
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button id="wAbbr">Abbrechen</button><button class="primaer" id="wOk">Platzieren</button></div>`);
+  $('#wAbbr', m).onclick = () => m.remove();
+  $('#wOk', m).onclick = async () => {
+    try {
+      const jetzt = new Date(); const tag = isoTag(jetzt); const min = Math.floor(minuten(jetzt) / 15) * 15;
+      const r = await rpc('verfuegbarkeit.freieZeiten', tag, +$('#wPers', m).value, { alsTeam: true });
+      const s = r.slots.find((x) => minuten(x.zeit) >= min) || r.slots[0];
+      if (!s) { melden('Gerade kein Tisch frei', true); return; }
+      const name = $('#wName', m).value.trim().split(' ');
+      const neu = await rpc('reservierungen.anlegen', { zeit: s.zeit, tische: s.tische, personen: +$('#wPers', m).value, telefon: $('#wTel', m).value || '+4369900' + String(Date.now()).slice(-6), vorname: name[0] || 'Walk-in', nachname: name.slice(1).join(' '), quelle: 'walkin', stumm: true });
+      await rpc('reservierungen.statusSetzen', neu._id, 'eingetroffen', {});
+      melden(`Walk-in an Tisch ${s.tische.join('+')}`); m.remove(); T.datum = tag; $('#datum').value = tag; laden();
+    } catch (f) { melden(f.message, true); }
+  };
+}
+
+/* =====================================================================
+   BUCHUNGSWIDGET (Gast)
+   ===================================================================== */
+const B = { personen: 2, datum: null, tage: [], slots: [], slot: null, hinweis: '', warteliste: false, zurWarte: false };
+function buchungStart() { document.body.insertAdjacentHTML('beforeend', spracheKnopf().replace('sprachwahl', 'sprachwahl schwebend')); B.datum = isoTag(new Date()); buchungZeichnen(); tageLaden(); }
+
+async function tageLaden() {
+  B.hinweis = 'lädt …'; buchungZeichnen();
+  try { B.tage = await rpc('verfuegbarkeit.kalenderUebersicht', isoTag(new Date()), 14, B.personen); } catch (f) { B.tage = []; }
+  const erster = B.tage.find((t) => t.frei);
+  if (erster && !B.tage.find((t) => t.datum === B.datum && t.frei)) B.datum = erster.datum;
+  slotsLaden();
+}
+async function slotsLaden() {
+  B.slot = null; B.slots = []; B.hinweis = 'lädt …'; buchungZeichnen();
+  try {
+    const r = await rpc('verfuegbarkeit.freieZeiten', B.datum, B.personen);
+    B.slots = r.slots; B.hinweis = r.hinweis || ''; B.warteliste = r.wartelisteMoeglich;
+  } catch (f) { B.hinweis = f.message; }
+  buchungZeichnen();
+}
+function buchungZeichnen() {
+  const nachSchicht = (s) => B.slots.filter((x) => x.schicht === s);
+  const wt = (iso) => new Intl.DateTimeFormat(LOC, { weekday: 'short', timeZone: TZ }).format(new Date(iso + 'T12:00:00Z'));
+  const tage = B.tage.length ? B.tage : [{ datum: B.datum, frei: true }];
+  $('#wurzel').innerHTML = `<div class="gast">
+    <div class="leise">Restaurant Sichuan · Wien</div><h1>Tisch reservieren</h1>
+    <h2>Wie viele Personen?</h2>
+    <div class="raster">${[1, 2, 3, 4, 5, 6, 7, 8].map((n) => `<button data-p="${n}" class="${n === B.personen ? 'an' : ''}">${n}</button>`).join('')}</div>
+    <p class="klein leise">Ab 9 Personen nehmen wir Ihre Reservierung gerne telefonisch entgegen: 01 263 37 13</p>
+    <h2>Wann?</h2>
+    <div class="tage">${tage.map((t) => `<div class="tag ${t.datum === B.datum ? 'an' : ''} ${t.frei ? '' : 'voll'}" data-d="${t.datum}"><div class="wt">${wt(t.datum)}</div><div class="nr">${+t.datum.slice(8)}</div><div class="klein">${t.frei ? '' : 'voll'}</div></div>`).join('')}</div>
+    <h2>Uhrzeit</h2>
+    ${['mittag', 'abend'].map((s) => (nachSchicht(s).length ? `<div class="leise klein" style="margin:6px 0">${s === 'mittag' ? 'Mittag' : 'Abend'}</div><div class="raster">${nachSchicht(s).map((x) => `<button data-z="${x.zeit}" class="${B.slot === x.zeit ? 'an' : ''}">${uhr(x.zeit)}</button>`).join('')}</div>` : '')).join('')}
+    ${!B.slots.length ? `<div class="karte"><div>${esc(B.hinweis)}</div>${B.warteliste ? `<button class="primaer" id="zurWarte" style="margin-top:10px">Auf die Warteliste setzen</button><p class="klein leise">Wird ein Tisch frei, bekommen Sie ihn per SMS angeboten – reserviert nur für Sie.</p>` : ''}</div>` : ''}
+    <div id="formular" class="${B.slot || B.zurWarte ? '' : 'versteckt'}">
+      <h2>${B.zurWarte ? 'Warteliste – Ihre Daten' : 'Ihre Daten'}</h2>
+      ${B.zurWarte ? `<label>Ungefähre Wunschzeit</label><input type="time" id="fWunsch" value="19:30" step="900">` : ''}
+      <div class="zeile" style="flex-wrap:nowrap"><div style="flex:1"><label>Vorname *</label><input id="fVor"></div><div style="flex:1"><label>Nachname *</label><input id="fNach"></div></div>
+      <label>Mobilnummer *</label><input id="fTel" type="tel" placeholder="0664 1234567"><label>E-Mail</label><input id="fMail" type="email">
+      ${B.zurWarte ? '' : `<label>Wünsche (Allergien, Anlass …)</label><textarea id="fWunschText" rows="2"></textarea>`}
+      <button class="primaer" id="fOk" style="width:100%;margin-top:14px;padding:12px">${B.zurWarte ? 'Auf die Warteliste' : `Reservieren · ${B.slot ? datumText(B.slot) + ', ' + uhr(B.slot) : ''} · ${B.personen} Pers.`}</button>
+    </div>
+    <div class="marke">Eigenes Reservierungssystem · Test</div></div>`;
+  document.querySelectorAll('[data-p]').forEach((k) => { k.onclick = () => { B.personen = +k.dataset.p; B.zurWarte = false; tageLaden(); }; });
+  document.querySelectorAll('[data-d]').forEach((k) => { k.onclick = () => { B.datum = k.dataset.d; B.zurWarte = false; slotsLaden(); }; });
+  document.querySelectorAll('[data-z]').forEach((k) => { k.onclick = () => { B.slot = k.dataset.z; B.zurWarte = false; buchungZeichnen(); $('#formular').scrollIntoView({ behavior: 'smooth' }); }; });
+  const w = $('#zurWarte'); if (w) w.onclick = () => { B.zurWarte = true; buchungZeichnen(); };
+  const ok = $('#fOk'); if (ok) ok.onclick = buchungAbsenden;
+}
+async function buchungAbsenden() {
+  const daten = { personen: B.personen, vorname: $('#fVor').value, nachname: $('#fNach').value, telefon: $('#fTel').value, email: $('#fMail').value, sprache: SPRACHE };
+  $('#fOk').disabled = true;
+  try {
+    if (B.zurWarte) {
+      const [h, m] = $('#fWunsch').value.split(':').map(Number);
+      await rpc('gastverwaltung.aufWarteliste', { ...daten, zeit: zeitAm(B.datum, h * 60 + m) });
+      $('#wurzel').innerHTML = `<div class="gast"><h1>Sie stehen auf der Warteliste</h1><p>Wird ein Tisch frei, bekommen Sie eine SMS mit einem Link – der Tisch ist dann kurz nur für Sie reserviert.</p></div>`;
+    } else {
+      const r = await rpc('reservierungen.anlegen', { ...daten, zeit: B.slot, gastWunsch: $('#fWunschText').value });
+      $('#wurzel').innerHTML = `<div class="gast"><h1>${r.status === 'angefragt' ? 'Danke für Ihre Anfrage!' : 'Ihr Tisch ist reserviert'}</h1>
+        <div class="karte"><div class="fett" style="font-size:17px">${datumText(r.zeit)} · ${uhr(r.zeit)} Uhr · ${r.personen} Pers.</div><div class="leise">${r.status === 'angefragt' ? 'Wir bestätigen in Kürze.' : 'Die Bestätigung kommt per SMS.'}</div></div>
+        <p><button id="verwalten">Reservierung ansehen oder ändern</button></p></div>`;
+      $('#verwalten').onclick = () => seiteOeffnen('/meine-reservierung?t=' + encodeURIComponent(r.verwaltungsToken));
+    }
+  } catch (f) { melden(f.message, true); $('#fOk').disabled = false; }
+}
+
+/* =====================================================================
+   GASTSEITE „Meine Reservierung"
+   ===================================================================== */
+const G = { stand: null, aendern: false, nurWeniger: false, wahl: null };
+async function gastStart() {
+  document.body.insertAdjacentHTML('beforeend', spracheKnopf().replace('sprachwahl', 'sprachwahl schwebend'));
+  if (!INIT.token) { $('#wurzel').innerHTML = `<div class="gast"><h1>Link unvollständig</h1><p>Bitte öffnen Sie den Link aus Ihrer SMS oder E-Mail.</p></div>`; return; }
+  try { G.stand = await rpc('gastverwaltung.laden', INIT.token); } catch (f) { $('#wurzel').innerHTML = `<div class="gast"><h1>Link ungültig</h1><p>${esc(f.message)}</p></div>`; return; }
+  if (INIT.absicht === 'rueckbestaetigen' && G.stand.darfRueckbestaetigen) { await gastAktion('rueckbestaetigen', 'Danke! Wir haben Ihren Tisch fest eingeplant.'); return; }
+  gastZeichnen();
+}
+async function gastAktion(methode, meldung, ...args) {
+  try { G.stand = await rpc('gastverwaltung.' + methode, INIT.token, ...args); G.aendern = false; gastZeichnen(); melden(meldung); } catch (f) { melden(f.message, true); }
+}
+function gastZeichnen() {
+  const s = G.stand;
+  $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan</div><h1>${s.vorname ? 'Hallo ' + esc(s.vorname) : 'Ihre Reservierung'}</h1>
+    <div class="karte"><div class="fett" style="font-size:18px">${datumText(s.zeit)} · ${uhr(s.zeit)} Uhr</div><div>${s.personen} ${s.personen === 1 ? 'Person' : 'Personen'}</div><div style="margin-top:6px">${badge(s.status)}</div>
+    ${s.angebotOffen ? `<p><b>Für Sie reserviert bis ${uhr(s.angebotBis)} Uhr.</b></p><div class="zeile"><button class="primaer" id="annehmen">Annehmen</button><button id="ablehnen">Nein danke</button></div>` : ''}</div>
+    ${s.darfRueckbestaetigen ? `<button class="primaer" id="rueck" style="width:100%;margin-top:14px;padding:12px">Ich komme ✓</button>` : ''}
+    ${s.stornoGiltAlsSpaet && s.darfStornieren && s.status !== 'warteliste' ? `<div class="karte" style="margin-top:14px;background:#fffbeb"><b>Ihr Termin ist in weniger als ${s.stornofristStunden} Stunden.</b><br>Eine Absage jetzt lässt den Tisch meist leer. Kommen Sie mit weniger Personen? Dann passen Sie lieber die Anzahl an.${s.personen > 1 ? `<div style="margin-top:8px"><button id="weniger">Personenzahl verringern</button></div>` : ''}</div>` : ''}
+    <div class="zeile" style="margin-top:14px">${s.darfAendern ? `<button id="aendern">Ändern</button>` : ''}${s.darfStornieren ? `<button id="storno">${s.status === 'warteliste' ? 'Von der Warteliste nehmen' : 'Stornieren'}</button>` : ''}</div>
+    <div id="aendernBox" class="${G.aendern ? '' : 'versteckt'}">
+      <h2>${G.nurWeniger ? 'Personenzahl' : 'Reservierung ändern'}</h2>
+      <div class="zeile" style="flex-wrap:nowrap">${G.nurWeniger ? '' : `<div style="flex:1"><label>Datum</label><input type="date" id="aDat" value="${isoTag(s.zeit)}"></div>`}<div style="width:100px"><label>Personen</label><input type="number" id="aPers" min="1" max="${G.nurWeniger ? s.personen : 8}" value="${G.nurWeniger ? Math.max(1, s.personen - 1) : s.personen}"></div></div>
+      ${G.nurWeniger ? '' : `<label>Uhrzeit</label><div class="raster" id="aSlots"></div>`}
+      <label>Wünsche</label><textarea id="aWunsch" rows="2">${esc(s.gastWunsch)}</textarea>
+      <button class="primaer" id="aOk" style="width:100%;margin-top:12px">Speichern</button>
+    </div>
+    <div class="marke">Eigenes Reservierungssystem · Test</div></div>`;
+  const an = (id, fn) => { const e = $('#' + id); if (e) e.onclick = fn; };
+  an('annehmen', () => gastAktion('angebotAnnehmen', 'Wunderbar – Ihr Tisch ist bestätigt.'));
+  an('ablehnen', () => gastAktion('angebotAblehnen', 'Schade. Wir geben den Tisch weiter.'));
+  an('rueck', () => gastAktion('rueckbestaetigen', 'Danke! Wir freuen uns auf Sie.'));
+  an('storno', () => { if (confirm(s.stornoGiltAlsSpaet ? 'Die Frist ist abgelaufen – die Absage zählt als spät. Trotzdem stornieren?' : 'Reservierung wirklich stornieren?')) gastAktion('stornieren', 'Storniert.'); });
+  an('aendern', () => { G.aendern = true; G.nurWeniger = false; gastZeichnen(); gastSlots(); });
+  an('weniger', () => { G.aendern = true; G.nurWeniger = true; gastZeichnen(); });
+  an('aOk', () => {
+    const aend = { personen: +$('#aPers').value, gastWunsch: $('#aWunsch').value };
+    if (!G.nurWeniger && G.wahl && G.wahl !== s.zeit) aend.zeit = G.wahl;
+    gastAktion('aendern', 'Gespeichert – Sie bekommen eine neue Bestätigung.', aend);
+  });
+  const d = $('#aDat'); if (d) d.onchange = gastSlots;
+  const p = $('#aPers'); if (p && !G.nurWeniger) p.onchange = gastSlots;
+}
+async function gastSlots() {
+  const s = G.stand; G.wahl = s.zeit;
+  const tag = $('#aDat').value, pers = +$('#aPers').value;
+  $('#aSlots').innerHTML = '<span class="leise">lädt …</span>';
+  const r = await rpc('verfuegbarkeit.freieZeiten', tag, pers);
+  const liste = (isoTag(s.zeit) === tag ? [{ zeit: s.zeit, bisher: true }] : []).concat(r.slots.filter((x) => x.zeit !== s.zeit));
+  liste.sort((a, b) => new Date(a.zeit) - new Date(b.zeit));
+  $('#aSlots').innerHTML = liste.map((x) => `<button data-z="${x.zeit}" class="${x.zeit === G.wahl ? 'an' : ''}">${uhr(x.zeit)}${x.bisher ? '*' : ''}</button>`).join('') || `<span class="leise">${esc(r.hinweis || 'nichts frei')}</span>`;
+  document.querySelectorAll('#aSlots [data-z]').forEach((k) => { k.onclick = () => { G.wahl = k.dataset.z; document.querySelectorAll('#aSlots [data-z]').forEach((x) => x.classList.toggle('an', x === k)); }; });
+}
+</script>
+</body>
+</html>
