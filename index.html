@@ -20,6 +20,7 @@ button{font:inherit;cursor:pointer;border:1px solid var(--linie);background:var(
 button:hover{border-color:#bbb}button.primaer{background:var(--akzent);border-color:var(--akzent);color:#fff}
 button.klein{padding:4px 8px;font-size:12px}button:disabled{opacity:.45;cursor:default}
 input,select,textarea{font:inherit;border:1px solid var(--linie);border-radius:8px;padding:7px 9px;background:#fff;width:100%}
+input[type=checkbox],input[type=radio]{width:auto;padding:0}
 label{display:block;font-size:12px;color:var(--leise);margin:8px 0 3px}
 .zeile{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .leise{color:var(--leise)}.klein{font-size:12px}.fett{font-weight:600}
@@ -64,7 +65,7 @@ body.allein .team{height:100vh;height:100dvh}
 .pin-tasten{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .pin-tasten button{background:#2c2c2e;border:0;color:#fff;font-size:26px;height:68px;border-radius:14px}
 .pin-tasten button:active{background:#48484a}.pin-tasten .leer{visibility:hidden}
-.sprachwahl{background:transparent;color:inherit;border:1px solid currentColor;opacity:.8;font-size:13px;padding:4px 10px}
+.sprachwahl{display:inline-flex;border:1px solid currentColor;border-radius:8px;overflow:hidden;opacity:.85}.sprachwahl button{background:transparent;color:inherit;border:0;border-radius:0;font-size:12px;padding:4px 8px}.sprachwahl button.an{background:currentColor}.sprachwahl button.an{color:#fff;background:var(--text)}
 .sprachwahl.schwebend{position:fixed;top:10px;right:10px;z-index:60;background:#fff;color:var(--text);border-color:var(--linie)}
 .anmeldung .fehlertext{color:#fca5a5;min-height:20px;margin-top:14px}
 table.liste{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--linie);border-radius:var(--radius);overflow:hidden}
@@ -155,6 +156,18 @@ a.knopf{display:block;text-align:center;text-decoration:none;border-radius:8px;p
 .fb-eintrag{border:1px solid var(--linie);border-radius:10px;padding:10px;margin-bottom:8px;background:#fff}.fb-eintrag.offen{border-color:var(--rot);background:#fef2f2}
 .fb-sterne{color:#f59e0b;letter-spacing:1px}.fb-sterne.s1,.fb-sterne.s2{color:var(--rot)}.fb-sterne.s3{color:#d97706}
 .fb-text{margin-top:6px;white-space:pre-wrap}
+.ka-raster{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0 10px}
+.ka-sprache{border:1px solid var(--linie);border-radius:8px;padding:8px;margin-top:6px}.ka-sprache textarea{margin-top:4px}
+.allergenwahl{display:flex;flex-wrap:wrap;gap:4px}.allergenwahl input{display:none}
+.schalter{position:relative;display:inline-block;width:38px;height:22px;margin:0}.schalter input{opacity:0;width:0;height:0}.schalter span{position:absolute;inset:0;background:#d4d4d8;border-radius:22px;cursor:pointer;transition:.15s}.schalter span:before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s}.schalter input:checked+span{background:var(--rot)}.schalter input:checked+span:before{transform:translateX(16px)}
+.qr-blatt{display:grid;grid-template-columns:repeat(3,1fr);gap:8mm}.qr-karte{border:1px dashed #999;padding:5mm;text-align:center;break-inside:avoid;font-size:11px}.qr-titel{font-weight:700;font-size:13px;margin-top:2mm}.qr-tisch{font-size:18px;font-weight:700;margin-top:1mm}
+.menue h2{margin-top:22px;border-bottom:2px solid var(--akzent);padding-bottom:4px}
+.menue-nav{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding:8px 0}.menue-nav a{text-decoration:none;color:inherit}
+.gericht{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--linie)}.gericht img{width:76px;height:76px;object-fit:cover;border-radius:8px;flex:none}.g-text{flex:1;min-width:0}
+.g-kopf{display:flex;justify-content:space-between;gap:8px}.g-nr{display:inline-block;min-width:26px;color:var(--leise);font-variant-numeric:tabular-nums}.g-preis{white-space:nowrap;font-weight:600}
+.gericht.aus{opacity:.45}.gericht.aus .g-preis{font-weight:400}
+.ev-teaser{display:flex;gap:8px;overflow-x:auto;margin:10px 0}.ev-mini{flex:none;display:flex;flex-direction:column;padding:8px 12px;border-radius:10px;background:#fff7ed;border:1px solid #fed7aa;text-decoration:none;color:inherit;font-size:13px}.ev-mini span{font-size:12px;color:var(--leise)}
+.ev-karte img{width:100%;max-height:220px;object-fit:cover;border-radius:8px;margin-bottom:8px}.ev-karte{margin-bottom:12px}
 .gast{max-width:620px;margin:0 auto;padding:18px 14px 40px}
 .gast h1{font-size:22px;margin:4px 0 2px}.gast h2{font-size:15px;margin:18px 0 8px}
 .raster{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}.raster>span{grid-column:1/-1}
@@ -164,12 +177,20 @@ a.knopf{display:block;text-align:center;text-decoration:none;border-radius:8px;p
 .tag.an{background:var(--akzent);color:#fff;border-color:var(--akzent)}.tag.voll{opacity:.4}
 .tag .wt{font-size:11px;text-transform:uppercase}.tag .nr{font-size:18px;font-weight:700}
 .marke{font-size:11px;color:var(--leise);text-align:center;margin-top:28px}
+.gutschein{max-width:520px;margin:12px auto;border:1px solid #c9a96e;outline:6px double #c9a96e33;border-radius:6px;padding:28px 24px;text-align:center;background:#fffdf8;color:#1c1917}
+.gs-kopf{letter-spacing:.2em;font-size:11px;color:#8b6f3a}.gs-titel{font:400 34px Georgia,'Times New Roman',serif;margin:10px 0 2px}.gs-wert{font:600 40px Georgia,serif;color:#b91c1c;margin:4px 0 10px}
+.gs-fuer{font-size:16px;margin:6px 0}.gs-nachricht{font-style:italic;margin:10px auto;max-width:400px;white-space:pre-wrap}.gs-code{font:600 22px ui-monospace,Menlo,monospace;letter-spacing:.08em;border:1px dashed #a8a29e;display:inline-block;padding:6px 14px;margin:12px 0}
+.gs-fuss{font-size:11px;color:#57534e;line-height:1.5}
+@media print{#druck .gutschein{margin:40px auto;font-size:14px}}
 </style>
 </head>
 <body>
 <div id="wurzel"><div class="gast leise">Lädt …</div></div>
 <div id="hinweis" class="versteckt"></div>
-<script>window.SICHUAN_KONFIG = {"api":"https://sichuan5.wixsite.com/website-1/_functions/api","website":"https://sichuan5.wixsite.com/website-1","version":"202610180215"};</script>
+<script>window.SICHUAN_KONFIG = {"api":"https://sichuan5.wixsite.com/website-1/_functions/api","website":"https://sichuan5.wixsite.com/website-1","version":"202610182121"};</script>
+<script>/* QR Code Generator for JavaScript – Copyright (c) 2009 Kazuhiko Arase – MIT License (https://github.com/kazuhikoarase/qrcode-generator) */
+var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],f={},c=function(t,r){o=function(t){for(var r=new Array(t),e=0;e<t;e+=1){r[e]=new Array(t);for(var n=0;n<t;n+=1)r[e][n]=null}return r}(i=4*e+17),l(0,0),l(i-7,0),l(0,i-7),s(),h(),d(t,r),e>=7&&v(t),null==a&&(a=p(e,n,u)),w(a,r)},l=function(t,r){for(var e=-1;e<=7;e+=1)if(!(t+e<=-1||i<=t+e))for(var n=-1;n<=7;n+=1)r+n<=-1||i<=r+n||(o[t+e][r+n]=0<=e&&e<=6&&(0==n||6==n)||0<=n&&n<=6&&(0==e||6==e)||2<=e&&e<=4&&2<=n&&n<=4)},h=function(){for(var t=8;t<i-8;t+=1)null==o[t][6]&&(o[t][6]=t%2==0);for(var r=8;r<i-8;r+=1)null==o[6][r]&&(o[6][r]=r%2==0)},s=function(){for(var t=B.getPatternPosition(e),r=0;r<t.length;r+=1)for(var n=0;n<t.length;n+=1){var i=t[r],a=t[n];if(null==o[i][a])for(var u=-2;u<=2;u+=1)for(var f=-2;f<=2;f+=1)o[i+u][a+f]=-2==u||2==u||-2==f||2==f||0==u&&0==f}},v=function(t){for(var r=B.getBCHTypeNumber(e),n=0;n<18;n+=1){var a=!t&&1==(r>>n&1);o[Math.floor(n/3)][n%3+i-8-3]=a}for(n=0;n<18;n+=1){a=!t&&1==(r>>n&1);o[n%3+i-8-3][Math.floor(n/3)]=a}},d=function(t,r){for(var e=n<<3|r,a=B.getBCHTypeInfo(e),u=0;u<15;u+=1){var f=!t&&1==(a>>u&1);u<6?o[u][8]=f:u<8?o[u+1][8]=f:o[i-15+u][8]=f}for(u=0;u<15;u+=1){f=!t&&1==(a>>u&1);u<8?o[8][i-u-1]=f:u<9?o[8][15-u-1+1]=f:o[8][15-u-1]=f}o[i-8][8]=!t},w=function(t,r){for(var e=-1,n=i-1,a=7,u=0,f=B.getMaskFunction(r),c=i-1;c>0;c-=2)for(6==c&&(c-=1);;){for(var g=0;g<2;g+=1)if(null==o[n][c-g]){var l=!1;u<t.length&&(l=1==(t[u]>>>a&1)),f(n,c-g)&&(l=!l),o[n][c-g]=l,-1==(a-=1)&&(u+=1,a=7)}if((n+=e)<0||i<=n){n-=e,e=-e;break}}},p=function(t,r,e){for(var n=A.getRSBlocks(t,r),o=b(),i=0;i<e.length;i+=1){var a=e[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var u=0;for(i=0;i<n.length;i+=1)u+=n[i].dataCount;if(o.getLengthInBits()>8*u)throw"code length overflow. ("+o.getLengthInBits()+">"+8*u+")";for(o.getLengthInBits()+4<=8*u&&o.put(0,4);o.getLengthInBits()%8!=0;)o.putBit(!1);for(;!(o.getLengthInBits()>=8*u||(o.put(236,8),o.getLengthInBits()>=8*u));)o.put(17,8);return function(t,r){for(var e=0,n=0,o=0,i=new Array(r.length),a=new Array(r.length),u=0;u<r.length;u+=1){var f=r[u].dataCount,c=r[u].totalCount-f;n=Math.max(n,f),o=Math.max(o,c),i[u]=new Array(f);for(var g=0;g<i[u].length;g+=1)i[u][g]=255&t.getBuffer()[g+e];e+=f;var l=B.getErrorCorrectPolynomial(c),h=k(i[u],l.getLength()-1).mod(l);for(a[u]=new Array(l.getLength()-1),g=0;g<a[u].length;g+=1){var s=g+h.getLength()-a[u].length;a[u][g]=s>=0?h.getAt(s):0}}var v=0;for(g=0;g<r.length;g+=1)v+=r[g].totalCount;var d=new Array(v),w=0;for(g=0;g<n;g+=1)for(u=0;u<r.length;u+=1)g<i[u].length&&(d[w]=i[u][g],w+=1);for(g=0;g<o;g+=1)for(u=0;u<r.length;u+=1)g<a[u].length&&(d[w]=a[u][g],w+=1);return d}(o,n)};f.addData=function(t,r){var e=null;switch(r=r||"Byte"){case"Numeric":e=M(t);break;case"Alphanumeric":e=x(t);break;case"Byte":e=m(t);break;case"Kanji":e=L(t);break;default:throw"mode:"+r}u.push(e),a=null},f.isDark=function(t,r){if(t<0||i<=t||r<0||i<=r)throw t+","+r;return o[t][r]},f.getModuleCount=function(){return i},f.make=function(){if(e<1){for(var t=1;t<40;t++){for(var r=A.getRSBlocks(t,n),o=b(),i=0;i<u.length;i++){var a=u[i];o.put(a.getMode(),4),o.put(a.getLength(),B.getLengthInBits(a.getMode(),t)),a.write(o)}var g=0;for(i=0;i<r.length;i++)g+=r[i].dataCount;if(o.getLengthInBits()<=8*g)break}e=t}c(!1,function(){for(var t=0,r=0,e=0;e<8;e+=1){c(!0,e);var n=B.getLostPoint(f);(0==e||t>n)&&(t=n,r=e)}return r}())},f.createTableTag=function(t,r){t=t||2;var e="";e+='<table style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: "+(r=void 0===r?4*t:r)+"px;",e+='">',e+="<tbody>";for(var n=0;n<f.getModuleCount();n+=1){e+="<tr>";for(var o=0;o<f.getModuleCount();o+=1)e+='<td style="',e+=" border-width: 0px; border-style: none;",e+=" border-collapse: collapse;",e+=" padding: 0px; margin: 0px;",e+=" width: "+t+"px;",e+=" height: "+t+"px;",e+=" background-color: ",e+=f.isDark(n,o)?"#000000":"#ffffff",e+=";",e+='"/>';e+="</tr>"}return e+="</tbody>",e+="</table>"},f.createSvgTag=function(t,r,e,n){var o={};"object"==typeof arguments[0]&&(t=(o=arguments[0]).cellSize,r=o.margin,e=o.alt,n=o.title),t=t||2,r=void 0===r?4*t:r,(e="string"==typeof e?{text:e}:e||{}).text=e.text||null,e.id=e.text?e.id||"qrcode-description":null,(n="string"==typeof n?{text:n}:n||{}).text=n.text||null,n.id=n.text?n.id||"qrcode-title":null;var i,a,u,c,g=f.getModuleCount()*t+2*r,l="";for(c="l"+t+",0 0,"+t+" -"+t+",0 0,-"+t+"z ",l+='<svg version="1.1" xmlns="http://www.w3.org/2000/svg"',l+=o.scalable?"":' width="'+g+'px" height="'+g+'px"',l+=' viewBox="0 0 '+g+" "+g+'" ',l+=' preserveAspectRatio="xMinYMin meet"',l+=n.text||e.text?' role="img" aria-labelledby="'+y([n.id,e.id].join(" ").trim())+'"':"",l+=">",l+=n.text?'<title id="'+y(n.id)+'">'+y(n.text)+"</title>":"",l+=e.text?'<description id="'+y(e.id)+'">'+y(e.text)+"</description>":"",l+='<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>',l+='<path d="',a=0;a<f.getModuleCount();a+=1)for(u=a*t+r,i=0;i<f.getModuleCount();i+=1)f.isDark(a,i)&&(l+="M"+(i*t+r)+","+u+c);return l+='" stroke="transparent" fill="black"/>',l+="</svg>"},f.createDataURL=function(t,r){t=t||2,r=void 0===r?4*t:r;var e=f.getModuleCount()*t+2*r,n=r,o=e-r;return I(e,e,function(r,e){if(n<=r&&r<o&&n<=e&&e<o){var i=Math.floor((r-n)/t),a=Math.floor((e-n)/t);return f.isDark(a,i)?0:1}return 1})},f.createImgTag=function(t,r,e){t=t||2,r=void 0===r?4*t:r;var n=f.getModuleCount()*t+2*r,o="";return o+="<img",o+=' src="',o+=f.createDataURL(t,r),o+='"',o+=' width="',o+=n,o+='"',o+=' height="',o+=n,o+='"',e&&(o+=' alt="',o+=y(e),o+='"'),o+="/>"};var y=function(t){for(var r="",e=0;e<t.length;e+=1){var n=t.charAt(e);switch(n){case"<":r+="&lt;";break;case">":r+="&gt;";break;case"&":r+="&amp;";break;case'"':r+="&quot;";break;default:r+=n}}return r};return f.createASCII=function(t,r){if((t=t||1)<2)return function(t){t=void 0===t?2:t;var r,e,n,o,i,a=1*f.getModuleCount()+2*t,u=t,c=a-t,g={"██":"█","█ ":"▀"," █":"▄","  ":" "},l={"██":"▀","█ ":"▀"," █":" ","  ":" "},h="";for(r=0;r<a;r+=2){for(n=Math.floor((r-u)/1),o=Math.floor((r+1-u)/1),e=0;e<a;e+=1)i="█",u<=e&&e<c&&u<=r&&r<c&&f.isDark(n,Math.floor((e-u)/1))&&(i=" "),u<=e&&e<c&&u<=r+1&&r+1<c&&f.isDark(o,Math.floor((e-u)/1))?i+=" ":i+="█",h+=t<1&&r+1>=c?l[i]:g[i];h+="\n"}return a%2&&t>0?h.substring(0,h.length-a-1)+Array(a+1).join("▀"):h.substring(0,h.length-1)}(r);t-=1,r=void 0===r?2*t:r;var e,n,o,i,a=f.getModuleCount()*t+2*r,u=r,c=a-r,g=Array(t+1).join("██"),l=Array(t+1).join("  "),h="",s="";for(e=0;e<a;e+=1){for(o=Math.floor((e-u)/t),s="",n=0;n<a;n+=1)i=1,u<=n&&n<c&&u<=e&&e<c&&f.isDark(o,Math.floor((n-u)/t))&&(i=0),s+=i?g:l;for(o=0;o<t;o+=1)h+=s+"\n"}return h.substring(0,h.length-1)},f.renderTo2dContext=function(t,r){r=r||2;for(var e=f.getModuleCount(),n=0;n<e;n++)for(var o=0;o<e;o++)t.fillStyle=f.isDark(n,o)?"black":"white",t.fillRect(n*r,o*r,r,r)},f};t.stringToBytes=(t.stringToBytesFuncs={default:function(t){for(var r=[],e=0;e<t.length;e+=1){var n=t.charCodeAt(e);r.push(255&n)}return r}}).default,t.createStringToBytes=function(t,r){var e=function(){for(var e=S(t),n=function(){var t=e.read();if(-1==t)throw"eof";return t},o=0,i={};;){var a=e.read();if(-1==a)break;var u=n(),f=n()<<8|n();i[String.fromCharCode(a<<8|u)]=f,o+=1}if(o!=r)throw o+" != "+r;return i}(),n="?".charCodeAt(0);return function(t){for(var r=[],o=0;o<t.length;o+=1){var i=t.charCodeAt(o);if(i<128)r.push(i);else{var a=e[t.charAt(o)];"number"==typeof a?(255&a)==a?r.push(a):(r.push(a>>>8),r.push(255&a)):r.push(n)}}return r}};var r,e,n,o,i,a=1,u=2,f=4,c=8,g={L:1,M:0,Q:3,H:2},l=0,h=1,s=2,v=3,d=4,w=5,p=6,y=7,B=(r=[[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90],[6,28,50,72,94],[6,26,50,74,98],[6,30,54,78,102],[6,28,54,80,106],[6,32,58,84,110],[6,30,58,86,114],[6,34,62,90,118],[6,26,50,74,98,122],[6,30,54,78,102,126],[6,26,52,78,104,130],[6,30,56,82,108,134],[6,34,60,86,112,138],[6,30,58,86,114,142],[6,34,62,90,118,146],[6,30,54,78,102,126,150],[6,24,50,76,102,128,154],[6,28,54,80,106,132,158],[6,32,58,84,110,136,162],[6,26,54,82,110,138,166],[6,30,58,86,114,142,170]],e=1335,n=7973,i=function(t){for(var r=0;0!=t;)r+=1,t>>>=1;return r},(o={}).getBCHTypeInfo=function(t){for(var r=t<<10;i(r)-i(e)>=0;)r^=e<<i(r)-i(e);return 21522^(t<<10|r)},o.getBCHTypeNumber=function(t){for(var r=t<<12;i(r)-i(n)>=0;)r^=n<<i(r)-i(n);return t<<12|r},o.getPatternPosition=function(t){return r[t-1]},o.getMaskFunction=function(t){switch(t){case l:return function(t,r){return(t+r)%2==0};case h:return function(t,r){return t%2==0};case s:return function(t,r){return r%3==0};case v:return function(t,r){return(t+r)%3==0};case d:return function(t,r){return(Math.floor(t/2)+Math.floor(r/3))%2==0};case w:return function(t,r){return t*r%2+t*r%3==0};case p:return function(t,r){return(t*r%2+t*r%3)%2==0};case y:return function(t,r){return(t*r%3+(t+r)%2)%2==0};default:throw"bad maskPattern:"+t}},o.getErrorCorrectPolynomial=function(t){for(var r=k([1],0),e=0;e<t;e+=1)r=r.multiply(k([1,C.gexp(e)],0));return r},o.getLengthInBits=function(t,r){if(1<=r&&r<10)switch(t){case a:return 10;case u:return 9;case f:case c:return 8;default:throw"mode:"+t}else if(r<27)switch(t){case a:return 12;case u:return 11;case f:return 16;case c:return 10;default:throw"mode:"+t}else{if(!(r<41))throw"type:"+r;switch(t){case a:return 14;case u:return 13;case f:return 16;case c:return 12;default:throw"mode:"+t}}},o.getLostPoint=function(t){for(var r=t.getModuleCount(),e=0,n=0;n<r;n+=1)for(var o=0;o<r;o+=1){for(var i=0,a=t.isDark(n,o),u=-1;u<=1;u+=1)if(!(n+u<0||r<=n+u))for(var f=-1;f<=1;f+=1)o+f<0||r<=o+f||0==u&&0==f||a==t.isDark(n+u,o+f)&&(i+=1);i>5&&(e+=3+i-5)}for(n=0;n<r-1;n+=1)for(o=0;o<r-1;o+=1){var c=0;t.isDark(n,o)&&(c+=1),t.isDark(n+1,o)&&(c+=1),t.isDark(n,o+1)&&(c+=1),t.isDark(n+1,o+1)&&(c+=1),0!=c&&4!=c||(e+=3)}for(n=0;n<r;n+=1)for(o=0;o<r-6;o+=1)t.isDark(n,o)&&!t.isDark(n,o+1)&&t.isDark(n,o+2)&&t.isDark(n,o+3)&&t.isDark(n,o+4)&&!t.isDark(n,o+5)&&t.isDark(n,o+6)&&(e+=40);for(o=0;o<r;o+=1)for(n=0;n<r-6;n+=1)t.isDark(n,o)&&!t.isDark(n+1,o)&&t.isDark(n+2,o)&&t.isDark(n+3,o)&&t.isDark(n+4,o)&&!t.isDark(n+5,o)&&t.isDark(n+6,o)&&(e+=40);var g=0;for(o=0;o<r;o+=1)for(n=0;n<r;n+=1)t.isDark(n,o)&&(g+=1);return e+=Math.abs(100*g/r/r-50)/5*10},o),C=function(){for(var t=new Array(256),r=new Array(256),e=0;e<8;e+=1)t[e]=1<<e;for(e=8;e<256;e+=1)t[e]=t[e-4]^t[e-5]^t[e-6]^t[e-8];for(e=0;e<255;e+=1)r[t[e]]=e;var n={glog:function(t){if(t<1)throw"glog("+t+")";return r[t]},gexp:function(r){for(;r<0;)r+=255;for(;r>=256;)r-=255;return t[r]}};return n}();function k(t,r){if(void 0===t.length)throw t.length+"/"+r;var e=function(){for(var e=0;e<t.length&&0==t[e];)e+=1;for(var n=new Array(t.length-e+r),o=0;o<t.length-e;o+=1)n[o]=t[o+e];return n}(),n={getAt:function(t){return e[t]},getLength:function(){return e.length},multiply:function(t){for(var r=new Array(n.getLength()+t.getLength()-1),e=0;e<n.getLength();e+=1)for(var o=0;o<t.getLength();o+=1)r[e+o]^=C.gexp(C.glog(n.getAt(e))+C.glog(t.getAt(o)));return k(r,0)},mod:function(t){if(n.getLength()-t.getLength()<0)return n;for(var r=C.glog(n.getAt(0))-C.glog(t.getAt(0)),e=new Array(n.getLength()),o=0;o<n.getLength();o+=1)e[o]=n.getAt(o);for(o=0;o<t.getLength();o+=1)e[o]^=C.gexp(C.glog(t.getAt(o))+r);return k(e,0).mod(t)}};return n}var A=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12,7,37,13],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],r=function(t,r){var e={};return e.totalCount=t,e.dataCount=r,e},e={};return e.getRSBlocks=function(e,n){var o=function(r,e){switch(e){case g.L:return t[4*(r-1)+0];case g.M:return t[4*(r-1)+1];case g.Q:return t[4*(r-1)+2];case g.H:return t[4*(r-1)+3];default:return}}(e,n);if(void 0===o)throw"bad rs block @ typeNumber:"+e+"/errorCorrectionLevel:"+n;for(var i=o.length/3,a=[],u=0;u<i;u+=1)for(var f=o[3*u+0],c=o[3*u+1],l=o[3*u+2],h=0;h<f;h+=1)a.push(r(c,l));return a},e}(),b=function(){var t=[],r=0,e={getBuffer:function(){return t},getAt:function(r){var e=Math.floor(r/8);return 1==(t[e]>>>7-r%8&1)},put:function(t,r){for(var n=0;n<r;n+=1)e.putBit(1==(t>>>r-n-1&1))},getLengthInBits:function(){return r},putBit:function(e){var n=Math.floor(r/8);t.length<=n&&t.push(0),e&&(t[n]|=128>>>r%8),r+=1}};return e},M=function(t){var r=a,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+2<r.length;)t.put(o(r.substring(n,n+3)),10),n+=3;n<r.length&&(r.length-n==1?t.put(o(r.substring(n,n+1)),4):r.length-n==2&&t.put(o(r.substring(n,n+2)),7))}},o=function(t){for(var r=0,e=0;e<t.length;e+=1)r=10*r+i(t.charAt(e));return r},i=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);throw"illegal char :"+t};return n},x=function(t){var r=u,e=t,n={getMode:function(){return r},getLength:function(t){return e.length},write:function(t){for(var r=e,n=0;n+1<r.length;)t.put(45*o(r.charAt(n))+o(r.charAt(n+1)),11),n+=2;n<r.length&&t.put(o(r.charAt(n)),6)}},o=function(t){if("0"<=t&&t<="9")return t.charCodeAt(0)-"0".charCodeAt(0);if("A"<=t&&t<="Z")return t.charCodeAt(0)-"A".charCodeAt(0)+10;switch(t){case" ":return 36;case"$":return 37;case"%":return 38;case"*":return 39;case"+":return 40;case"-":return 41;case".":return 42;case"/":return 43;case":":return 44;default:throw"illegal char :"+t}};return n},m=function(r){var e=f,n=t.stringToBytes(r),o={getMode:function(){return e},getLength:function(t){return n.length},write:function(t){for(var r=0;r<n.length;r+=1)t.put(n[r],8)}};return o},L=function(r){var e=c,n=t.stringToBytesFuncs.SJIS;if(!n)throw"sjis not supported.";!function(){var t=n("友");if(2!=t.length||38726!=(t[0]<<8|t[1]))throw"sjis not supported."}();var o=n(r),i={getMode:function(){return e},getLength:function(t){return~~(o.length/2)},write:function(t){for(var r=o,e=0;e+1<r.length;){var n=(255&r[e])<<8|255&r[e+1];if(33088<=n&&n<=40956)n-=33088;else{if(!(57408<=n&&n<=60351))throw"illegal char at "+(e+1)+"/"+n;n-=49472}n=192*(n>>>8&255)+(255&n),t.put(n,13),e+=2}if(e<r.length)throw"illegal char at "+(e+1)}};return i},D=function(){var t=[],r={writeByte:function(r){t.push(255&r)},writeShort:function(t){r.writeByte(t),r.writeByte(t>>>8)},writeBytes:function(t,e,n){e=e||0,n=n||t.length;for(var o=0;o<n;o+=1)r.writeByte(t[o+e])},writeString:function(t){for(var e=0;e<t.length;e+=1)r.writeByte(t.charCodeAt(e))},toByteArray:function(){return t},toString:function(){var r="";r+="[";for(var e=0;e<t.length;e+=1)e>0&&(r+=","),r+=t[e];return r+="]"}};return r},S=function(t){var r=t,e=0,n=0,o=0,i={read:function(){for(;o<8;){if(e>=r.length){if(0==o)return-1;throw"unexpected end of file./"+o}var t=r.charAt(e);if(e+=1,"="==t)return o=0,-1;t.match(/^\s$/)||(n=n<<6|a(t.charCodeAt(0)),o+=6)}var i=n>>>o-8&255;return o-=8,i}},a=function(t){if(65<=t&&t<=90)return t-65;if(97<=t&&t<=122)return t-97+26;if(48<=t&&t<=57)return t-48+52;if(43==t)return 62;if(47==t)return 63;throw"c:"+t};return i},I=function(t,r,e){for(var n=function(t,r){var e=t,n=r,o=new Array(t*r),i={setPixel:function(t,r,n){o[r*e+t]=n},write:function(t){t.writeString("GIF87a"),t.writeShort(e),t.writeShort(n),t.writeByte(128),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(0),t.writeByte(255),t.writeByte(255),t.writeByte(255),t.writeString(","),t.writeShort(0),t.writeShort(0),t.writeShort(e),t.writeShort(n),t.writeByte(0);var r=a(2);t.writeByte(2);for(var o=0;r.length-o>255;)t.writeByte(255),t.writeBytes(r,o,255),o+=255;t.writeByte(r.length-o),t.writeBytes(r,o,r.length-o),t.writeByte(0),t.writeString(";")}},a=function(t){for(var r=1<<t,e=1+(1<<t),n=t+1,i=u(),a=0;a<r;a+=1)i.add(String.fromCharCode(a));i.add(String.fromCharCode(r)),i.add(String.fromCharCode(e));var f,c,g,l=D(),h=(f=l,c=0,g=0,{write:function(t,r){if(t>>>r!=0)throw"length over";for(;c+r>=8;)f.writeByte(255&(t<<c|g)),r-=8-c,t>>>=8-c,g=0,c=0;g|=t<<c,c+=r},flush:function(){c>0&&f.writeByte(g)}});h.write(r,n);var s=0,v=String.fromCharCode(o[s]);for(s+=1;s<o.length;){var d=String.fromCharCode(o[s]);s+=1,i.contains(v+d)?v+=d:(h.write(i.indexOf(v),n),i.size()<4095&&(i.size()==1<<n&&(n+=1),i.add(v+d)),v=d)}return h.write(i.indexOf(v),n),h.write(e,n),h.flush(),l.toByteArray()},u=function(){var t={},r=0,e={add:function(n){if(e.contains(n))throw"dup key:"+n;t[n]=r,r+=1},size:function(){return r},indexOf:function(r){return t[r]},contains:function(r){return void 0!==t[r]}};return e};return i}(t,r),o=0;o<r;o+=1)for(var i=0;i<t;i+=1)n.setPixel(i,o,e(i,o));var a=D();n.write(a);for(var u=function(){var t=0,r=0,e=0,n="",o={},i=function(t){n+=String.fromCharCode(a(63&t))},a=function(t){if(t<0);else{if(t<26)return 65+t;if(t<52)return t-26+97;if(t<62)return t-52+48;if(62==t)return 43;if(63==t)return 47}throw"n:"+t};return o.writeByte=function(n){for(t=t<<8|255&n,r+=8,e+=1;r>=6;)i(t>>>r-6),r-=6},o.flush=function(){if(r>0&&(i(t<<6-r),t=0,r=0),e%3!=0)for(var o=3-e%3,a=0;a<o;a+=1)n+="="},o.toString=function(){return n},o}(),f=a.toByteArray(),c=0;c<f.length;c+=1)u.writeByte(f[c]);return u.flush(),"data:image/gif;base64,"+u};return t}();qrcode.stringToBytesFuncs["UTF-8"]=function(t){return function(t){for(var r=[],e=0;e<t.length;e++){var n=t.charCodeAt(e);n<128?r.push(n):n<2048?r.push(192|n>>6,128|63&n):n<55296||n>=57344?r.push(224|n>>12,128|n>>6&63,128|63&n):(e++,n=65536+((1023&n)<<10|1023&t.charCodeAt(e)),r.push(240|n>>18,128|n>>12&63,128|n>>6&63,128|63&n))}return r}(t)},function(t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports&&(module.exports=t())}(function(){return qrcode});
+</script>
 <script>
 'use strict';
 /* ---------- Brücke zur Wix-Seite ---------- */
@@ -212,7 +233,7 @@ window.addEventListener('message', (e) => {
 function seiteOeffnen(ziel) {
   if (!ALLEIN) { window.parent.postMessage({ typ: 'navigieren', ziel }, '*'); return; }
   const seiten = (SITZUNG && SITZUNG.seiten) || {};
-  const pfad = ziel === '/reservieren' ? (seiten.buchung || ziel) : ziel.replace(/^\/meine-reservierung/, seiten.gast || '/meine-reservierung');
+  const pfad = ziel.replace(/^\/reservieren/, seiten.buchung || '/reservieren').replace(/^\/meine-reservierung/, seiten.gast || '/meine-reservierung');
   window.open(BASIS + pfad, '_blank', 'noopener');
 }
 function urlOeffnen(url) {
@@ -264,8 +285,11 @@ if (ALLEIN) {
  * angezeigten Text anhand des Wörterbuchs. Unbekanntes bleibt Deutsch.
  * Wahl pro Gerät (localStorage). Gäste: Browsersprache als Vorgabe.
  */
-const ZH = {"Feedback":"反馈","Herzlichen Dank!":"衷心感谢！","Es freut uns sehr, dass es Ihnen geschmeckt hat.":"很高兴您用餐愉快。","Würden Sie Ihre Erfahrung auch auf Google teilen? Das hilft uns sehr.":"您愿意在 Google 上分享您的体验吗？这对我们帮助很大。","Auf Google bewerten":"在 Google 上评价","Danke für Ihre ehrliche Rückmeldung. Wir nehmen sie ernst und melden uns gegebenenfalls persönlich bei Ihnen.":"感谢您的真诚反馈。我们会认真对待，必要时会亲自与您联系。","Wie war Ihr Besuch?":"您这次用餐体验如何？","Wie zufrieden waren Sie insgesamt?":"您总体满意吗？","Essen":"菜品","Service":"服务","Ambiente":"环境","Möchten Sie uns noch etwas sagen? (optional)":"还有什么想告诉我们的吗？（可选）","Was war besonders gut – oder was sollen wir besser machen?":"哪些特别好——或者我们哪里需要改进？","Feedback senden":"提交反馈","Feedback ist nach Ihrem Besuch möglich.":"用餐后才能提交反馈。","Durchschnitt":"平均","Feedbacks":"条反馈","Kritisch (1–3 ★)":"差评（1–3 ★）","Zu Google geschickt":"引导至 Google","Offen (kritisch)":"待处理（差评）","Erledigt":"已处理","Noch kein Feedback in diesem Zeitraum.":"此期间暂无反馈。","Feedback-Seite öffnen":"打开反馈页面","Team-Notiz (z. B. angerufen, Gutschein angeboten)":"团队备注（例如：已致电、已提供代金券）","Bitte 1 bis 5 Sterne vergeben.":"请给出 1 到 5 颗星。","Danke – Ihr Feedback liegt uns schon vor.":"谢谢——我们已收到您的反馈。","Feedback ist nach dem Besuch möglich.":"用餐后才能提交反馈。","Lädt …":"加载中 …","lädt …":"加载中 …","Prüfe …":"验证中 …","Team-App · PIN eingeben":"员工应用 · 输入 PIN","OK":"确定","PIN":"PIN","PIN stimmt nicht.":"PIN 不正确。","Bitte neu anmelden.":"请重新登录。","Keine Internetverbindung.":"没有网络连接。","Keine Antwort vom Server.":"服务器无响应。","Unbekannter Fehler.":"未知错误。","Abmelden":"退出登录","Auf diesem Gerät abmelden?":"在此设备上退出登录？","Heute":"今天","Vortag":"前一天","Folgetag":"后一天","Ganzer Tag":"全天","Mittag":"午餐","Abend":"晚餐","Liste":"列表","Timeline":"时间轴","Tischplan":"餐桌图","Suchen …":"搜索 …","Walk-in":"现场客人","+ Warteliste":"+ 候补","+ Reservierung":"+ 预订","Testdaten einrichten":"创建测试数据","Testdaten löschen":"删除测试数据","Warteliste jetzt prüfen":"立即检查候补名单","Buchungswidget öffnen":"打开预订页面","Team & PINs":"团队与 PIN","Alle":"全部","Kommend":"即将到达","Stornos":"已取消","Pers.":"人","Reservierungen":"预订","Gast":"客人","Zeit":"时间","Personen":"人数","Tisch":"餐桌","Tische":"餐桌","Status":"状态","Risiko":"风险","Quelle":"来源","Notiz":"备注","Tags":"标签","Verlauf":"记录","Warteliste":"候补","Angefragt":"待确认","Bestätigt":"已确认","Rückbestätigt":"已再次确认","Angebot offen":"待接受","Wartet drinnen":"店内等候","Am Tisch":"已入座","am Tisch":"已入座","Abgeschlossen":"已完成","Vorzeitig weg":"提前离开","Storniert":"已取消","Storniert.":"已取消。","Spät storniert":"迟取消","spät storniert":"迟取消","No-Show":"未到","No-Shows":"未到次数","Bestätigen":"确认","Ist da / am Tisch":"已到 / 入座","Abschliessen":"结账完成","Vorzeitig gegangen":"提前离开","Stornieren":"取消","Zurück auf Anfrage":"改回待确认","Neu":"新客","Gut":"良好","Sehr gut":"很好","Exzellent":"优秀","Neue Reservierung":"新预订","Datum":"日期","Uhrzeit":"时间","Freie Zeiten":"可选时间","Telefon":"电话","Vorname":"名","Nachname":"姓","Vorname *":"名 *","Nachname *":"姓 *","Mobilnummer *":"手机号 *","E-Mail":"电子邮件","Name":"姓名","Name (optional)":"姓名（可选）","Telefon (optional, fürs Gastprofil)":"电话（可选，用于客人档案）","Wünsche":"需求","Wünsche (Allergien, Anlass …)":"需求（过敏、场合 …）","Interne Notiz":"内部备注","Tags (Komma)":"标签（逗号分隔）","geburtstag, vip":"生日, vip","geburtstag, vip, geschaeftsessen":"生日, vip, 商务宴请","Vermittler":"介绍人","Hotel, Concierge, Firma":"酒店、礼宾、公司","Online":"网上","Google":"Google","Abbrechen":"取消","Speichern":"保存","Schliessen":"关闭","Anlegen":"创建","Ändern":"修改","Platzieren":"安排入座","Annehmen":"接受","Nein danke":"不用了，谢谢","Als Serie wiederholen":"按周重复","Wie viele Termine insgesamt (wöchentlich, gleiche Uhrzeit)?":"总共几次（每周，同一时间）？","Termine angelegt":"个预订已创建","Umbuchen (Zeit · Personen · Tische)":"改订（时间 · 人数 · 餐桌）","Umgebucht":"已改订","Neue Zeit vorschlagen":"建议新时间","Vorschlagen":"建议","Vorschlag verschickt":"建议已发送","Gültig für (Stunden)":"有效期（小时）","🔒 Tisch fixieren":"🔒 固定餐桌","🔓 Tisch freigeben":"🔓 解除固定","Tisch fixiert":"餐桌已固定","Gastlink öffnen":"打开客人链接","Gastseite (Test)":"客人页面（测试）","ersetzt im Test die SMS":"测试中代替短信","Noch keine Einträge.":"暂无记录。","Notiz gespeichert":"备注已保存","Tagesnotiz fürs Team":"今日团队备注","z. B. Küche: keine Ente heute · Gruppe Müller VIP":"例如：厨房今天没有鸭子 · Müller 团体 VIP","Online-Buchung":"网上预订","Mittag voll":"午餐已满","Abend voll":"晚餐已满","Ganzer Tag voll":"全天已满","Wieder öffnen":"重新开放","Online gesperrt":"网上预订已关闭","Online wieder offen":"网上预订已重新开放","„Voll\" sperrt nur das Widget. Das Team kann weiter buchen.":"“已满”只关闭网上预订，团队仍可预订。","Offene Anfragen":"待处理请求","Ohne Tisch:":"未分配餐桌：","Tischkonflikt(e)":"餐桌冲突","Klick auf eine Reservierung öffnet Details, Statusknöpfe und Verlauf.":"点击预订可查看详情、状态按钮和记录。","Keine Reservierungen für diese Auswahl.":"此筛选下没有预订。","⋯ → Testdaten einrichten":"⋯ → 创建测试数据","No-Show-Risiko":"未到风险","Besuche":"到访次数","Allergie:":"过敏：","✓ Bestehender Gast":"✓ 老客人","⏰ Überfällig":"⏰ 已超时","Überfällig – No-Show prüfen":"已超时 – 请检查是否未到","Keine Rückbestätigung – bitte anrufen":"未再次确认 – 请致电","kommt in ≤30 min":"≤30 分钟内到达","💬 Gast:":"💬 客人：","(aus Warteliste)":"（来自候补名单）","ohne freien Tisch":"无空桌","Walk-in an Tisch":"现场客人入座餐桌","Gast ohne Reservierung, sitzt ab jetzt.":"无预订客人，现在入座。","Gerade kein Tisch frei":"目前没有空桌","Auf der Warteliste":"已加入候补名单","Kein passender Platz für die Warteliste frei":"候补名单暂无合适空位","Angebot(e) an die Warteliste verschickt":"条邀请已发送给候补客人","Richte Testdaten ein …":"正在创建测试数据 …","Alle Testbuchungen und Testgäste löschen?":"删除所有测试预订和测试客人？","Gelöscht:":"已删除：","Eingerichtet:":"已创建：","Buchungen":"个预订","Wunschzeit":"希望时间","Ungefähre Wunschzeit":"大约希望的时间","Wie viele Personen?":"几位？","Wann?":"什么时候？","Personenzahl":"人数","Personenzahl verringern":"减少人数","Jede Person meldet sich in der Team-App mit ihrer eigenen PIN an (4–8 Ziffern, im Team eindeutig). App-Adresse:":"每位员工用自己的 PIN 登录员工应用（4–8 位数字，团队内唯一）。应用地址：","Neue Person":"新员工","Rolle":"角色","Team":"员工","Admin":"管理员","Neue PIN":"新 PIN","Neue PIN (4–8 Ziffern):":"新 PIN（4–8 位数字）：","Sperren":"停用","Freigeben":"启用","aktiv":"启用","gesperrt":"已停用","Gesperrt":"已停用","Freigegeben":"已启用","Angelegt":"已创建","PIN geändert – alte Anmeldungen sind beendet":"PIN 已更改 – 旧登录已失效","Noch niemand angelegt. Leg zuerst dich selbst als Admin an.":"还没有员工。请先把自己添加为管理员。","Restaurant Sichuan":"四川饭店","Restaurant Sichuan · Wien":"四川饭店 · 维也纳","四川 Sichuan":"四川饭店","Eigenes Reservierungssystem · Test":"自有预订系统 · 测试","Tisch reservieren":"预订餐桌","Reservieren ·":"预订 ·","Ihre Daten":"您的信息","Ab 9 Personen nehmen wir Ihre Reservierung gerne telefonisch entgegen: 01 263 37 13":"9 人以上请致电预订：01 263 37 13","Auf die Warteliste":"加入候补名单","Auf die Warteliste setzen":"加入候补名单","auf die Warteliste?":"加入候补名单？","Wird ein Tisch frei, bekommen Sie ihn per SMS angeboten – reserviert nur für Sie.":"有空桌时我们会通过短信通知您，并为您保留。","Wird ein Tisch frei, bekommen Sie eine SMS mit einem Link – der Tisch ist dann kurz nur für Sie reserviert.":"有空桌时您会收到带链接的短信 – 餐桌会为您短暂保留。","Warteliste – Ihre Daten":"候补名单 – 您的信息","Sie stehen auf der Warteliste":"您已在候补名单上","Danke für Ihre Anfrage!":"感谢您的预订请求！","Wir bestätigen in Kürze.":"我们会尽快确认。","Die Bestätigung kommt per SMS.":"确认将通过短信发送。","Ihr Tisch ist reserviert":"您的餐桌已预订","Danke! Wir freuen uns auf Sie.":"谢谢！期待您的光临。","Danke! Wir haben Ihren Tisch fest eingeplant.":"谢谢！您的餐桌已确定。","Wunderbar – Ihr Tisch ist bestätigt.":"太好了 – 您的餐桌已确认。","Schade. Wir geben den Tisch weiter.":"很遗憾，我们会把餐桌留给其他客人。","Ihre Reservierung":"您的预订","Reservierung ändern":"修改预订","Reservierung ansehen oder ändern":"查看或修改预订","Reservierung wirklich stornieren?":"确定要取消预订吗？","Die Frist ist abgelaufen – die Absage zählt als spät. Trotzdem stornieren?":"已超过期限 – 此次取消将记为迟取消。仍要取消吗？","Gespeichert – Sie bekommen eine neue Bestätigung.":"已保存 – 您会收到新的确认。","Ich komme ✓":"我会来 ✓","Für Sie reserviert bis":"为您保留至","Angebot gültig bis":"邀请有效至","Ihr Termin ist in weniger als":"您的预订时间不足","Stunden.":"小时。","Uhr":"点","Uhr.":"点。","Uhr ·":"点 ·","Hallo":"您好","bis":"至","keine":"无","reserviert":"已预订","Link ungültig":"链接无效","Link unvollständig":"链接不完整","Bitte öffnen Sie den Link aus Ihrer SMS oder E-Mail.":"请打开短信或电子邮件中的链接。","← Übersicht":"← 概览","Im Service":"用餐中","Offen":"待处理","Pers. Der Gast bekommt einen Link und kann annehmen oder ablehnen. Der Tisch ist so lange für ihn reserviert.":"人。客人会收到链接，可以接受或拒绝。在此期间餐桌为其保留。","An diesem Tag ist leider alles vergeben.":"很抱歉，这一天已全部订满。","An diesem Tag ist Ruhetag.":"这一天是休息日。","Bitte eine gültige Personenanzahl angeben.":"请输入有效的人数。","Bitte einen Namen eingeben.":"请输入姓名。","Der Tisch wurde gerade eben vergeben. Bitte eine andere Zeit wählen.":"这张桌子刚刚被订走了，请选择其他时间。","Der übergebene Zeitpunkt ist ungültig.":"时间无效。","Diese Funktion ist dem Team vorbehalten.":"此功能仅限员工使用。","Diese PIN ist schon vergeben.":"此 PIN 已被使用。","Diese Reservierung kann nicht mehr bestätigt werden.":"此预订无法再确认。","Diese Reservierung kann online nicht mehr geändert werden. Bitte rufen Sie uns an.":"此预订无法再在网上修改，请致电我们。","Diese Reservierung kann online nicht mehr storniert werden.":"此预订无法再在网上取消。","Dieser Link ist ungültig oder abgelaufen.":"此链接无效或已过期。","Dieses Angebot ist leider abgelaufen.":"很抱歉，此邀请已过期。","Für die gewünschte Änderung ist kein passender Tisch frei.":"没有适合此修改的空桌。","Für diesen Zeitpunkt ist kein passender Tisch mehr frei.":"此时间已没有合适的空桌。","Für so kurzfristig führen wir keine Warteliste — bitte rufen Sie uns an.":"时间太近无法候补 — 请致电我们。","Mindestens ein aktiver Admin muss bleiben.":"至少需要保留一名启用的管理员。","Mitglied nicht gefunden.":"找不到该员工。","Nur für Admins.":"仅限管理员。","Reservierung nicht gefunden.":"找不到该预订。","So kurzfristig können wir online nicht umbuchen. Bitte rufen Sie uns an.":"时间太近无法在网上改订，请致电我们。","Die PIN darf nur aus Ziffern bestehen.":"PIN 只能由数字组成。","Die PIN muss 4–8 Ziffern haben.":"PIN 必须是 4–8 位数字。","Diese PIN ist zu leicht zu erraten.":"此 PIN 太容易被猜到。","Gerade kein Tisch frei.":"目前没有空桌。","Sprache":"语言","Eintragen":"登记","Gespeichert":"已保存","Innen":"室内","Nichts frei":"没有空位","nichts frei":"没有空位","Person":"人","Reservieren":"预订","Reserviert":"已预订","System":"系统","Terrasse":"露台","Von der Warteliste nehmen":"从候补名单移除","walkin":"现场客人","telefon":"电话","online":"网上","google":"Google","Geburtstag":"生日","Ankünfte":"到店","Ganzer Service":"整个餐段","Zeitpunkt":"时间点","+1 weitere":"+1 更多","Gäste":"客人","Statistik":"统计","Tagesliste drucken":"打印当日列表","✎ Plan bearbeiten":"✎ 编辑餐桌图","Plan bearbeiten":"编辑餐桌图","+ Tisch":"+ 餐桌","+ Deko …":"+ 装饰 …","+ Bereich":"+ 区域","Raster":"网格","Verwerfen":"放弃","Änderungen verwerfen?":"放弃修改？","Tischplan gespeichert":"餐桌图已保存","Wand":"墙","Bar / Theke":"吧台","Pflanze":"植物","Beschriftung":"文字标签","Tür / Durchgang":"门 / 通道","Nummer":"编号","Min. Pers.":"最少人数","Max. Pers.":"最多人数","Form":"形状","Eckig":"方形","Rund":"圆形","Kombinierbar mit (Nummern, Komma)":"可拼桌（编号，逗号分隔）","Priorität (kleiner = zuerst vergeben)":"优先级（越小越先分配）","Nur manuell zuweisbar ✋":"仅手动分配 ✋","Aktiv (buchbar)":"启用（可预订）","Bereich":"区域","Breite":"宽度","Höhe":"高度","Drehung":"旋转","Duplizieren":"复制","Entfernen":"删除","Ohne Tisch":"未分配餐桌","Mit Tisch":"已分配餐桌","Keine Reservierungen.":"没有预订。","Keine Tische in diesem Bereich.":"此区域没有餐桌。","Gastprofil":"客人档案","Alle Details":"全部详情","Reserviert via":"预订渠道","Reserviert am":"预订于","keine Nummer":"无号码","keine E-Mail":"无电子邮件","Website":"网站","Import":"导入","Walk-in hier":"现场客人入座此桌","in diesem Service frei":"本餐段空闲","heute":"今天","gestern":"昨天","Stammgäste (3+)":"常客（3次以上）","Mit No-Show":"有未到记录","Allergien":"过敏","Newsletter-OK":"同意接收资讯","Name A–Z":"姓名 A–Z","Meiste Besuche":"到访最多","Neueste":"最新","Name, Telefon oder E-Mail …":"姓名、电话或电子邮件 …","Kontakt":"联系方式","Stufe":"等级","Allergien / Unverträglichkeiten":"过敏 / 不耐受","Vorlieben (Tisch, Speisen, Getränke …)":"偏好（餐桌、菜品、饮品 …）","Newsletter / Angebote erlaubt":"允许发送资讯 / 优惠","Deutsch":"德语","Keine.":"无。","Auslastung":"上座率","No-Show-Quote":"未到率","Storno-Quote":"取消率","Ø Gruppe":"平均人数","Ø Vorlauf":"平均提前天数","Verschiedene Gäste":"不同客人","zwischen Buchung und Besuch":"预订到用餐之间","2 Services pro Tag":"每天 2 个餐段","Kanäle":"渠道","Ø Gäste je Wochentag":"每个工作日平均客人","Ankünfte nach Uhrzeit":"按时间到店","Meistgebuchte Tische":"最常预订的餐桌","Gäste pro Tag":"每日客人","Keine Daten.":"没有数据。","1 Jahr":"1 年","Wo möchten Sie sitzen?":"您想坐在哪里？","Egal":"都可以","Drinnen":"室内","Rückgängig":"撤销","auf einen Tisch ziehen":"拖到餐桌上","Dazunehmen":"加桌","Trotzdem":"仍然"};
+const ZH = {"Lädt …":"加载中 …","lädt …":"加载中 …","Prüfe …":"验证中 …","Team-App · PIN eingeben":"员工应用 · 输入 PIN","OK":"确定","PIN":"PIN","PIN stimmt nicht.":"PIN 不正确。","Bitte neu anmelden.":"请重新登录。","Keine Internetverbindung.":"没有网络连接。","Keine Antwort vom Server.":"服务器无响应。","Unbekannter Fehler.":"未知错误。","Abmelden":"退出登录","Auf diesem Gerät abmelden?":"在此设备上退出登录？","Heute":"今天","Vortag":"前一天","Folgetag":"后一天","Ganzer Tag":"全天","Mittag":"午餐","Abend":"晚餐","Liste":"列表","Timeline":"时间轴","Tischplan":"餐桌图","Suchen …":"搜索 …","Walk-in":"现场客人","+ Warteliste":"+ 候补","+ Reservierung":"+ 预订","Testdaten einrichten":"创建测试数据","Testdaten löschen":"删除测试数据","Warteliste jetzt prüfen":"立即检查候补名单","Buchungswidget öffnen":"打开预订页面","Team & PINs":"团队与 PIN","Alle":"全部","Kommend":"即将到达","Stornos":"已取消","Pers.":"人","Reservierungen":"预订","Gast":"客人","Zeit":"时间","Personen":"人数","Tisch":"餐桌","Tische":"餐桌","Status":"状态","Risiko":"风险","Quelle":"来源","Notiz":"备注","Tags":"标签","Verlauf":"记录","Warteliste":"候补","Angefragt":"待确认","Bestätigt":"已确认","Rückbestätigt":"已再次确认","Angebot offen":"待接受","Wartet drinnen":"店内等候","Am Tisch":"已入座","am Tisch":"已入座","Abgeschlossen":"已完成","Vorzeitig weg":"提前离开","Storniert":"已取消","Storniert.":"已取消。","Spät storniert":"迟取消","spät storniert":"迟取消","No-Show":"未到","No-Shows":"未到次数","Bestätigen":"确认","Ist da / am Tisch":"已到 / 入座","Abschliessen":"结账完成","Vorzeitig gegangen":"提前离开","Stornieren":"取消","Zurück auf Anfrage":"改回待确认","Neu":"新客","Gut":"良好","Sehr gut":"很好","Exzellent":"优秀","Neue Reservierung":"新预订","Datum":"日期","Uhrzeit":"时间","Freie Zeiten":"可选时间","Telefon":"电话","Vorname":"名","Nachname":"姓","Vorname *":"名 *","Nachname *":"姓 *","Mobilnummer *":"手机号 *","E-Mail":"电子邮件","Name":"姓名","Name (optional)":"姓名（可选）","Telefon (optional, fürs Gastprofil)":"电话（可选，用于客人档案）","Wünsche":"需求","Wünsche (Allergien, Anlass …)":"需求（过敏、场合 …）","Interne Notiz":"内部备注","Tags (Komma)":"标签（逗号分隔）","geburtstag, vip":"生日, vip","geburtstag, vip, geschaeftsessen":"生日, vip, 商务宴请","Vermittler":"介绍人","Hotel, Concierge, Firma":"酒店、礼宾、公司","Online":"网上","Google":"Google","Abbrechen":"取消","Speichern":"保存","Schliessen":"关闭","Anlegen":"创建","Ändern":"修改","Platzieren":"安排入座","Annehmen":"接受","Nein danke":"不用了，谢谢","Als Serie wiederholen":"按周重复","Wie viele Termine insgesamt (wöchentlich, gleiche Uhrzeit)?":"总共几次（每周，同一时间）？","Termine angelegt":"个预订已创建","Umbuchen (Zeit · Personen · Tische)":"改订（时间 · 人数 · 餐桌）","Umgebucht":"已改订","Neue Zeit vorschlagen":"建议新时间","Vorschlagen":"建议","Vorschlag verschickt":"建议已发送","Gültig für (Stunden)":"有效期（小时）","🔒 Tisch fixieren":"🔒 固定餐桌","🔓 Tisch freigeben":"🔓 解除固定","Tisch fixiert":"餐桌已固定","Gastlink öffnen":"打开客人链接","Gastseite (Test)":"客人页面（测试）","ersetzt im Test die SMS":"测试中代替短信","Noch keine Einträge.":"暂无记录。","Notiz gespeichert":"备注已保存","Tagesnotiz fürs Team":"今日团队备注","z. B. Küche: keine Ente heute · Gruppe Müller VIP":"例如：厨房今天没有鸭子 · Müller 团体 VIP","Online-Buchung":"网上预订","Mittag voll":"午餐已满","Abend voll":"晚餐已满","Ganzer Tag voll":"全天已满","Wieder öffnen":"重新开放","Online gesperrt":"网上预订已关闭","Online wieder offen":"网上预订已重新开放","„Voll\" sperrt nur das Widget. Das Team kann weiter buchen.":"“已满”只关闭网上预订，团队仍可预订。","Offene Anfragen":"待处理请求","Ohne Tisch:":"未分配餐桌：","Tischkonflikt(e)":"餐桌冲突","Klick auf eine Reservierung öffnet Details, Statusknöpfe und Verlauf.":"点击预订可查看详情、状态按钮和记录。","Keine Reservierungen für diese Auswahl.":"此筛选下没有预订。","⋯ → Testdaten einrichten":"⋯ → 创建测试数据","No-Show-Risiko":"未到风险","Besuche":"到访次数","Allergie:":"过敏：","✓ Bestehender Gast":"✓ 老客人","⏰ Überfällig":"⏰ 已超时","Überfällig – No-Show prüfen":"已超时 – 请检查是否未到","Keine Rückbestätigung – bitte anrufen":"未再次确认 – 请致电","kommt in ≤30 min":"≤30 分钟内到达","💬 Gast:":"💬 客人：","(aus Warteliste)":"（来自候补名单）","ohne freien Tisch":"无空桌","Walk-in an Tisch":"现场客人入座餐桌","Gast ohne Reservierung, sitzt ab jetzt.":"无预订客人，现在入座。","Gerade kein Tisch frei":"目前没有空桌","Auf der Warteliste":"已加入候补名单","Kein passender Platz für die Warteliste frei":"候补名单暂无合适空位","Angebot(e) an die Warteliste verschickt":"条邀请已发送给候补客人","Richte Testdaten ein …":"正在创建测试数据 …","Alle Testbuchungen und Testgäste löschen?":"删除所有测试预订和测试客人？","Gelöscht:":"已删除：","Eingerichtet:":"已创建：","Buchungen":"个预订","Wunschzeit":"希望时间","Ungefähre Wunschzeit":"大约希望的时间","Wie viele Personen?":"几位？","Wann?":"什么时候？","Personenzahl":"人数","Personenzahl verringern":"减少人数","Jede Person meldet sich in der Team-App mit ihrer eigenen PIN an (4–8 Ziffern, im Team eindeutig). App-Adresse:":"每位员工用自己的 PIN 登录员工应用（4–8 位数字，团队内唯一）。应用地址：","Neue Person":"新员工","Rolle":"角色","Team":"员工","Admin":"管理员","Neue PIN":"新 PIN","Neue PIN (4–8 Ziffern):":"新 PIN（4–8 位数字）：","Sperren":"停用","Freigeben":"启用","aktiv":"启用","gesperrt":"已停用","Gesperrt":"已停用","Freigegeben":"已启用","Angelegt":"已创建","PIN geändert – alte Anmeldungen sind beendet":"PIN 已更改 – 旧登录已失效","Noch niemand angelegt. Leg zuerst dich selbst als Admin an.":"还没有员工。请先把自己添加为管理员。","Restaurant Sichuan":"四川饭店","Restaurant Sichuan · Wien":"四川饭店 · 维也纳","四川 Sichuan":"四川饭店","Eigenes Reservierungssystem · Test":"自有预订系统 · 测试","Tisch reservieren":"预订餐桌","Reservieren ·":"预订 ·","Ihre Daten":"您的信息","Ab 9 Personen nehmen wir Ihre Reservierung gerne telefonisch entgegen: 01 263 37 13":"9 人以上请致电预订：01 263 37 13","Auf die Warteliste":"加入候补名单","Auf die Warteliste setzen":"加入候补名单","auf die Warteliste?":"加入候补名单？","Wird ein Tisch frei, bekommen Sie ihn per SMS angeboten – reserviert nur für Sie.":"有空桌时我们会通过短信通知您，并为您保留。","Wird ein Tisch frei, bekommen Sie eine SMS mit einem Link – der Tisch ist dann kurz nur für Sie reserviert.":"有空桌时您会收到带链接的短信 – 餐桌会为您短暂保留。","Warteliste – Ihre Daten":"候补名单 – 您的信息","Sie stehen auf der Warteliste":"您已在候补名单上","Danke für Ihre Anfrage!":"感谢您的预订请求！","Wir bestätigen in Kürze.":"我们会尽快确认。","Die Bestätigung kommt per SMS.":"确认将通过短信发送。","Ihr Tisch ist reserviert":"您的餐桌已预订","Danke! Wir freuen uns auf Sie.":"谢谢！期待您的光临。","Danke! Wir haben Ihren Tisch fest eingeplant.":"谢谢！您的餐桌已确定。","Wunderbar – Ihr Tisch ist bestätigt.":"太好了 – 您的餐桌已确认。","Schade. Wir geben den Tisch weiter.":"很遗憾，我们会把餐桌留给其他客人。","Ihre Reservierung":"您的预订","Reservierung ändern":"修改预订","Reservierung ansehen oder ändern":"查看或修改预订","Reservierung wirklich stornieren?":"确定要取消预订吗？","Die Frist ist abgelaufen – die Absage zählt als spät. Trotzdem stornieren?":"已超过期限 – 此次取消将记为迟取消。仍要取消吗？","Gespeichert – Sie bekommen eine neue Bestätigung.":"已保存 – 您会收到新的确认。","Ich komme ✓":"我会来 ✓","Für Sie reserviert bis":"为您保留至","Angebot gültig bis":"邀请有效至","Ihr Termin ist in weniger als":"您的预订时间不足","Stunden.":"小时。","Uhr":"点","Uhr.":"点。","Uhr ·":"点 ·","Hallo":"您好","bis":"至","keine":"无","reserviert":"已预订","Link ungültig":"链接无效","Link unvollständig":"链接不完整","Bitte öffnen Sie den Link aus Ihrer SMS oder E-Mail.":"请打开短信或电子邮件中的链接。","← Übersicht":"← 概览","Im Service":"用餐中","Offen":"待处理","Pers. Der Gast bekommt einen Link und kann annehmen oder ablehnen. Der Tisch ist so lange für ihn reserviert.":"人。客人会收到链接，可以接受或拒绝。在此期间餐桌为其保留。","An diesem Tag ist leider alles vergeben.":"很抱歉，这一天已全部订满。","An diesem Tag ist Ruhetag.":"这一天是休息日。","Bitte eine gültige Personenanzahl angeben.":"请输入有效的人数。","Bitte einen Namen eingeben.":"请输入姓名。","Der Tisch wurde gerade eben vergeben. Bitte eine andere Zeit wählen.":"这张桌子刚刚被订走了，请选择其他时间。","Der übergebene Zeitpunkt ist ungültig.":"时间无效。","Diese Funktion ist dem Team vorbehalten.":"此功能仅限员工使用。","Diese PIN ist schon vergeben.":"此 PIN 已被使用。","Diese Reservierung kann nicht mehr bestätigt werden.":"此预订无法再确认。","Diese Reservierung kann online nicht mehr geändert werden. Bitte rufen Sie uns an.":"此预订无法再在网上修改，请致电我们。","Diese Reservierung kann online nicht mehr storniert werden.":"此预订无法再在网上取消。","Dieser Link ist ungültig oder abgelaufen.":"此链接无效或已过期。","Dieses Angebot ist leider abgelaufen.":"很抱歉，此邀请已过期。","Für die gewünschte Änderung ist kein passender Tisch frei.":"没有适合此修改的空桌。","Für diesen Zeitpunkt ist kein passender Tisch mehr frei.":"此时间已没有合适的空桌。","Für so kurzfristig führen wir keine Warteliste — bitte rufen Sie uns an.":"时间太近无法候补 — 请致电我们。","Mindestens ein aktiver Admin muss bleiben.":"至少需要保留一名启用的管理员。","Mitglied nicht gefunden.":"找不到该员工。","Nur für Admins.":"仅限管理员。","Reservierung nicht gefunden.":"找不到该预订。","So kurzfristig können wir online nicht umbuchen. Bitte rufen Sie uns an.":"时间太近无法在网上改订，请致电我们。","Die PIN darf nur aus Ziffern bestehen.":"PIN 只能由数字组成。","Die PIN muss 4–8 Ziffern haben.":"PIN 必须是 4–8 位数字。","Diese PIN ist zu leicht zu erraten.":"此 PIN 太容易被猜到。","Gerade kein Tisch frei.":"目前没有空桌。","Sprache":"语言","Eintragen":"登记","Gespeichert":"已保存","Innen":"室内","Nichts frei":"没有空位","nichts frei":"没有空位","Person":"人","Reservieren":"预订","Reserviert":"已预订","System":"系统","Terrasse":"露台","Von der Warteliste nehmen":"从候补名单移除","walkin":"现场客人","telefon":"电话","online":"网上","google":"Google","Geburtstag":"生日","Ankünfte":"到店","Ganzer Service":"整个餐段","Zeitpunkt":"时间点","+1 weitere":"+1 更多","Gäste":"客人","Statistik":"统计","Tagesliste drucken":"打印当日列表","✎ Plan bearbeiten":"✎ 编辑餐桌图","Plan bearbeiten":"编辑餐桌图","+ Tisch":"+ 餐桌","+ Deko …":"+ 装饰 …","+ Bereich":"+ 区域","Raster":"网格","Verwerfen":"放弃","Änderungen verwerfen?":"放弃修改？","Tischplan gespeichert":"餐桌图已保存","Wand":"墙","Bar / Theke":"吧台","Pflanze":"植物","Beschriftung":"文字标签","Tür / Durchgang":"门 / 通道","Nummer":"编号","Min. Pers.":"最少人数","Max. Pers.":"最多人数","Form":"形状","Eckig":"方形","Rund":"圆形","Kombinierbar mit (Nummern, Komma)":"可拼桌（编号，逗号分隔）","Priorität (kleiner = zuerst vergeben)":"优先级（越小越先分配）","Nur manuell zuweisbar ✋":"仅手动分配 ✋","Aktiv (buchbar)":"启用（可预订）","Bereich":"区域","Breite":"宽度","Höhe":"高度","Drehung":"旋转","Duplizieren":"复制","Entfernen":"删除","Ohne Tisch":"未分配餐桌","Mit Tisch":"已分配餐桌","Keine Reservierungen.":"没有预订。","Keine Tische in diesem Bereich.":"此区域没有餐桌。","Gastprofil":"客人档案","Alle Details":"全部详情","Reserviert via":"预订渠道","Reserviert am":"预订于","keine Nummer":"无号码","keine E-Mail":"无电子邮件","Website":"网站","Import":"导入","Walk-in hier":"现场客人入座此桌","in diesem Service frei":"本餐段空闲","heute":"今天","gestern":"昨天","Stammgäste (3+)":"常客（3次以上）","Mit No-Show":"有未到记录","Allergien":"过敏","Newsletter-OK":"同意接收资讯","Name A–Z":"姓名 A–Z","Meiste Besuche":"到访最多","Neueste":"最新","Name, Telefon oder E-Mail …":"姓名、电话或电子邮件 …","Kontakt":"联系方式","Stufe":"等级","Allergien / Unverträglichkeiten":"过敏 / 不耐受","Vorlieben (Tisch, Speisen, Getränke …)":"偏好（餐桌、菜品、饮品 …）","Newsletter / Angebote erlaubt":"允许发送资讯 / 优惠","Deutsch":"德语","Keine.":"无。","Auslastung":"上座率","No-Show-Quote":"未到率","Storno-Quote":"取消率","Ø Gruppe":"平均人数","Ø Vorlauf":"平均提前天数","Verschiedene Gäste":"不同客人","zwischen Buchung und Besuch":"预订到用餐之间","2 Services pro Tag":"每天 2 个餐段","Kanäle":"渠道","Ø Gäste je Wochentag":"每个工作日平均客人","Ankünfte nach Uhrzeit":"按时间到店","Meistgebuchte Tische":"最常预订的餐桌","Gäste pro Tag":"每日客人","Keine Daten.":"没有数据。","1 Jahr":"1 年","Wo möchten Sie sitzen?":"您想坐在哪里？","Egal":"都可以","Drinnen":"室内","Rückgängig":"撤销","auf einen Tisch ziehen":"拖到餐桌上","Dazunehmen":"加桌","Trotzdem":"仍然","Feedback":"反馈","Herzlichen Dank!":"衷心感谢！","Es freut uns sehr, dass es Ihnen geschmeckt hat.":"很高兴您用餐愉快。","Würden Sie Ihre Erfahrung auch auf Google teilen? Das hilft uns sehr.":"您愿意在 Google 上分享您的体验吗？这对我们帮助很大。","Auf Google bewerten":"在 Google 上评价","Danke für Ihre ehrliche Rückmeldung. Wir nehmen sie ernst und melden uns gegebenenfalls persönlich bei Ihnen.":"感谢您的真诚反馈。我们会认真对待，必要时会亲自与您联系。","Wie war Ihr Besuch?":"您这次用餐体验如何？","Wie zufrieden waren Sie insgesamt?":"您总体满意吗？","Essen":"菜品","Service":"服务","Ambiente":"环境","Möchten Sie uns noch etwas sagen? (optional)":"还有什么想告诉我们的吗？（可选）","Was war besonders gut – oder was sollen wir besser machen?":"哪些特别好——或者我们哪里需要改进？","Feedback senden":"提交反馈","Feedback ist nach Ihrem Besuch möglich.":"用餐后才能提交反馈。","Durchschnitt":"平均","Feedbacks":"条反馈","Kritisch (1–3 ★)":"差评（1–3 ★）","Zu Google geschickt":"引导至 Google","Offen (kritisch)":"待处理（差评）","Erledigt":"已处理","Noch kein Feedback in diesem Zeitraum.":"此期间暂无反馈。","Feedback-Seite öffnen":"打开反馈页面","Team-Notiz (z. B. angerufen, Gutschein angeboten)":"团队备注（例如：已致电、已提供代金券）","Bitte 1 bis 5 Sterne vergeben.":"请给出 1 到 5 颗星。","Danke – Ihr Feedback liegt uns schon vor.":"谢谢——我们已收到您的反馈。","Feedback ist nach dem Besuch möglich.":"用餐后才能提交反馈。","+ Gericht":"+ 菜品","+ Kategorie":"+ 分类","+ Neue Kampagne":"+ 新建营销活动","+ Neues Event":"+ 新建活动","Abend (19:00)":"晚上（19:00）","Abgemeldet":"已退订","Allergene":"过敏原","Ansehen":"查看","Ausgebucht":"已订满","Ausverkauft":"已售罄","Bearbeiten":"编辑","Beginn *":"开始时间 *","Beschreibung":"描述","Beschreibung (Menü, Programm …)":"描述（菜单、节目安排 …）","Besuche höchstens":"最多到访","Besuche mind.":"至少到访","Betreff":"主题","Betreff und Text auf Deutsch sind Pflicht.":"德语的主题和正文为必填项。","Bild-URL (optional)":"图片链接（可选）","Bitte Datum und Uhrzeit des Events angeben.":"请填写活动的日期和时间。","Bitte eine Kategorie wählen.":"请选择一个分类。","Bitte einen Namen für die Kampagne angeben.":"请填写营销活动名称。","Bitte einen deutschen Namen für das Gericht angeben.":"请填写菜品的德语名称。","Bitte einen deutschen Namen für die Kategorie angeben.":"请填写分类的德语名称。","Bitte einen deutschen Titel für das Event angeben.":"请填写活动的德语标题。","Bitte einen gültigen Preis angeben.":"请填写有效的价格。","Da gewesen in den letzten (Tagen)":"最近到访（天数内）","Das Ende muss nach dem Beginn liegen.":"结束时间必须晚于开始时间。","Das Event hat Buchungen – bitte deaktivieren statt löschen.":"该活动已有预订，请停用而不要删除。","Derzeit sind keine Events geplant.":"目前暂无活动安排。","Deutsch ist Pflicht. Fehlt Englisch oder Chinesisch, bekommen diese Gäste die deutsche Version.":"德语为必填项。若缺少英语或中文，这些客人将收到德语版本。","Die Kategorie enthält noch Gerichte.":"该分类下仍有菜品。","Die Speisekarte wird gerade vorbereitet.":"菜单正在准备中。","Diese Kampagne wurde schon versendet.":"该营销活动已发送。","Dieses Event ist ausgebucht.":"该活动已订满。","Dieses Event ist nicht mehr buchbar.":"该活动已无法预订。","Drucken":"打印","Empfänger":"收件人","Empfänger zählen":"统计收件人","Ende":"结束","Englisch fehlt":"缺少英语","Entwurf":"草稿","Entwurf löschen?":"删除草稿？","Erdnuss":"花生","Erstellt":"已创建","Event bearbeiten":"编辑活动","Event löschen?":"删除活动？","Event nicht gefunden.":"未找到该活动。","Event-Seite ansehen":"查看活动页面","Events":"活动","Fisch":"鱼类","Fragen Sie gerne unser Team nach Details.":"详情请随时询问我们的团队。","Garten":"花园","Garten voll":"花园已满","Gelöscht":"已删除","Gericht":"菜品","Gericht bearbeiten":"编辑菜品","Gericht löschen?":"删除菜品？","Gericht nicht gefunden.":"未找到该菜品。","Gesendet":"已发送","Gluten":"麸质","Grund":"原因","Gästeansicht":"客人视图","Hintergarten":"后花园","Hinweis (optional)":"备注（可选）","Jeder Code öffnet die Speisekarte in der Sprache des Handys (DE/EN/中文). Mit Tischnummer, damit ihr später sehen könnt, wo gescannt wurde.":"每个二维码会以手机的语言（DE/EN/中文）打开菜单。包含桌号，方便您日后查看扫码位置。","Jetzt umschichten":"立即重新安排","Kampagne nicht gefunden.":"未找到该营销活动。","Kampagne versendet":"营销活动已发送","Kampagnen":"营销活动","Karte":"菜单","Kategorie":"分类","Kategorie bearbeiten":"编辑分类","Kategorie löschen?":"删除分类？","Keine Gartentische angelegt – im Plan-Editor Tische dem Bereich „vordergarten“ bzw. „hintergarten“ zuordnen.":"尚未设置花园桌位，请在平面图编辑器中将桌位分配到“vordergarten”或“hintergarten”区域。","Krebstiere":"甲壳类","Lupinen":"羽扇豆","Löschen":"删除","Max. Personen pro Buchung":"每笔预订最多人数","Milch":"牛奶","Mittag (12:00)":"中午（12:00）","Name (intern)":"名称（内部）","Neue Kampagne":"新建营销活动","Neue Kategorie":"新建分类","Neues Event":"新建活动","Neues Gericht":"新建菜品","Nicht da seit (Tagen)":"未到访（天数）","Nichts zu verschieben.":"无需重新安排。","Noch keine Buchungen.":"暂无预订。","Noch keine Events.":"暂无活动。","Noch keine Gerichte in dieser Kategorie.":"该分类下暂无菜品。","Noch keine Kampagne.":"暂无营销活动。","Noch keine Kategorie – zuerst „+ Kategorie“.":"暂无分类，请先点击“+ 分类”。","Nr. auf der Karte":"菜单编号","Nur noch":"仅剩","Plätze gesamt (leer = unbegrenzt)":"总席位（留空 = 不限）","Plätze reservieren":"预留席位","Preis":"价格","Preis (€)":"价格（€）","Preis pro Person (€)":"每人价格（€）","Preis-Hinweis":"价格说明","Prognose wird geladen …":"正在加载预报 …","QR-Codes drucken":"打印二维码","QR-Codes für die Tische":"桌位二维码","Reihenfolge":"顺序","Reservierung telefonisch: 01 263 37 13":"电话预订：01 263 37 13","Reservierungsbestätigungen bekommen Sie weiterhin.":"您仍会收到预订确认。","Schalenfrüchte":"坚果","Schärfe":"辣度","Sellerie":"芹菜","Senf":"芥末","Sesam":"芝麻","Sie bekommen keine Neuigkeiten mehr per E-Mail.":"您将不再通过电子邮件收到最新资讯。","Soja":"大豆","Speichern & senden":"保存并发送","Speisekarte":"菜单","Speisekarte (QR-Menü)":"菜单（二维码菜单）","Sulfite":"亚硫酸盐","Text":"正文","Text – Hallo {vorname}, …":"正文 – 您好 {vorname}，…","Titel":"标题","Versand fortsetzen":"继续发送","Versendete Kampagnen bleiben zur Nachvollziehbarkeit gespeichert.":"已发送的营销活动会保留记录，以便追溯。","Von → Nach":"从 → 到","Vordergarten":"前花园","Weichtiere":"软体动物","Wird gesendet":"发送中","alle":"全部","ausgebucht":"已订满","ausverkauft":"已售罄","ein Code pro Tisch":"每桌一个二维码","ein allgemeiner Code (Fenster, Flyer)":"一个通用二维码（橱窗、传单）","inaktiv":"已停用","keine Gäste mit No-Show":"没有爽约的客人","mild":"微辣","nur telefonisch":"仅限电话预订","nur vegetarisch":"仅限素食","online buchbar":"可在线预订","pro Person":"每人","scharf":"辣","sichtbar":"可见","vegan":"纯素","vegetarisch":"素食","vip, firma":"vip，公司","z. B. Herbstmenü 2026":"例如：2026 秋季菜单","z. B. pro Person, ab 2 Pers.":"例如：每人，2 位起","ÜBERBUCHT":"超额预订","„Ausverkauft“ kann jedes Teammitglied schalten – das Gericht bleibt sichtbar, ist aber ausgegraut. Bearbeiten und Preise nur für Admins. Allergene nach österreichischer Kennzeichnung (A–R).":"任何团队成员均可将菜品标记为“已售罄”，该菜品仍会显示，但呈灰色。编辑和价格仅限管理员操作。过敏原按奥地利标识规范标注（A–R）。","← Normale Reservierung":"← 普通预订","→ Speisekarte":"→ 菜单","☀ Garten":"☀ 花园","★ Empfehlung":"★ 推荐","🌱 vegan":"🌱 纯素","🥬 vegetarisch":"🥬 素食"};
 const ZH_MUSTER = [
+  [/^Nur noch (\d+) Plätze frei\.$/, (m) => `仅剩 ${m[1]} 个座位。`],
+  [/^(\d+) Empfänger$/, (m) => `${m[1]} 位收件人`],
+  [/^Tisch (\S+)$/, (m) => `${m[1]} 号桌`],
   [/^(\d+) noch offen$/, (m) => `${m[1]} 条待处理`],
   [/^(\d+) Gäste$/, (m) => `${m[1]} 位客人`],
   [/^(\d+) Tage$/, (m) => `${m[1]} 天`],
@@ -295,26 +319,78 @@ const ZH_MUSTER = [
   [/^Hallo (.+)$/, (m) => `${m[1]}，您好`],
   [/^(\d+) Besuche$/, (m) => `到访 ${m[1]} 次`]
 ];
+const EN = {"Lädt …":"Loading …","lädt …":"loading …","Prüfe …":"Checking …","Team-App · PIN eingeben":"Team app · Enter PIN","OK":"OK","PIN":"PIN","PIN stimmt nicht.":"Incorrect PIN.","Bitte neu anmelden.":"Please sign in again.","Keine Internetverbindung.":"No internet connection.","Keine Antwort vom Server.":"No response from the server.","Unbekannter Fehler.":"Unknown error.","Abmelden":"Sign out","Auf diesem Gerät abmelden?":"Sign out on this device?","Heute":"Today","Vortag":"Previous day","Folgetag":"Next day","Ganzer Tag":"All day","Mittag":"Lunch","Abend":"Dinner","Liste":"List","Timeline":"Timeline","Tischplan":"Floor plan","Suchen …":"Search …","Walk-in":"Walk-in","+ Warteliste":"+ Waitlist","+ Reservierung":"+ Reservation","Testdaten einrichten":"Set up test data","Testdaten löschen":"Delete test data","Warteliste jetzt prüfen":"Check waitlist now","Buchungswidget öffnen":"Open booking widget","Team & PINs":"Team & PINs","Alle":"All","Kommend":"Upcoming","Stornos":"Cancellations","Pers.":"Pax","Reservierungen":"Reservations","Gast":"Guest","Zeit":"Time","Personen":"Guests","Tisch":"Table","Tische":"Tables","Status":"Status","Risiko":"Risk","Quelle":"Source","Notiz":"Note","Tags":"Tags","Verlauf":"History","Warteliste":"Waitlist","Angefragt":"Requested","Bestätigt":"Confirmed","Rückbestätigt":"Reconfirmed","Angebot offen":"Offer pending","Wartet drinnen":"Waiting inside","Am Tisch":"Seated","am Tisch":"seated","Abgeschlossen":"Completed","Vorzeitig weg":"Left early","Storniert":"Cancelled","Storniert.":"Cancelled.","Spät storniert":"Late cancellation","spät storniert":"late cancellation","No-Show":"No-Show","No-Shows":"No-Shows","Bestätigen":"Confirm","Ist da / am Tisch":"Arrived / seated","Abschliessen":"Complete","Vorzeitig gegangen":"Left early","Stornieren":"Cancel booking","Zurück auf Anfrage":"Back to requested","Neu":"New","Gut":"Good","Sehr gut":"Very good","Exzellent":"Excellent","Neue Reservierung":"New reservation","Datum":"Date","Uhrzeit":"Time","Freie Zeiten":"Available times","Telefon":"Phone","Vorname":"First name","Nachname":"Last name","Vorname *":"First name *","Nachname *":"Last name *","Mobilnummer *":"Mobile number *","E-Mail":"Email","Name":"Name","Name (optional)":"Name (optional)","Telefon (optional, fürs Gastprofil)":"Phone (optional, for guest profile)","Wünsche":"Requests","Wünsche (Allergien, Anlass …)":"Requests (allergies, occasion …)","Interne Notiz":"Internal note","Tags (Komma)":"Tags (comma-separated)","geburtstag, vip":"birthday, vip","geburtstag, vip, geschaeftsessen":"birthday, vip, business-dinner","Vermittler":"Referrer","Hotel, Concierge, Firma":"Hotel, concierge, company","Online":"Online","Google":"Google","Abbrechen":"Cancel","Speichern":"Save","Schliessen":"Close","Anlegen":"Create","Ändern":"Change","Platzieren":"Assign","Annehmen":"Accept","Nein danke":"No thanks","Als Serie wiederholen":"Repeat as series","Wie viele Termine insgesamt (wöchentlich, gleiche Uhrzeit)?":"How many bookings in total (weekly, same time)?","Termine angelegt":"Bookings created","Umbuchen (Zeit · Personen · Tische)":"Rebook (time · guests · tables)","Umgebucht":"Rebooked","Neue Zeit vorschlagen":"Suggest new time","Vorschlagen":"Suggest","Vorschlag verschickt":"Suggestion sent","Gültig für (Stunden)":"Valid for (hours)","🔒 Tisch fixieren":"🔒 Lock table","🔓 Tisch freigeben":"🔓 Release table","Tisch fixiert":"Table locked","Gastlink öffnen":"Open guest link","Gastseite (Test)":"Guest page (test)","ersetzt im Test die SMS":"replaces the SMS in test mode","Noch keine Einträge.":"No entries yet.","Notiz gespeichert":"Note saved","Tagesnotiz fürs Team":"Daily note for the team","z. B. Küche: keine Ente heute · Gruppe Müller VIP":"e.g. Kitchen: no duck today · Müller party VIP","Online-Buchung":"Online booking","Mittag voll":"Lunch full","Abend voll":"Dinner full","Ganzer Tag voll":"Full all day","Wieder öffnen":"Reopen","Online gesperrt":"Online closed","Online wieder offen":"Online open again","„Voll\" sperrt nur das Widget. Das Team kann weiter buchen.":"“Full” only blocks the widget. The team can still book.","Offene Anfragen":"Open requests","Ohne Tisch:":"No table:","Tischkonflikt(e)":"Table conflict(s)","Klick auf eine Reservierung öffnet Details, Statusknöpfe und Verlauf.":"Click a reservation to open details, status buttons and history.","Keine Reservierungen für diese Auswahl.":"No reservations for this selection.","⋯ → Testdaten einrichten":"⋯ → Set up test data","No-Show-Risiko":"No-show risk","Besuche":"Visits","Allergie:":"Allergy:","✓ Bestehender Gast":"✓ Existing guest","⏰ Überfällig":"⏰ Overdue","Überfällig – No-Show prüfen":"Overdue – check for no-show","Keine Rückbestätigung – bitte anrufen":"No reconfirmation – please call","kommt in ≤30 min":"due in ≤30 min","💬 Gast:":"💬 Guest:","(aus Warteliste)":"(from waitlist)","ohne freien Tisch":"no free table","Walk-in an Tisch":"Walk-in to table","Gast ohne Reservierung, sitzt ab jetzt.":"Guest without a reservation, seated from now.","Gerade kein Tisch frei":"No table free at the moment","Auf der Warteliste":"On the waitlist","Kein passender Platz für die Warteliste frei":"No suitable space free for the waitlist","Angebot(e) an die Warteliste verschickt":"offer(s) sent to the waitlist","Richte Testdaten ein …":"Setting up test data …","Alle Testbuchungen und Testgäste löschen?":"Delete all test bookings and test guests?","Gelöscht:":"Deleted:","Eingerichtet:":"Set up:","Buchungen":"Bookings","Wunschzeit":"Preferred time","Ungefähre Wunschzeit":"Approximate preferred time","Wie viele Personen?":"How many guests?","Wann?":"When?","Personenzahl":"Number of guests","Personenzahl verringern":"Decrease number of guests","Jede Person meldet sich in der Team-App mit ihrer eigenen PIN an (4–8 Ziffern, im Team eindeutig). App-Adresse:":"Each person signs in to the team app with their own PIN (4–8 digits, unique within the team). App address:","Neue Person":"New person","Rolle":"Role","Team":"Team","Admin":"Admin","Neue PIN":"New PIN","Neue PIN (4–8 Ziffern):":"New PIN (4–8 digits):","Sperren":"Block","Freigeben":"Unblock","aktiv":"active","gesperrt":"blocked","Gesperrt":"Blocked","Freigegeben":"Unblocked","Angelegt":"Created","PIN geändert – alte Anmeldungen sind beendet":"PIN changed – old sessions have been ended","Noch niemand angelegt. Leg zuerst dich selbst als Admin an.":"Nobody added yet. Add yourself as an admin first.","Restaurant Sichuan":"Restaurant Sichuan","Restaurant Sichuan · Wien":"Restaurant Sichuan · Vienna","四川 Sichuan":"四川 Sichuan","Eigenes Reservierungssystem · Test":"Our own reservation system · Test","Tisch reservieren":"Reserve a table","Reservieren ·":"Reserve ·","Ihre Daten":"Your details","Ab 9 Personen nehmen wir Ihre Reservierung gerne telefonisch entgegen: 01 263 37 13":"For parties of 9 or more, we are happy to take your reservation by phone: 01 263 37 13","Auf die Warteliste":"Join the waitlist","Auf die Warteliste setzen":"Add to waitlist","auf die Warteliste?":"join the waitlist?","Wird ein Tisch frei, bekommen Sie ihn per SMS angeboten – reserviert nur für Sie.":"If a table becomes available, we will offer it to you by SMS – reserved for you alone.","Wird ein Tisch frei, bekommen Sie eine SMS mit einem Link – der Tisch ist dann kurz nur für Sie reserviert.":"If a table becomes available, you will receive an SMS with a link – the table is then held for you alone for a short time.","Warteliste – Ihre Daten":"Waitlist – your details","Sie stehen auf der Warteliste":"You are on the waitlist","Danke für Ihre Anfrage!":"Thank you for your request!","Wir bestätigen in Kürze.":"We will confirm shortly.","Die Bestätigung kommt per SMS.":"The confirmation will arrive by SMS.","Ihr Tisch ist reserviert":"Your table is reserved","Danke! Wir freuen uns auf Sie.":"Thank you! We look forward to seeing you.","Danke! Wir haben Ihren Tisch fest eingeplant.":"Thank you! Your table is firmly booked.","Wunderbar – Ihr Tisch ist bestätigt.":"Wonderful – your table is confirmed.","Schade. Wir geben den Tisch weiter.":"What a shame. We will release the table.","Ihre Reservierung":"Your reservation","Reservierung ändern":"Change reservation","Reservierung ansehen oder ändern":"View or change reservation","Reservierung wirklich stornieren?":"Really cancel the reservation?","Die Frist ist abgelaufen – die Absage zählt als spät. Trotzdem stornieren?":"The deadline has passed – the cancellation will count as late. Cancel anyway?","Gespeichert – Sie bekommen eine neue Bestätigung.":"Saved – you will receive a new confirmation.","Ich komme ✓":"I'll be there ✓","Für Sie reserviert bis":"Reserved for you until","Angebot gültig bis":"Offer valid until","Ihr Termin ist in weniger als":"Your booking is in less than","Stunden.":"hours.","Uhr":"","Uhr.":".","Uhr ·":"·","Hallo":"Hello","bis":"to","keine":"no","reserviert":"reserved","Link ungültig":"Invalid link","Link unvollständig":"Incomplete link","Bitte öffnen Sie den Link aus Ihrer SMS oder E-Mail.":"Please open the link from your SMS or email.","← Übersicht":"← Overview","Im Service":"In service","Offen":"Open","Pers. Der Gast bekommt einen Link und kann annehmen oder ablehnen. Der Tisch ist so lange für ihn reserviert.":"guests. The guest receives a link and can accept or decline. The table is held for them until then.","An diesem Tag ist leider alles vergeben.":"Unfortunately we are fully booked on this day.","An diesem Tag ist Ruhetag.":"We are closed on this day.","Bitte eine gültige Personenanzahl angeben.":"Please enter a valid number of guests.","Bitte einen Namen eingeben.":"Please enter a name.","Der Tisch wurde gerade eben vergeben. Bitte eine andere Zeit wählen.":"That table has just been taken. Please choose another time.","Der übergebene Zeitpunkt ist ungültig.":"The time provided is invalid.","Diese Funktion ist dem Team vorbehalten.":"This function is reserved for the team.","Diese PIN ist schon vergeben.":"This PIN is already in use.","Diese Reservierung kann nicht mehr bestätigt werden.":"This reservation can no longer be confirmed.","Diese Reservierung kann online nicht mehr geändert werden. Bitte rufen Sie uns an.":"This reservation can no longer be changed online. Please call us.","Diese Reservierung kann online nicht mehr storniert werden.":"This reservation can no longer be cancelled online.","Dieser Link ist ungültig oder abgelaufen.":"This link is invalid or has expired.","Dieses Angebot ist leider abgelaufen.":"Unfortunately this offer has expired.","Für die gewünschte Änderung ist kein passender Tisch frei.":"No suitable table is free for the requested change.","Für diesen Zeitpunkt ist kein passender Tisch mehr frei.":"No suitable table is free at this time any more.","Für so kurzfristig führen wir keine Warteliste — bitte rufen Sie uns an.":"We do not keep a waitlist at such short notice — please call us.","Mindestens ein aktiver Admin muss bleiben.":"At least one active admin must remain.","Mitglied nicht gefunden.":"Member not found.","Nur für Admins.":"Admins only.","Reservierung nicht gefunden.":"Reservation not found.","So kurzfristig können wir online nicht umbuchen. Bitte rufen Sie uns an.":"We cannot rebook online at such short notice. Please call us.","Die PIN darf nur aus Ziffern bestehen.":"The PIN may only contain digits.","Die PIN muss 4–8 Ziffern haben.":"The PIN must be 4–8 digits.","Diese PIN ist zu leicht zu erraten.":"This PIN is too easy to guess.","Gerade kein Tisch frei.":"No table free at the moment.","Sprache":"Language","Eintragen":"Add","Gespeichert":"Saved","Innen":"Inside","Nichts frei":"Fully booked","nichts frei":"fully booked","Person":"Person","Reservieren":"Reserve","Reserviert":"Reserved","System":"System","Terrasse":"Terrace","Von der Warteliste nehmen":"Remove from waitlist","walkin":"Walk-in","telefon":"Phone","online":"Online","google":"Google","Geburtstag":"Birthday","Ankünfte":"Arrivals","Ganzer Service":"Whole service","Zeitpunkt":"Time","+1 weitere":"+1 more","Gäste":"Guests","Statistik":"Statistics","Tagesliste drucken":"Print daily list","✎ Plan bearbeiten":"✎ Edit plan","Plan bearbeiten":"Edit plan","+ Tisch":"+ Table","+ Deko …":"+ Decor …","+ Bereich":"+ Area","Raster":"Grid","Verwerfen":"Discard","Änderungen verwerfen?":"Discard changes?","Tischplan gespeichert":"Floor plan saved","Wand":"Wall","Bar / Theke":"Bar / counter","Pflanze":"Plant","Beschriftung":"Label","Tür / Durchgang":"Door / opening","Nummer":"Number","Min. Pers.":"Min. guests","Max. Pers.":"Max. guests","Form":"Shape","Eckig":"Square","Rund":"Round","Kombinierbar mit (Nummern, Komma)":"Can be combined with (numbers, comma-separated)","Priorität (kleiner = zuerst vergeben)":"Priority (lower = assigned first)","Nur manuell zuweisbar ✋":"Manual assignment only ✋","Aktiv (buchbar)":"Active (bookable)","Bereich":"Area","Breite":"Width","Höhe":"Height","Drehung":"Rotation","Duplizieren":"Duplicate","Entfernen":"Remove","Ohne Tisch":"No table","Mit Tisch":"With table","Keine Reservierungen.":"No reservations.","Keine Tische in diesem Bereich.":"No tables in this area.","Gastprofil":"Guest profile","Alle Details":"All details","Reserviert via":"Reserved via","Reserviert am":"Reserved on","keine Nummer":"no number","keine E-Mail":"no email","Website":"Website","Import":"Import","Walk-in hier":"Walk-in here","in diesem Service frei":"free in this service","heute":"today","gestern":"yesterday","Stammgäste (3+)":"Regulars (3+)","Mit No-Show":"With no-show","Allergien":"Allergies","Newsletter-OK":"Newsletter OK","Name A–Z":"Name A–Z","Meiste Besuche":"Most visits","Neueste":"Newest","Name, Telefon oder E-Mail …":"Name, phone or email …","Kontakt":"Contact","Stufe":"Level","Allergien / Unverträglichkeiten":"Allergies / intolerances","Vorlieben (Tisch, Speisen, Getränke …)":"Preferences (table, food, drinks …)","Newsletter / Angebote erlaubt":"Newsletter / offers permitted","Deutsch":"Deutsch","Keine.":"None.","Auslastung":"Occupancy","No-Show-Quote":"No-show rate","Storno-Quote":"Cancellation rate","Ø Gruppe":"Avg. party size","Ø Vorlauf":"Avg. lead time","Verschiedene Gäste":"Unique guests","zwischen Buchung und Besuch":"between booking and visit","2 Services pro Tag":"2 services per day","Kanäle":"Channels","Ø Gäste je Wochentag":"Avg. guests by weekday","Ankünfte nach Uhrzeit":"Arrivals by time","Meistgebuchte Tische":"Most-booked tables","Gäste pro Tag":"Guests per day","Keine Daten.":"No data.","1 Jahr":"1 year","Wo möchten Sie sitzen?":"Where would you like to sit?","Egal":"No preference","Drinnen":"Indoors","Rückgängig":"Undo","auf einen Tisch ziehen":"drag onto a table","Dazunehmen":"Add on","Trotzdem":"Proceed anyway","Feedback":"Feedback","Herzlichen Dank!":"Thank you very much!","Es freut uns sehr, dass es Ihnen geschmeckt hat.":"We are delighted that you enjoyed your meal.","Würden Sie Ihre Erfahrung auch auf Google teilen? Das hilft uns sehr.":"Would you also share your experience on Google? It helps us a great deal.","Auf Google bewerten":"Review us on Google","Danke für Ihre ehrliche Rückmeldung. Wir nehmen sie ernst und melden uns gegebenenfalls persönlich bei Ihnen.":"Thank you for your honest feedback. We take it seriously and may contact you personally.","Wie war Ihr Besuch?":"How was your visit?","Wie zufrieden waren Sie insgesamt?":"How satisfied were you overall?","Essen":"Food","Service":"Service","Ambiente":"Ambience","Möchten Sie uns noch etwas sagen? (optional)":"Is there anything else you would like to tell us? (optional)","Was war besonders gut – oder was sollen wir besser machen?":"What was especially good – or what could we do better?","Feedback senden":"Send feedback","Feedback ist nach Ihrem Besuch möglich.":"Feedback can be given after your visit.","Durchschnitt":"Average","Feedbacks":"Responses","Kritisch (1–3 ★)":"Critical (1–3 ★)","Zu Google geschickt":"Sent to Google","Offen (kritisch)":"Open (critical)","Erledigt":"Done","Noch kein Feedback in diesem Zeitraum.":"No feedback in this period yet.","Feedback-Seite öffnen":"Open feedback page","Team-Notiz (z. B. angerufen, Gutschein angeboten)":"Team note (e.g. called, offered voucher)","Bitte 1 bis 5 Sterne vergeben.":"Please give 1 to 5 stars.","Danke – Ihr Feedback liegt uns schon vor.":"Thank you – we already have your feedback.","Feedback ist nach dem Besuch möglich.":"Feedback can be given after the visit.","+ Gericht":"+ Dish","+ Kategorie":"+ Category","+ Neue Kampagne":"+ New campaign","+ Neues Event":"+ New event","0664 1234567":"0664 1234567","Abend (19:00)":"Evening (19:00)","Abgemeldet":"Unsubscribed","Allergene":"Allergens","Ansehen":"View","Ausgebucht":"Fully booked","Ausverkauft":"Sold out","Bearbeiten":"Edit","Beginn *":"Start *","Beschreibung":"Description","Beschreibung (Menü, Programm …)":"Description (menu, programme …)","Besuche höchstens":"Visited at most","Besuche mind.":"Visited at least","Betreff":"Subject","Betreff und Text auf Deutsch sind Pflicht.":"Subject and text in German are required.","Bild-URL (optional)":"Image URL (optional)","Bitte Datum und Uhrzeit des Events angeben.":"Please enter the date and time of the event.","Bitte eine Kategorie wählen.":"Please choose a category.","Bitte einen Namen für die Kampagne angeben.":"Please enter a name for the campaign.","Bitte einen deutschen Namen für das Gericht angeben.":"Please enter a German name for the dish.","Bitte einen deutschen Namen für die Kategorie angeben.":"Please enter a German name for the category.","Bitte einen deutschen Titel für das Event angeben.":"Please enter a German title for the event.","Bitte einen gültigen Preis angeben.":"Please enter a valid price.","Da gewesen in den letzten (Tagen)":"Visited within the last (days)","Das Ende muss nach dem Beginn liegen.":"The end must be after the start.","Das Event hat Buchungen – bitte deaktivieren statt löschen.":"This event has bookings – please deactivate it instead of deleting it.","Derzeit sind keine Events geplant.":"There are currently no events planned.","Deutsch ist Pflicht. Fehlt Englisch oder Chinesisch, bekommen diese Gäste die deutsche Version.":"German is required. If English or Chinese is missing, those guests will receive the German version.","Die Kategorie enthält noch Gerichte.":"The category still contains dishes.","Die Speisekarte wird gerade vorbereitet.":"The menu is currently being prepared.","Diese Kampagne wurde schon versendet.":"This campaign has already been sent.","Dieses Event ist ausgebucht.":"This event is fully booked.","Dieses Event ist nicht mehr buchbar.":"This event can no longer be booked.","Drucken":"Print","EUR":"EUR","Empfänger":"Recipients","Empfänger zählen":"Count recipients","Ende":"End","Englisch fehlt":"English missing","English":"English","Entwurf":"Draft","Entwurf löschen?":"Delete draft?","Erdnuss":"Peanut","Erstellt":"Created","Event bearbeiten":"Edit event","Event löschen?":"Delete event?","Event nicht gefunden.":"Event not found.","Event-Seite ansehen":"View event page","Events":"Events","Fisch":"Fish","Fragen Sie gerne unser Team nach Details.":"Please feel free to ask our team for details.","Garten":"Garden","Garten voll":"Garden full","Gelöscht":"Deleted","Gericht":"Dish","Gericht bearbeiten":"Edit dish","Gericht löschen?":"Delete dish?","Gericht nicht gefunden.":"Dish not found.","Gesendet":"Sent","Gluten":"Gluten","Grund":"Reason","Gästeansicht":"Guest view","Hintergarten":"Back garden","Hinweis (optional)":"Note (optional)","Jeder Code öffnet die Speisekarte in der Sprache des Handys (DE/EN/中文). Mit Tischnummer, damit ihr später sehen könnt, wo gescannt wurde.":"Each code opens the menu in the language of the phone (DE/EN/中文). Includes the table number so you can later see where it was scanned.","Jetzt umschichten":"Re-seat now","Kampagne nicht gefunden.":"Campaign not found.","Kampagne versendet":"Campaign sent","Kampagnen":"Campaigns","Karte":"Menu","Kategorie":"Category","Kategorie bearbeiten":"Edit category","Kategorie löschen?":"Delete category?","Keine Gartentische angelegt – im Plan-Editor Tische dem Bereich „vordergarten“ bzw. „hintergarten“ zuordnen.":"No garden tables set up – assign tables to the “vordergarten” or “hintergarten” area in the plan editor.","Krebstiere":"Crustaceans","Lupinen":"Lupin","Löschen":"Delete","Max. Personen pro Buchung":"Max. guests per booking","Milch":"Milk","Mittag (12:00)":"Lunch (12:00)","Name (intern)":"Name (internal)","Neue Kampagne":"New campaign","Neue Kategorie":"New category","Neues Event":"New event","Neues Gericht":"New dish","Nicht da seit (Tagen)":"Not visited for (days)","Nichts zu verschieben.":"Nothing to re-seat.","Noch keine Buchungen.":"No bookings yet.","Noch keine Events.":"No events yet.","Noch keine Gerichte in dieser Kategorie.":"No dishes in this category yet.","Noch keine Kampagne.":"No campaigns yet.","Noch keine Kategorie – zuerst „+ Kategorie“.":"No categories yet – first use “+ Category”.","Nr.":"Nr.","Nr. auf der Karte":"No. on the menu","Nur noch":"Only","P.":"P.","Plätze gesamt (leer = unbegrenzt)":"Total places (empty = unlimited)","Plätze reservieren":"Reserve places","Preis":"Price","Preis (€)":"Price (€)","Preis pro Person (€)":"Price per person (€)","Preis-Hinweis":"Price note","Prognose wird geladen …":"Loading forecast …","QR-Codes drucken":"Print QR codes","QR-Codes für die Tische":"QR codes for the tables","Reihenfolge":"Order","Reservierung telefonisch: 01 263 37 13":"Reservations by phone: 01 263 37 13","Reservierungsbestätigungen bekommen Sie weiterhin.":"You will still receive reservation confirmations.","Schalenfrüchte":"Tree nuts","Schärfe":"Spice level","Sellerie":"Celery","Senf":"Mustard","Sesam":"Sesame","Sie bekommen keine Neuigkeiten mehr per E-Mail.":"You will no longer receive news by email.","Soja":"Soy","Speichern & senden":"Save & send","Speisekarte":"Menu","Speisekarte (QR-Menü)":"Menu (QR menu)","Speisekarte · Menu · 菜单":"Speisekarte · Menu · 菜单","Sulfite":"Sulphites","T12:00:00Z":"T12:00:00Z","Text":"Text","Text – Hallo {vorname}, …":"Text – Hello {vorname}, …","Titel":"Title","Versand fortsetzen":"Resume sending","Versendete Kampagnen bleiben zur Nachvollziehbarkeit gespeichert.":"Sent campaigns remain stored for traceability.","Von → Nach":"From → To","Vordergarten":"Front garden","Weichtiere":"Molluscs","Wird gesendet":"Sending","alle":"all","ausgebucht":"fully booked","ausverkauft":"sold out","ein Code pro Tisch":"one code per table","ein allgemeiner Code (Fenster, Flyer)":"one general code (window, flyers)","inaktiv":"inactive","keine Gäste mit No-Show":"no guests with no-shows","mild":"mild","nur telefonisch":"by phone only","nur vegetarisch":"vegetarian only","online buchbar":"bookable online","pro Person":"per person","scharf":"spicy","sichtbar":"visible","vegan":"vegan","vegetarisch":"vegetarian","vip, firma":"vip, company","z. B. Herbstmenü 2026":"e.g. Autumn Menu 2026","z. B. pro Person, ab 2 Pers.":"e.g. per person, from 2 guests","ÜBERBUCHT":"OVERBOOKED","„Ausverkauft“ kann jedes Teammitglied schalten – das Gericht bleibt sichtbar, ist aber ausgegraut. Bearbeiten und Preise nur für Admins. Allergene nach österreichischer Kennzeichnung (A–R).":"Any team member can mark a dish “Sold out” – it stays visible but is greyed out. Editing and prices are for admins only. Allergens follow Austrian labelling (A–R).","← Normale Reservierung":"← Regular reservation","→ Speisekarte":"→ Menu","☀ Garten":"☀ Garden","★ Empfehlung":"★ Recommended","四川 Restaurant Sichuan":"四川 Restaurant Sichuan","🌱 vegan":"🌱 vegan","🥬 vegetarisch":"🥬 vegetarian"};
+const EN_MUSTER = [
+  [/^Nur noch (\d+) Plätze frei\.$/, (m) => `Only ${m[1]} seats left.`],
+  [/^(\d+) Empfänger$/, (m) => `${m[1]} recipients`],
+  [/^(\d+) noch offen$/, (m) => `${m[1]} still open`],
+  [/^(\d+) Gäste$/, (m) => `${m[1]} ${m[1] === '1' ? 'guest' : 'guests'}`],
+  [/^(\d+) Tage$/, (m) => `${m[1]} ${m[1] === '1' ? 'day' : 'days'}`],
+  [/^vor (\d+) Tagen$/, (m) => `${m[1]} ${m[1] === '1' ? 'day' : 'days'} ago`],
+  [/^Seite (\d+) \/ (\d+)$/, (m) => `Page ${m[1]} / ${m[2]}`],
+  [/^Ohne Tisch \((\d+)\)$/, (m) => `No table (${m[1]})`],
+  [/^Speichern \((\d+)\)$/, (m) => `Save (${m[1]})`],
+  [/^(\d+) von (\d+) Tischen reserviert$/, (m) => `${m[1]} of ${m[2]} tables reserved`],
+  [/^\+(\d+) weitere$/, (m) => `+${m[1]} more`],
+  [/^frei in (-?\d+)′$/, (m) => `free in ${m[1]}′`],
+  [/^(\d+)′ überzogen$/, (m) => `${m[1]}′ over`],
+  [/^(\d+) Pers\. ab (\d\d:\d\d)$/, (m) => `${m[1]} pax from ${m[2]}`],
+  [/^Bitte eine gültige Dauer angeben \(15–480 Minuten\)\.$/, () => 'Please enter a valid duration (15–480 minutes).'],
+  [/^(\d+) Reservierungen$/, (m) => `${m[1]} ${m[1] === '1' ? 'reservation' : 'reservations'}`],
+  [/^(\d+) Pers\.$/, (m) => `${m[1]} pax`],
+  [/^(Offen|Im Service|Warteliste|No-Show) \((\d+)\)$/, (m) => `${{ 'Offen': 'Open', 'Im Service': 'In service', 'Warteliste': 'Waitlist', 'No-Show': 'No-Show' }[m[1]]} (${m[2]})`],
+  [/^Zu viele Fehlversuche\. Bitte in (\d+) Min\. erneut versuchen\.$/, (m) => `Too many failed attempts. Please try again in ${m[1]} min.`],
+  [/^Bitte noch ausfüllen: (.*)\.$/, (m) => `Please fill in: ${m[1].replace('Vorname', 'first name').replace('Nachname', 'last name').replace('Telefon', 'phone')}.`],
+  [/^Gelöscht: (\d+) Buchungen$/, (m) => `Deleted: ${m[1]} bookings`],
+  [/^Eingerichtet: (\d+) Tische, (\d+) Buchungen(.*)$/, (m) => `Set up: ${m[1]} tables, ${m[2]} bookings${m[3]}`],
+  [/^(\d+) Angebot\(e\) an die Warteliste verschickt$/, (m) => `${m[1]} offer(s) sent to the waitlist`],
+  [/^(\d+) Termine angelegt$/, (m) => `${m[1]} bookings created`],
+  [/^Für (\d+) Personen und mehr nehmen wir die Reservierung gerne persönlich entgegen\.$/, (m) => `For parties of ${m[1]} or more, we are happy to take your reservation in person.`],
+  [/^Server antwortet nicht \((\d+)\)\.$/, (m) => `Server not responding (${m[1]}).`],
+  [/^Nicht erlaubt: (.*)$/, (m) => `Not allowed: ${m[1]}`],
+  [/^Tisch (\S+)$/, (m) => `Table ${m[1]}`],
+  [/^Hallo (.+)$/, (m) => `Hello ${m[1]}`],
+  [/^(\d+) Besuche$/, (m) => `${m[1]} ${m[1] === '1' ? 'visit' : 'visits'}`]
+];
+const SPRACHEN = ['de', 'en', 'zh'];
 const SPRACHE = (() => {
-  try { const s = localStorage.getItem('sichuan.sprache'); if (s === 'de' || s === 'zh') return s; } catch { /* privat */ }
-  return /^zh/i.test(navigator.language || '') ? 'zh' : 'de';
+  try { const s = localStorage.getItem('sichuan.sprache'); if (SPRACHEN.includes(s)) return s; } catch { /* privat */ }
+  const n = (navigator.language || '').toLowerCase();
+  if (n.startsWith('zh')) return 'zh';
+  if (n.startsWith('de')) return 'de';
+  // Gäste aus dem Ausland: Englisch. Das Team-Gerät bleibt über die Auswahl auf Deutsch.
+  return 'en';
 })();
-const LOC = SPRACHE === 'zh' ? 'zh-CN' : 'de-AT';
-document.documentElement.lang = SPRACHE === 'zh' ? 'zh-CN' : 'de';
+const EINGEBETTET = {
+  en: [[/ Uhr\b\.?/g, ''], [/ Pers\./g, ' guests'], [/ pro Person\b/g, ' per person'], [/ vegetarisch\b/g, ' vegetarian'], [/\bTisch (\S+)/g, 'Table $1']],
+  zh: [[/ Uhr\b\.?/g, ''], [/ Pers\./g, ' 人'], [/ pro Person\b/g, ' /人'], [/ vegetarisch\b/g, ' 素食'], [/\bTisch (\S+)/g, '$1 号桌']]
+};
+const WOERTER = { zh: { liste: ZH, muster: ZH_MUSTER }, en: { liste: EN, muster: EN_MUSTER } };
+const LOC = SPRACHE === 'zh' ? 'zh-CN' : SPRACHE === 'en' ? 'en-GB' : 'de-AT';
+document.documentElement.lang = SPRACHE === 'zh' ? 'zh-CN' : SPRACHE;
 function t(s) {
-  if (SPRACHE !== 'zh' || s == null) return s;
+  const w = WOERTER[SPRACHE];
+  if (!w || s == null) return s;
   const roh = String(s); const kern = roh.trim(); if (!kern) return roh;
-  let neu = ZH[kern];
-  if (neu === undefined) for (const [re, f] of ZH_MUSTER) { const m = kern.match(re); if (m) { neu = f(m); break; } }
+  let neu = w.liste[kern];
+  if (neu === undefined) for (const [re, f] of w.muster) { const m = kern.match(re); if (m) { neu = f(m); break; } }
+  if (neu === undefined && /\d/.test(kern)) {
+    // Einzelwörter in zusammengesetzten Zeilen („18:30 Uhr · 3 Pers.“)
+    let x = kern;
+    for (const [de, ue] of EINGEBETTET[SPRACHE] || []) x = x.replace(de, ue);
+    if (x !== kern) neu = x;
+  }
   if (neu === undefined) return roh;
   return roh.replace(kern, neu);
 }
-function spracheWechseln() {
-  try { localStorage.setItem('sichuan.sprache', SPRACHE === 'zh' ? 'de' : 'zh'); } catch { /* privat */ }
+function spracheWechseln(ziel) {
+  const neu = SPRACHEN.includes(ziel) ? ziel : SPRACHEN[(SPRACHEN.indexOf(SPRACHE) + 1) % SPRACHEN.length];
+  try { localStorage.setItem('sichuan.sprache', neu); } catch { /* privat */ }
   location.reload();
 }
-const spracheKnopf = () => `<button class="sprachwahl" type="button" onclick="spracheWechseln()" title="Sprache">${SPRACHE === 'zh' ? 'Deutsch' : '中文'}</button>`;
-if (SPRACHE === 'zh') {
+const SPRACH_NAME = { de: 'Deutsch', en: 'English', zh: '中文' };
+const spracheKnopf = () => `<span class="sprachwahl">${SPRACHEN.map((l) => `<button type="button" class="${l === SPRACHE ? 'an' : ''}" onclick="spracheWechseln('${l}')" title="${SPRACH_NAME[l]}">${l === 'zh' ? '中文' : l.toUpperCase()}</button>`).join('')}</span>`;
+if (SPRACHE !== 'de') {
   const NICHT = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT']);
   const knoten = (n) => {
     if (n.nodeType === 3) { if (n.parentNode && !NICHT.has(n.parentNode.nodeName)) { const neu = t(n.nodeValue); if (neu !== n.nodeValue) n.nodeValue = neu; } return; }
@@ -371,6 +447,7 @@ function sitzText(i) { return i.ueber ? `${-i.rest}′ überzogen` : `frei in ${
 function start() {
   if (INIT.modus === 'team') teamStart();
   else if (INIT.modus === 'gast') gastStart();
+  else if (INIT.modus === 'karte') karteStart();
   else buchungStart();
 }
 /** Team & PINs: Mitglieder anlegen, sperren, PIN neu vergeben (nur Admin). */
@@ -413,11 +490,11 @@ function teamStart() {
       <b style="font-size:15px">四川 <span class="marke-name">Sichuan</span></b>${ALLEIN && SITZUNG ? `<span class="leise klein" style="color:#a1a1a6">${esc(SITZUNG.name)}</span>` : ''}
       <button id="zurueck" title="Vortag">‹</button><input type="date" id="datum"><button id="vor" title="Folgetag">›</button><button id="heute">Heute</button>
       <select id="schicht"><option value="alle">Ganzer Tag</option><option value="mittag">Mittag</option><option value="abend">Abend</option></select>
-      <div class="tabs zeile" style="gap:0"><button data-a="liste">Liste</button><button data-a="timeline">Timeline</button><button data-a="plan">Tischplan</button><button data-a="gaeste">Gäste</button><button data-a="statistik">Statistik</button><button data-a="feedback">Feedback</button></div>
+      <div class="tabs zeile" style="gap:0"><button data-a="liste">Liste</button><button data-a="timeline">Timeline</button><button data-a="plan">Tischplan</button><button data-a="gaeste">Gäste</button><button data-a="statistik">Statistik</button><button data-a="feedback">Feedback</button><button data-a="kampagnen">Kampagnen</button><button data-a="karte">Karte</button><button data-a="events">Events</button><button data-a="gutscheine">Gutscheine</button></div>
       <input id="suche" placeholder="Suchen …" style="width:150px">
       <span style="flex:1"></span>
       <button id="walkin">Walk-in</button><button id="warte">+ Warteliste</button><button class="primaer" id="neu">+ Reservierung</button>
-      <select id="mehr"><option value="">⋯</option><option value="demo">Testdaten einrichten</option><option value="demoweg">Testdaten löschen</option><option value="druck">Tagesliste drucken</option><option value="nachr">Warteliste jetzt prüfen</option><option value="buchung">Buchungswidget öffnen</option><option value="team">Team &amp; PINs</option><option value="sprache">${SPRACHE === 'zh' ? 'Deutsch' : '中文'}</option>${ALLEIN ? '<option value="abmelden">Abmelden</option>' : ''}</select>
+      <select id="mehr"><option value="">⋯</option><option value="demo">Testdaten einrichten</option><option value="demoweg">Testdaten löschen</option><option value="druck">Tagesliste drucken</option><option value="nachr">Warteliste jetzt prüfen</option><option value="buchung">Buchungswidget öffnen</option><option value="garantie">💳 Garantie für diesen Tag …</option><option value="team">Team &amp; PINs</option>${SPRACHEN.filter((l) => l !== SPRACHE).map((l) => `<option value="sprache-${l}">${SPRACH_NAME[l]}</option>`).join('')}${ALLEIN ? '<option value="abmelden">Abmelden</option>' : ''}</select>
     </div>
     <div class="kennzahlen" id="kennzahlen"></div>
     <div class="haupt"><div class="inhalt" id="inhalt"></div><div class="seite" id="seite"></div></div>
@@ -443,7 +520,8 @@ function teamStart() {
       if (w === 'druck') tageslisteDrucken();
       if (w === 'buchung') seiteOeffnen('/reservieren');
       if (w === 'team') teamVerwalten();
-      if (w === 'sprache') spracheWechseln();
+      if (w === 'garantie') zahlungEinstellungenDialog({ tag: T.datum });
+      if (w.startsWith('sprache-')) spracheWechseln(w.slice(8));
       if (w === 'abmelden') { if (confirm('Auf diesem Gerät abmelden?')) abmelden(); }
     } catch (f) { melden(f.message, true); }
   };
@@ -497,8 +575,8 @@ function zeichnen() {
     <span style="flex:1"></span>${chips.map(([k, t]) => `<span class="chip ${T.filter === k ? 'an' : ''}" data-f="${k}">${t}</span>`).join('')}`;
   document.querySelectorAll('[data-f]').forEach((c) => { c.onclick = () => { T.filter = c.dataset.f; zeichnen(); }; });
   popoverSchliessen();
-  document.querySelector('.haupt')?.classList.toggle('ohne-seite', ['plan', 'gaeste', 'statistik', 'feedback'].includes(T.ansicht) && !T.gewaehlt);
-  if (T.ansicht === 'liste') listeZeichnen(); else if (T.ansicht === 'timeline') timelineZeichnen(); else if (T.ansicht === 'gaeste') gaesteZeichnen(); else if (T.ansicht === 'statistik') statistikZeichnen(); else if (T.ansicht === 'feedback') feedbackTeamZeichnen(); else planZeichnen();
+  document.querySelector('.haupt')?.classList.toggle('ohne-seite', ['plan', 'gaeste', 'statistik', 'feedback', 'kampagnen', 'karte', 'events', 'gutscheine'].includes(T.ansicht) && !T.gewaehlt);
+  if (T.ansicht === 'liste') listeZeichnen(); else if (T.ansicht === 'timeline') timelineZeichnen(); else if (T.ansicht === 'gaeste') gaesteZeichnen(); else if (T.ansicht === 'statistik') statistikZeichnen(); else if (T.ansicht === 'feedback') feedbackTeamZeichnen(); else if (T.ansicht === 'kampagnen') kampagnenZeichnen(); else if (T.ansicht === 'karte') speisekarteZeichnen(); else if (T.ansicht === 'events') eventsZeichnen(); else if (T.ansicht === 'gutscheine') gutscheineZeichnen(); else planZeichnen();
   if (!T.gewaehlt) seiteStandard();
 }
 
@@ -507,6 +585,7 @@ function hinweisSymbole(b) {
   if (b.ueberfaellig) s.push('<span class="warnsymbol" title="Überfällig – No-Show prüfen">⏰</span>');
   if (b.rueckbestaetigungWarnung) s.push('<span title="Keine Rückbestätigung – bitte anrufen">📞</span>');
   if (b.tischGesperrt) s.push('<span title="Tisch fixiert">🔒</span>');
+  if (b.zahlungStatus) s.push(`<span class="${b.zahlungStatus === 'offen' || b.zahlungStatus === 'abgelaufen' ? 'warnsymbol' : ''}" title="${esc(ZART_TEXT[b.zahlungArt] || 'Zahlung')}: ${esc(ZSTATUS_TEXT[b.zahlungStatus] || b.zahlungStatus)}">💳</span>`);
   const si = sitzInfo(b);
   if (si) s.push(`<span class="${si.bald || si.ueber ? 'warnsymbol' : ''}" title="${si.seit !== null ? 'am Tisch seit ' + si.seit + ' Min. · ' : ''}${sitzText(si)}">⏱ ${si.seit !== null ? si.seit + '′' : ''}${si.bald || si.ueber ? ' · ' + sitzText(si) : ''}</span>`);
   if (b.gastId?.allergien) s.push(`<span title="Allergie: ${esc(b.gastId.allergien)}">⚠️</span>`);
@@ -546,7 +625,7 @@ function timelineZeichnen() {
   html += `<div class="tl-ank"><div class="tl-name klein" style="font-weight:600">Ankünfte</div>${Object.entries(ank).filter(([m]) => +m >= von && +m <= bis).map(([m, p]) => `<span class="tl-ankz" style="left:${x(+m)}px;width:${15 * pxMin - 2}px" title="${p} Pers. ab ${hhmm(+m)}">${p}</span>`).join('')}</div>`;
   let gruppe = '';
   for (const z of tl.zeilen) {
-    if (z.bereich !== gruppe) { gruppe = z.bereich; html += `<div class="tl-gruppe">${esc(gruppe === 'terrasse' ? 'Terrasse' : gruppe === 'innen' ? 'Innen' : gruppe)}</div>`; }
+    if (z.bereich !== gruppe) { gruppe = z.bereich; html += `<div class="tl-gruppe">${esc(bereichName(gruppe))}</div>`; }
     html += `<div class="tl-zeile" data-tisch="${esc(z.tisch)}"><div class="tl-name">${esc(z.tisch)}<span class="leise" style="font-weight:400;margin-left:3px">${z.maxPersonen ? '·' + z.maxPersonen : ''}</span></div>`;
     for (const b of z.balken) {
       if (b.endeMin < von || b.startMin > bis || !filter.has(b.id)) continue;
@@ -649,7 +728,8 @@ const KANAL_TEXT = { online: 'Website', telefon: 'Telefon', walkin: 'Walk-in', g
 const DEKO = { 'deko-wand': 'Wand', 'deko-bar': 'Bar / Theke', 'deko-pflanze': 'Pflanze', 'deko-text': 'Beschriftung', 'deko-tuer': 'Tür / Durchgang' };
 const nrGleich = (a, c) => String(a).toUpperCase() === String(c).toUpperCase();
 const istDeko = (t) => (t.art || 'tisch') !== 'tisch';
-const bereichName = (b) => (b === 'innen' ? 'Innen' : b === 'terrasse' ? 'Terrasse' : b);
+const BEREICH_NAMEN = { innen: 'Innen', terrasse: 'Terrasse', vordergarten: 'Vordergarten', hintergarten: 'Hintergarten', nebenraum: 'Nebenraum', separee: 'Separee' };
+const bereichName = (b) => BEREICH_NAMEN[b] || b;
 
 /** Reservierungen des angezeigten Service (ohne Stornos und abgeschlossene). */
 function planReservierungen() {
@@ -696,7 +776,7 @@ function planZeichnen() {
       <label class="klein zeile" style="gap:4px;margin:0"><input type="checkbox" id="peRaster" ${T.planRaster !== false ? 'checked' : ''}> Raster</label>
       <button class="klein" id="peUndo" ${T.planUndo?.length ? '' : 'disabled'} title="Rückgängig">↶</button>
       <button class="klein" id="peVerwerfen">Verwerfen</button><button class="klein primaer" id="peSpeichern">Speichern${aenderungen ? ` (${aenderungen})` : ''}</button>`
-    : `<button class="klein" id="peStart" title="Tische verschieben, Grösse ändern, neue Tische und Deko anlegen">✎ Plan bearbeiten</button>`}`;
+    : `<button class="klein" id="peGarten" title="Wetter und automatische Umschichtung in die Gärten">☀ Garten</button><button class="klein" id="peStart" title="Tische verschieben, Grösse ändern, neue Tische und Deko anlegen">✎ Plan bearbeiten</button>`}`;
 
   // Bühne: alle Elemente des Bereichs einpassen – auf einen Blick, egal wie gross der Bildschirm ist.
   const buehne = $('#planBuehne');
@@ -750,6 +830,7 @@ function planZeichnen() {
   document.querySelectorAll('#planLeiste [data-modus]').forEach((c) => { c.onclick = () => { T.planModus = c.dataset.modus; planZeichnen(); }; });
   if ($('#planRegler')) $('#planRegler').oninput = (e) => { T.planZeit = +e.target.value; planZeichnen(); };
   if ($('#peStart')) $('#peStart').onclick = planEditStarten;
+  if ($('#peGarten')) $('#peGarten').onclick = gartenDialog;
   if (T.planEdit) planEditorEreignisse(); else planDragEreignisse();
 }
 
@@ -860,7 +941,7 @@ function crmPopover(b, anker) {
   const p = popoverZeigen(`
     <div class="zeile" style="justify-content:space-between;flex-wrap:nowrap"><b style="font-size:15px">${esc(gastName(b))}</b><span style="white-space:nowrap">${badge(b.status)} <button class="klein pop-zu" title="Schliessen">✕</button></span></div>
     <div class="pop-kontakt">${g.telefonE164 ? (platzhalter ? `<span class="leise">📞 keine Nummer</span>` : `<a href="tel:${esc(g.telefonE164)}">📞 ${esc(g.telefonE164)}</a>`) : '<span class="leise">📞 –</span>'}
-      ${g.email ? `<a href="mailto:${esc(g.email)}">✉ ${esc(g.email)}</a>` : '<span class="leise">✉ keine E-Mail</span>'}${g.sprache === 'zh' ? ' <span class="badge">中文</span>' : ''}</div>
+      ${g.email ? `<a href="mailto:${esc(g.email)}">✉ ${esc(g.email)}</a>` : '<span class="leise">✉ keine E-Mail</span>'}${g.sprache === 'zh' ? ' <span class="badge">中文</span>' : g.sprache === 'en' ? ' <span class="badge">EN</span>' : ''}</div>
     <div class="pop-block"><span class="badge s-abgeschlossen">${esc(STUFE_TEXT[b.gaststufe] || STUFE_TEXT[g.stufe] || 'Neu')}</span>
       <span class="klein">${g.anzahlBesuche || 0} Besuche · ${g.anzahlNoShows || 0} No-Shows · ${g.anzahlSpaeteStornos || 0} spät storniert</span>
       ${g.allergien ? `<div class="pop-warn">⚠️ Allergie: ${esc(g.allergien)}</div>` : ''}
@@ -1082,6 +1163,7 @@ async function detailZeigen(id, stillesNeuladen = false) {
     <label>Vermittler</label><input id="dVerm" value="${esc(b.vermittler || '')}" placeholder="Hotel, Concierge, Firma">
     <label>Interne Notiz</label><textarea id="dNotiz" rows="2">${esc(b.notiz || '')}</textarea>
     <div class="zeile" style="justify-content:flex-end;margin-top:6px"><button class="klein" id="dSpeichern">Speichern</button></div>
+    ${zahlungDetailHtml(b)}
     <label>Gastseite (Test)</label><div class="zeile"><button class="klein" id="gastlink">Gastlink öffnen</button>${['abgeschlossen', 'abgereist'].includes(b.status) ? '<button class="klein" id="fblink">Feedback-Seite öffnen</button>' : ''}${b.feedbackSterne ? ` <span class="badge">Feedback ${'★'.repeat(b.feedbackSterne)}</span>` : ''}<span class="klein leise">ersetzt im Test die SMS</span></div>
     <h4 style="margin:18px 0 6px">Verlauf</h4><div id="verlauf" class="klein">${T.verlauf.length ? verlaufHtml() : '<span class="leise">lädt …</span>'}</div>`;
   $('#schliessen').onclick = () => { T.gewaehlt = null; zeichnen(); };
@@ -1110,6 +1192,7 @@ async function detailZeigen(id, stillesNeuladen = false) {
   };
   $('#dSpeichern').onclick = async () => { await sicher(() => rpc('reservierungen.detailsSetzen', id, { tags: $('#dTags').value.split(',').map((s) => s.trim()).filter(Boolean), vermittler: $('#dVerm').value, notiz: $('#dNotiz').value }), 'Gespeichert'); T.verlauf = []; laden(); };
   $('#gastlink').onclick = async () => { const link = await sicher(() => rpc('team.gastlinkFuerTest', id)); urlOeffnen(link); };
+  zahlungDetailEreignisse(b);
   if ($('#fblink')) $('#fblink').onclick = async () => { const r = await sicher(() => rpc('feedback.jetztAnfragen', id)); urlOeffnen(r.link); };
   if (!T.verlauf.length) {
     try { T.verlauf = await rpc('reservierungen.verlauf', id); if (T.gewaehlt === id && $('#verlauf')) $('#verlauf').innerHTML = verlaufHtml(); } catch (f) { /* still */ }
@@ -1252,7 +1335,7 @@ async function gastProfil(id) {
     <label>Tags (Komma)</label><input id="gpTags" value="${esc(g.tags.join(', '))}" placeholder="vip, stammgast, firma">
     <label>Interne Notiz</label><textarea id="gpNotiz" rows="2">${esc(g.notizIntern)}</textarea>
     <div class="zeile" style="gap:14px;margin-top:6px"><label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="gpMkt" ${g.marketingOptIn ? 'checked' : ''}> Newsletter / Angebote erlaubt</label>
-      <label class="zeile" style="gap:6px;margin:0">Sprache <select id="gpSpr"><option value="de" ${g.sprache !== 'zh' ? 'selected' : ''}>Deutsch</option><option value="zh" ${g.sprache === 'zh' ? 'selected' : ''}>中文</option></select></label></div>
+      <label class="zeile" style="gap:6px;margin:0">Sprache <select id="gpSpr"><option value="de" ${!['zh', 'en'].includes(g.sprache) ? 'selected' : ''}>Deutsch</option><option value="en" ${g.sprache === 'en' ? 'selected' : ''}>English</option><option value="zh" ${g.sprache === 'zh' ? 'selected' : ''}>中文</option></select></label></div>
     <div class="zeile" style="justify-content:flex-end;margin-top:8px"><button class="primaer" id="gpSpeichern">Speichern</button></div>
     <h4 style="margin:14px 0 6px">Reservierungen (${d.reservierungen.length}, davon ${gekommen} besucht)</h4>
     <div style="max-height:240px;overflow:auto">${d.reservierungen.map((r) => `<div class="klein" style="padding:4px 0;border-bottom:1px solid var(--linie)"><b>${datumText(r.datumZeit)} ${uhr(r.datumZeit)}</b> · ${r.personen} P. · Tisch ${esc(r.tische.join('+') || '–')} · ${badge(r.status)} · ${esc(KANAL_TEXT[r.quelle] || r.quelle)}${r.gastWunsch ? `<div class="leise">💬 ${esc(r.gastWunsch)}</div>` : ''}</div>`).join('') || '<span class="leise klein">Keine.</span>'}</div>`);
@@ -1417,8 +1500,383 @@ function feedbackTeamZeichnen() {
   if ($('#fbVor')) $('#fbVor').onclick = () => { FBT.seite += 1; feedbackTeamLaden(); };
 }
 
-const B = { bereich: '', personen: 2, datum: null, tage: [], slots: [], slot: null, hinweis: '', warteliste: false, zurWarte: false };
-function buchungStart() { document.body.insertAdjacentHTML('beforeend', spracheKnopf().replace('sprachwahl', 'sprachwahl schwebend')); B.datum = isoTag(new Date()); buchungZeichnen(); tageLaden(); }
+/* =====================================================================
+   KAMPAGNEN (Team) – E-Mails an Gästegruppen, nur mit Einwilligung
+   ===================================================================== */
+const KA = { daten: null, laedt: false };
+async function kampagnenLaden() {
+  KA.laedt = true;
+  try { KA.daten = await rpc('kampagnen.liste'); } catch (f) { melden(f.message, true); KA.daten = { kampagnen: [], vorlagen: [] }; }
+  KA.laedt = false; if (T.ansicht === 'kampagnen') kampagnenZeichnen();
+}
+const KSTATUS = { entwurf: 'Entwurf', laeuft: 'Wird gesendet', gesendet: 'Gesendet' };
+function kampagnenZeichnen() {
+  if (!KA.daten && !KA.laedt) kampagnenLaden();
+  const d = KA.daten || { kampagnen: [], vorlagen: [] };
+  $('#inhalt').innerHTML = `<div class="karte">
+    <div class="zeile" style="justify-content:space-between"><b style="font-size:16px">Kampagnen</b><button class="primaer" id="kaNeu">+ Neue Kampagne</button></div>
+    <p class="klein leise">E-Mails an Gästegruppen. Es werden nur Gäste angeschrieben, die dem Newsletter zugestimmt haben und eine E-Mail-Adresse hinterlegt haben. Jede Mail enthält einen Abmeldelink. Platzhalter im Text: {vorname}</p>
+    ${KA.laedt && !d.kampagnen.length ? '<p class="leise">Lädt …</p>' : d.kampagnen.length ? `<table class="liste"><tr><th>Name</th><th>Status</th><th>Empfänger</th><th>Erstellt</th><th></th></tr>
+      ${d.kampagnen.map((k) => `<tr><td><b>${esc(k.name)}</b><div class="klein leise">${esc(k.texte?.de?.betreff || '')}</div></td>
+        <td><span class="badge ${k.status === 'gesendet' ? 's-abgeschlossen' : k.status === 'laeuft' ? 's-angefragt' : ''}">${esc(KSTATUS[k.status] || k.status)}</span></td>
+        <td class="klein">${k.status === 'entwurf' ? '–' : `${k.gesendet} / ${k.empfaenger}${k.blockiert ? ` · ${k.blockiert} im Testmodus nicht gesendet` : ''}${k.fehler ? ` · ${k.fehler} Fehler` : ''}`}</td>
+        <td class="klein">${k._createdDate ? datumText(k._createdDate) : ''}</td>
+        <td><button class="klein" data-ka="${k._id}">${k.status === 'entwurf' ? 'Bearbeiten' : 'Ansehen'}</button></td></tr>`).join('')}</table>` : '<p class="leise">Noch keine Kampagne.</p>'}
+  </div>`;
+  $('#kaNeu').onclick = () => kampagneDialog(null);
+  document.querySelectorAll('[data-ka]').forEach((b) => { b.onclick = () => kampagneDialog(d.kampagnen.find((k) => k._id === b.dataset.ka)); });
+}
+function kampagneDialog(k) {
+  const d = KA.daten || { vorlagen: [] };
+  const neu = !k; k = k || { name: '', segment: {}, texte: { de: {}, en: {}, zh: {} }, status: 'entwurf' };
+  const nurLesen = k.status !== 'entwurf';
+  const s = k.segment || {};
+  const sp = (l, n) => `<div class="ka-sprache"><div class="fett klein">${n}</div><input data-betreff="${l}" placeholder="Betreff" value="${esc(k.texte?.[l]?.betreff || '')}" ${nurLesen ? 'disabled' : ''}><textarea data-text="${l}" rows="6" placeholder="Text – Hallo {vorname}, …" ${nurLesen ? 'disabled' : ''}>${esc(k.texte?.[l]?.text || '')}</textarea></div>`;
+  const m = modal(`<div class="zeile" style="justify-content:space-between"><b style="font-size:16px">${neu ? 'Neue Kampagne' : esc(k.name)}</b><button id="kaZu">Schliessen</button></div>
+    <label>Name (intern)</label><input id="kaName" value="${esc(k.name)}" ${nurLesen ? 'disabled' : ''} placeholder="z. B. Herbstmenü 2026">
+    <h4 style="margin:14px 0 4px">Empfänger</h4>
+    ${nurLesen ? '' : `<div class="zeile" style="gap:4px;flex-wrap:wrap">${d.vorlagen.map((v) => `<span class="chip" data-vorlage="${v.id}">${esc(v.name)}</span>`).join('')}</div>`}
+    <div class="ka-raster">
+      <div><label>Besuche mind.</label><input id="kaMin" type="number" min="0" value="${s.besucheMin ?? ''}" ${nurLesen ? 'disabled' : ''}></div>
+      <div><label>Besuche höchstens</label><input id="kaMax" type="number" min="0" value="${s.besucheMax ?? ''}" ${nurLesen ? 'disabled' : ''}></div>
+      <div><label>Nicht da seit (Tagen)</label><input id="kaInaktiv" type="number" min="0" value="${s.inaktivSeitTagen ?? ''}" ${nurLesen ? 'disabled' : ''}></div>
+      <div><label>Da gewesen in den letzten (Tagen)</label><input id="kaAktiv" type="number" min="0" value="${s.aktivInTagen ?? ''}" ${nurLesen ? 'disabled' : ''}></div>
+      <div><label>Sprache</label><select id="kaSprache" ${nurLesen ? 'disabled' : ''}><option value="">alle</option>${[['de', 'Deutsch'], ['en', 'English'], ['zh', '中文']].map(([v, n]) => `<option value="${v}" ${(s.sprachen || [])[0] === v ? 'selected' : ''}>${n}</option>`).join('')}</select></div>
+      <div><label>Tags (Komma)</label><input id="kaTags" value="${esc((s.tags || []).join(', '))}" ${nurLesen ? 'disabled' : ''} placeholder="vip, firma"></div>
+    </div>
+    <label class="zeile" style="gap:6px;margin-top:8px"><input type="checkbox" id="kaNoShow" ${s.ohneNoShow ? 'checked' : ''} ${nurLesen ? 'disabled' : ''}> keine Gäste mit No-Show</label>
+    <div class="zeile" style="margin-top:8px"><button class="klein" id="kaVorschau">Empfänger zählen</button><span id="kaAnzahl" class="klein"></span></div>
+    <h4 style="margin:14px 0 4px">Text</h4><p class="klein leise">Deutsch ist Pflicht. Fehlt Englisch oder Chinesisch, bekommen diese Gäste die deutsche Version.</p>
+    ${sp('de', 'Deutsch')}${sp('en', 'English')}${sp('zh', '中文')}
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px;flex-wrap:wrap">
+      ${!neu && !nurLesen ? '<button id="kaLoeschen" style="color:var(--rot)">Löschen</button>' : ''}
+      ${nurLesen ? (k.status === 'laeuft' ? '<button class="primaer" id="kaSenden">Versand fortsetzen</button>' : '') : '<button id="kaSpeichern">Speichern</button><button class="primaer" id="kaSenden">Speichern & senden</button>'}
+    </div><div id="kaFortschritt" class="klein" style="margin-top:6px"></div>`);
+  const segment = () => ({ besucheMin: $('#kaMin', m).value, besucheMax: $('#kaMax', m).value, inaktivSeitTagen: $('#kaInaktiv', m).value, aktivInTagen: $('#kaAktiv', m).value, sprachen: $('#kaSprache', m).value ? [$('#kaSprache', m).value] : [], tags: $('#kaTags', m).value, ohneNoShow: $('#kaNoShow', m).checked });
+  const daten = () => ({ _id: k._id, name: $('#kaName', m).value, segment: segment(), texte: Object.fromEntries(['de', 'en', 'zh'].map((l) => [l, { betreff: $(`[data-betreff="${l}"]`, m).value, text: $(`[data-text="${l}"]`, m).value }])) });
+  $('#kaZu', m).onclick = () => m.remove();
+  m.querySelectorAll('[data-vorlage]').forEach((c) => { c.onclick = () => {
+    const v = d.vorlagen.find((x) => x.id === c.dataset.vorlage).segment;
+    $('#kaMin', m).value = v.besucheMin ?? ''; $('#kaMax', m).value = v.besucheMax ?? ''; $('#kaInaktiv', m).value = v.inaktivSeitTagen ?? ''; $('#kaAktiv', m).value = v.aktivInTagen ?? '';
+    $('#kaSprache', m).value = (v.sprachen || [])[0] || ''; $('#kaTags', m).value = (v.tags || []).join(', ');
+    $('#kaVorschau', m).click();
+  }; });
+  $('#kaVorschau', m).onclick = async () => {
+    $('#kaAnzahl', m).textContent = 'zählt …';
+    try { const r = await rpc('kampagnen.vorschau', segment()); $('#kaAnzahl', m).innerHTML = `<b>${r.anzahl}</b> Empfänger${r.anzahl ? ` (${Object.entries(r.sprachen).map(([l, n]) => `${l.toUpperCase()} ${n}`).join(', ')}) – z. B. ${esc(r.beispiele.slice(0, 4).join(', '))}` : ''}`; }
+    catch (f) { $('#kaAnzahl', m).textContent = f.message; }
+  };
+  const speichern = async () => { const r = await sicher(() => rpc('kampagnen.speichern', daten()), 'Gespeichert'); k = { ...k, ...r }; return r; };
+  if ($('#kaSpeichern', m)) $('#kaSpeichern', m).onclick = async () => { await speichern(); m.remove(); kampagnenLaden(); };
+  if ($('#kaLoeschen', m)) $('#kaLoeschen', m).onclick = async () => { if (!confirm('Entwurf löschen?')) return; await sicher(() => rpc('kampagnen.entfernen', k._id), 'Gelöscht'); m.remove(); kampagnenLaden(); };
+  if ($('#kaSenden', m)) $('#kaSenden', m).onclick = async () => {
+    if (!nurLesen) {
+      const r = await rpc('kampagnen.vorschau', segment()).catch(() => null);
+      if (!confirm(`Kampagne jetzt an ${r ? r.anzahl : '?'} Gäste senden? Das lässt sich nicht rückgängig machen.`)) return;
+      await speichern();
+    }
+    const f = $('#kaFortschritt', m); $('#kaSenden', m).disabled = true;
+    try {
+      for (let i = 0; i < 300; i += 1) {
+        const r = await rpc('kampagnen.senden', k._id);
+        f.textContent = `${r.gesendet} / ${r.empfaenger} verarbeitet${r.blockiert ? ` · ${r.blockiert} im Testmodus nicht gesendet` : ''}${r.fehler ? ` · ${r.fehler} Fehler` : ''}`;
+        if (r.fertig) break;
+      }
+      melden('Kampagne versendet'); kampagnenLaden();
+    } catch (fe) { melden(fe.message, true); $('#kaSenden', m).disabled = false; }
+  };
+}
+
+/* =====================================================================
+   SPEISEKARTE (Team) – pflegen, ausverkauft schalten, QR-Codes drucken
+   ===================================================================== */
+const SK = { daten: null, laedt: false, kategorie: null };
+const ALLERGEN_CODES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'L', 'M', 'N', 'O', 'P', 'R'];
+const ALLERGEN_DE = { A: 'Gluten', B: 'Krebstiere', C: 'Ei', D: 'Fisch', E: 'Erdnuss', F: 'Soja', G: 'Milch', H: 'Schalenfrüchte', L: 'Sellerie', M: 'Senf', N: 'Sesam', O: 'Sulfite', P: 'Lupinen', R: 'Weichtiere' };
+const euro = (p) => (p == null ? '' : new Intl.NumberFormat(LOC, { style: 'currency', currency: 'EUR' }).format(p));
+async function speisekarteLaden() {
+  SK.laedt = true;
+  try { SK.daten = await rpc('speisekarte.verwaltung'); } catch (f) { melden(f.message, true); SK.daten = { kategorien: [], gerichte: [], tische: [] }; }
+  SK.laedt = false; if (T.ansicht === 'karte') speisekarteZeichnen();
+}
+function speisekarteZeichnen() {
+  if (!SK.daten && !SK.laedt) speisekarteLaden();
+  const d = SK.daten || { kategorien: [], gerichte: [], tische: [] };
+  if (!SK.kategorie && d.kategorien[0]) SK.kategorie = d.kategorien[0]._id;
+  const ger = d.gerichte.filter((g) => g.kategorieId === SK.kategorie).sort((a, b) => (a.sortierung ?? 100) - (b.sortierung ?? 100));
+  $('#inhalt').innerHTML = `<div class="karte">
+    <div class="zeile" style="justify-content:space-between;flex-wrap:wrap"><b style="font-size:16px">Speisekarte (QR-Menü)</b>
+      <span class="zeile" style="gap:4px"><button class="klein" id="skQr">QR-Codes drucken</button><button class="klein" id="skAnsehen">Gästeansicht</button><button class="klein" id="skKatNeu">+ Kategorie</button><button class="klein primaer" id="skNeu" ${SK.kategorie ? '' : 'disabled'}>+ Gericht</button></span></div>
+    <div class="zeile" style="gap:4px;flex-wrap:wrap;margin:10px 0">${d.kategorien.map((k) => `<span class="chip ${k._id === SK.kategorie ? 'an' : ''}" data-skkat="${k._id}">${esc(k.name?.de)}${k.aktiv === false ? ' (aus)' : ''} <span class="leise">${d.gerichte.filter((g) => g.kategorieId === k._id).length}</span></span>`).join('') || '<span class="leise klein">Noch keine Kategorie – zuerst „+ Kategorie“.</span>'}
+      ${SK.kategorie ? '<button class="klein" id="skKatEdit">Kategorie bearbeiten</button>' : ''}</div>
+    ${SK.laedt && !d.kategorien.length ? '<p class="leise">Lädt …</p>' : ger.length ? `<table class="liste"><tr><th>Nr.</th><th>Gericht</th><th>Preis</th><th>Allergene</th><th>Ausverkauft</th><th></th></tr>
+      ${ger.map((g) => `<tr class="${g.aktiv === false ? 'leise' : ''}"><td>${esc(g.nummer)}</td><td><b>${esc(g.name?.de)}</b> ${g.name?.zh ? `<span class="leise">${esc(g.name.zh)}</span>` : ''}${g.name?.en ? `<div class="klein leise">${esc(g.name.en)}</div>` : '<div class="klein" style="color:#d97706">Englisch fehlt</div>'}
+        <div class="klein">${'🌶'.repeat(g.schaerfe || 0)}${g.vegan ? ' 🌱 vegan' : g.vegetarisch ? ' 🥬 vegetarisch' : ''}${g.empfehlung ? ' ★ Empfehlung' : ''}${g.aktiv === false ? ' · nicht sichtbar' : ''}</div></td>
+        <td>${euro(g.preis)}${g.preisHinweis ? `<div class="klein leise">${esc(g.preisHinweis)}</div>` : ''}</td><td class="klein">${(g.allergene || []).join(' ')}</td>
+        <td><label class="schalter"><input type="checkbox" data-skaus="${g._id}" ${g.ausverkauft ? 'checked' : ''}><span></span></label></td>
+        <td><button class="klein" data-skedit="${g._id}">Bearbeiten</button></td></tr>`).join('')}</table>` : SK.kategorie ? '<p class="leise">Noch keine Gerichte in dieser Kategorie.</p>' : ''}
+    <p class="klein leise" style="margin-top:10px">„Ausverkauft“ kann jedes Teammitglied schalten – das Gericht bleibt sichtbar, ist aber ausgegraut. Bearbeiten und Preise nur für Admins. Allergene nach österreichischer Kennzeichnung (A–R).</p>
+  </div>`;
+  document.querySelectorAll('[data-skkat]').forEach((c) => { c.onclick = () => { SK.kategorie = c.dataset.skkat; speisekarteZeichnen(); }; });
+  document.querySelectorAll('[data-skaus]').forEach((i) => { i.onchange = async () => { const g = d.gerichte.find((x) => x._id === i.dataset.skaus); try { await rpc('speisekarte.ausverkauft', g._id, i.checked); g.ausverkauft = i.checked; melden(i.checked ? `${g.name.de}: ausverkauft` : `${g.name.de}: wieder verfügbar`); } catch (f) { melden(f.message, true); i.checked = !i.checked; } }; });
+  document.querySelectorAll('[data-skedit]').forEach((b) => { b.onclick = () => gerichtDialog(d.gerichte.find((x) => x._id === b.dataset.skedit)); });
+  $('#skNeu').onclick = () => gerichtDialog(null);
+  $('#skKatNeu').onclick = () => kategorieDialog(null);
+  if ($('#skKatEdit')) $('#skKatEdit').onclick = () => kategorieDialog(d.kategorien.find((k) => k._id === SK.kategorie));
+  $('#skAnsehen').onclick = () => seiteOeffnen('/karte');
+  $('#skQr').onclick = () => qrDrucken(d);
+}
+const drei = (feld, wert, mehrzeilig) => ['de', 'en', 'zh'].map((l) => `<div><label>${{ de: 'Deutsch', en: 'English', zh: '中文' }[l]}${l === 'de' ? ' *' : ''}</label>${mehrzeilig ? `<textarea data-${feld}="${l}" rows="2">${esc(wert?.[l] || '')}</textarea>` : `<input data-${feld}="${l}" value="${esc(wert?.[l] || '')}">`}</div>`).join('');
+const dreiLesen = (m, feld) => Object.fromEntries(['de', 'en', 'zh'].map((l) => [l, $(`[data-${feld}="${l}"]`, m).value]));
+function kategorieDialog(k) {
+  k = k || { name: {}, hinweis: {}, aktiv: true, sortierung: ((SK.daten?.kategorien.length || 0) + 1) * 10 };
+  const m = modal(`<b style="font-size:16px">${k._id ? 'Kategorie bearbeiten' : 'Neue Kategorie'}</b>
+    <h4 style="margin:10px 0 0">Name</h4><div class="ka-raster">${drei('kname', k.name)}</div>
+    <h4 style="margin:10px 0 0">Hinweis (optional)</h4><div class="ka-raster">${drei('khinweis', k.hinweis)}</div>
+    <div class="zeile" style="margin-top:8px"><label style="margin:0">Reihenfolge</label><input id="kSort" type="number" value="${k.sortierung ?? 100}" style="width:90px"><label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="kAktiv" ${k.aktiv !== false ? 'checked' : ''}> sichtbar</label></div>
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px">${k._id ? '<button id="kWeg" style="color:var(--rot)">Löschen</button>' : ''}<button id="kAbbr">Abbrechen</button><button class="primaer" id="kOk">Speichern</button></div>`);
+  $('#kAbbr', m).onclick = () => m.remove();
+  $('#kOk', m).onclick = async () => { const r = await sicher(() => rpc('speisekarte.kategorieSpeichern', { _id: k._id, name: dreiLesen(m, 'kname'), hinweis: dreiLesen(m, 'khinweis'), sortierung: +$('#kSort', m).value, aktiv: $('#kAktiv', m).checked }), 'Gespeichert'); SK.kategorie = r._id; m.remove(); speisekarteLaden(); };
+  if ($('#kWeg', m)) $('#kWeg', m).onclick = async () => { if (!confirm('Kategorie löschen?')) return; await sicher(() => rpc('speisekarte.entfernen', 'kategorie', k._id), 'Gelöscht'); SK.kategorie = null; m.remove(); speisekarteLaden(); };
+}
+function gerichtDialog(g) {
+  const d = SK.daten;
+  g = g || { kategorieId: SK.kategorie, name: {}, beschreibung: {}, allergene: [], schaerfe: 0, aktiv: true, sortierung: (d.gerichte.filter((x) => x.kategorieId === SK.kategorie).length + 1) * 10 };
+  const m = modal(`<b style="font-size:16px">${g._id ? 'Gericht bearbeiten' : 'Neues Gericht'}</b>
+    <div class="ka-raster"><div><label>Kategorie</label><select id="gKat">${d.kategorien.map((k) => `<option value="${k._id}" ${k._id === g.kategorieId ? 'selected' : ''}>${esc(k.name?.de)}</option>`).join('')}</select></div>
+      <div><label>Nr. auf der Karte</label><input id="gNr" value="${esc(g.nummer || '')}"></div>
+      <div><label>Preis (€)</label><input id="gPreis" inputmode="decimal" value="${g.preis ?? ''}"></div>
+      <div><label>Preis-Hinweis</label><input id="gPreisH" value="${esc(g.preisHinweis || '')}" placeholder="z. B. pro Person, ab 2 Pers."></div></div>
+    <h4 style="margin:10px 0 0">Name</h4><div class="ka-raster">${drei('gname', g.name)}</div>
+    <h4 style="margin:10px 0 0">Beschreibung</h4><div class="ka-raster">${drei('gbeschr', g.beschreibung, true)}</div>
+    <h4 style="margin:10px 0 4px">Allergene</h4><div class="allergenwahl">${ALLERGEN_CODES.map((a) => `<label class="chip ${(g.allergene || []).includes(a) ? 'an' : ''}"><input type="checkbox" value="${a}" ${(g.allergene || []).includes(a) ? 'checked' : ''}> ${a} ${ALLERGEN_DE[a]}</label>`).join('')}</div>
+    <div class="zeile" style="margin-top:8px;gap:14px;flex-wrap:wrap"><label style="margin:0">Schärfe <select id="gScharf">${[0, 1, 2, 3].map((n) => `<option value="${n}" ${(g.schaerfe || 0) === n ? 'selected' : ''}>${n ? '🌶'.repeat(n) : 'mild'}</option>`).join('')}</select></label>
+      <label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="gVeg" ${g.vegetarisch ? 'checked' : ''}> vegetarisch</label>
+      <label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="gVegan" ${g.vegan ? 'checked' : ''}> vegan</label>
+      <label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="gEmpf" ${g.empfehlung ? 'checked' : ''}> ★ Empfehlung</label>
+      <label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="gAktiv" ${g.aktiv !== false ? 'checked' : ''}> sichtbar</label></div>
+    <div class="ka-raster"><div><label>Bild-URL (optional)</label><input id="gBild" value="${esc(g.bild || '')}" placeholder="https://…"></div><div><label>Reihenfolge</label><input id="gSort" type="number" value="${g.sortierung ?? 100}"></div></div>
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px">${g._id ? '<button id="gWeg" style="color:var(--rot)">Löschen</button>' : ''}<button id="gAbbr">Abbrechen</button><button class="primaer" id="gOk">Speichern</button></div>`);
+  m.querySelectorAll('.allergenwahl input').forEach((i) => { i.onchange = () => i.parentElement.classList.toggle('an', i.checked); });
+  $('#gAbbr', m).onclick = () => m.remove();
+  $('#gOk', m).onclick = async () => {
+    await sicher(() => rpc('speisekarte.gerichtSpeichern', { _id: g._id, kategorieId: $('#gKat', m).value, nummer: $('#gNr', m).value, preis: $('#gPreis', m).value, preisHinweis: $('#gPreisH', m).value,
+      name: dreiLesen(m, 'gname'), beschreibung: dreiLesen(m, 'gbeschr'), allergene: [...m.querySelectorAll('.allergenwahl input:checked')].map((i) => i.value),
+      schaerfe: +$('#gScharf', m).value, vegetarisch: $('#gVeg', m).checked, vegan: $('#gVegan', m).checked, empfehlung: $('#gEmpf', m).checked, aktiv: $('#gAktiv', m).checked, bild: $('#gBild', m).value, sortierung: +$('#gSort', m).value, ausverkauft: g.ausverkauft }), 'Gespeichert');
+    m.remove(); speisekarteLaden();
+  };
+  if ($('#gWeg', m)) $('#gWeg', m).onclick = async () => { if (!confirm('Gericht löschen?')) return; await sicher(() => rpc('speisekarte.entfernen', 'gericht', g._id), 'Gelöscht'); m.remove(); speisekarteLaden(); };
+}
+/** QR-Code als SVG (Bibliothek qrcode-generator, MIT). */
+function qrSvg(text, px = 160) {
+  const q = qrcode(0, 'M'); q.addData(text); q.make();
+  const n = q.getModuleCount(), r = 2, gr = n + r * 2;
+  let pfad = '';
+  for (let y = 0; y < n; y += 1) for (let x = 0; x < n; x += 1) if (q.isDark(y, x)) pfad += `M${x + r},${y + r}h1v1h-1z`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${gr} ${gr}" width="${px}" height="${px}" shape-rendering="crispEdges"><rect width="${gr}" height="${gr}" fill="#fff"/><path d="${pfad}" fill="#000"/></svg>`;
+}
+function qrDrucken(d) {
+  const m = modal(`<b style="font-size:16px">QR-Codes für die Tische</b>
+    <p class="klein leise">Jeder Code öffnet die Speisekarte in der Sprache des Handys (DE/EN/中文). Mit Tischnummer, damit ihr später sehen könnt, wo gescannt wurde.</p>
+    <label class="zeile" style="gap:6px"><input type="radio" name="qrArt" value="tische" checked> ein Code pro Tisch</label>
+    <label class="zeile" style="gap:6px"><input type="radio" name="qrArt" value="einer"> ein allgemeiner Code (Fenster, Flyer)</label>
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button id="qrAbbr">Abbrechen</button><button class="primaer" id="qrOk">Drucken</button></div>`);
+  $('#qrAbbr', m).onclick = () => m.remove();
+  $('#qrOk', m).onclick = () => {
+    const einer = m.querySelector('[name=qrArt]:checked').value === 'einer';
+    const ziele = einer ? [{ nr: '', url: d.kartenUrl }] : [...d.tische].sort((a, b) => a.localeCompare(b, 'de', { numeric: true })).map((nr) => ({ nr, url: `${d.kartenUrl}?tisch=${encodeURIComponent(nr)}` }));
+    let el = document.getElementById('druck'); if (!el) { el = document.createElement('div'); el.id = 'druck'; document.body.appendChild(el); }
+    el.innerHTML = `<div class="qr-blatt">${ziele.map((z) => `<div class="qr-karte">${qrSvg(z.url, einer ? 320 : 150)}<div class="qr-titel">四川 Restaurant Sichuan</div><div>Speisekarte · Menu · 菜单</div>${z.nr ? `<div class="qr-tisch">Tisch ${esc(z.nr)}</div>` : ''}</div>`).join('')}</div>`;
+    m.remove(); window.print();
+  };
+}
+
+/* =====================================================================
+   EVENTS (Team)
+   ===================================================================== */
+const EV = { daten: null, laedt: false };
+async function eventsLaden() {
+  EV.laedt = true;
+  try { EV.daten = await rpc('events.alle'); } catch (f) { melden(f.message, true); EV.daten = []; }
+  EV.laedt = false; if (T.ansicht === 'events') eventsZeichnen();
+}
+const datumZeitText = (d) => `${datumText(d)} · ${uhr(d)}`;
+function eventsZeichnen() {
+  if (!EV.daten && !EV.laedt) eventsLaden();
+  const d = EV.daten || [];
+  const jetzt = Date.now();
+  $('#inhalt').innerHTML = `<div class="karte">
+    <div class="zeile" style="justify-content:space-between"><b style="font-size:16px">Events</b><span class="zeile" style="gap:4px"><button class="klein" id="evSeite">Event-Seite ansehen</button><button class="primaer" id="evNeu">+ Neues Event</button></span></div>
+    <p class="klein leise">Themenabende, Feiertagsmenüs, Verkostungen. Gäste buchen auf der Website (Reservieren → Events). Jede Event-Buchung ist eine normale Reservierung mit dem Tag „event“ und erscheint in Liste, Timeline und Tischplan.</p>
+    ${EV.laedt && !d.length ? '<p class="leise">Lädt …</p>' : d.length ? d.map((e) => `<div class="fb-eintrag ${new Date(e.ende).getTime() < jetzt ? 'leise' : ''}">
+      <div class="zeile" style="justify-content:space-between;flex-wrap:wrap"><span><b>${esc(e.titel?.de)}</b> <span class="klein leise">${datumZeitText(e.beginn)}–${uhr(e.ende)}</span>${e.aktiv ? '' : ' <span class="badge">inaktiv</span>'}${e.buchbar ? '' : ' <span class="badge">nur telefonisch</span>'}</span>
+        <span class="zeile" style="gap:4px"><span class="klein"><b>${e.gebucht}</b>${e.plaetze != null ? ` / ${e.plaetze}` : ''} Pers. · ${e.buchungen} Buchungen</span><button class="klein" data-evteil="${e._id}">Gäste</button><button class="klein" data-evedit="${e._id}">Bearbeiten</button></span></div>
+      ${e.preisProPerson != null ? `<div class="klein">${euro(e.preisProPerson)} pro Person</div>` : ''}${e.zahlungsart && e.zahlungsart !== 'keine' ? `<div class="klein">💳 ${esc(ZART_TEXT[e.zahlungsart])}</div>` : ''}${e.beschreibung?.de ? `<div class="klein leise">${esc(e.beschreibung.de).slice(0, 220)}</div>` : ''}
+    </div>`).join('') : '<p class="leise">Noch keine Events.</p>'}
+  </div>`;
+  $('#evNeu').onclick = () => eventDialog(null);
+  $('#evSeite').onclick = () => seiteOeffnen('/karte?a=events');
+  document.querySelectorAll('[data-evedit]').forEach((b) => { b.onclick = () => eventDialog(d.find((e) => e._id === b.dataset.evedit)); });
+  document.querySelectorAll('[data-evteil]').forEach((b) => { b.onclick = async () => {
+    const l = await sicher(() => rpc('events.teilnehmer', b.dataset.evteil));
+    const m = modal(`<div class="zeile" style="justify-content:space-between"><b>Gäste</b><button id="tZu">Schliessen</button></div>${l.length ? `<table class="liste"><tr><th>Gast</th><th>P.</th><th>Tisch</th><th>Status</th></tr>${l.map((x) => `<tr><td>${esc(x.name)}<div class="klein leise">${esc(x.gastWunsch)}</div></td><td>${x.personen}</td><td>${esc(x.tische.join('+') || '–')}</td><td>${badge(x.status)}</td></tr>`).join('')}</table>` : '<p class="leise">Noch keine Buchungen.</p>'}`);
+    $('#tZu', m).onclick = () => m.remove();
+  }; });
+}
+const lokalInput = (d) => { if (!d) return ''; const x = new Date(d); const teile = new Intl.DateTimeFormat('sv-SE', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).format(x); return teile.replace(' ', 'T'); };
+function eventDialog(e) {
+  e = e || { titel: {}, beschreibung: {}, aktiv: true, buchbar: true, maxProBuchung: 8 };
+  const m = modal(`<b style="font-size:16px">${e._id ? 'Event bearbeiten' : 'Neues Event'}</b>
+    <h4 style="margin:10px 0 0">Titel</h4><div class="ka-raster">${drei('etitel', e.titel)}</div>
+    <h4 style="margin:10px 0 0">Beschreibung (Menü, Programm …)</h4><div class="ka-raster">${drei('ebeschr', e.beschreibung, true)}</div>
+    <div class="ka-raster"><div><label>Beginn *</label><input id="eVon" type="datetime-local" value="${lokalInput(e.beginn)}"></div><div><label>Ende</label><input id="eBis" type="datetime-local" value="${lokalInput(e.ende)}"></div>
+      <div><label>Plätze gesamt (leer = unbegrenzt)</label><input id="ePl" type="number" min="1" value="${e.plaetze ?? ''}"></div><div><label>Preis pro Person (€)</label><input id="ePreis" inputmode="decimal" value="${e.preisProPerson ?? ''}"></div>
+      <div><label>Max. Personen pro Buchung</label><input id="eMax" type="number" min="1" value="${e.maxProBuchung ?? 8}"></div><div><label>Bild-URL (optional)</label><input id="eBild" value="${esc(e.bild || '')}"></div>
+      <div><label>Zahlung beim Buchen (Stripe)</label><select id="eZart">${[['keine', 'Keine'], ['ticket', 'Ticket: Preis vorab bezahlen'], ['anzahlung', 'Anzahlung pro Person'], ['garantie', 'Reservierungsgarantie (Karte)']].map(([k, v]) => `<option value="${k}" ${(e.zahlungsart || 'keine') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></div>
+      <div><label>Anzahlung / Garantie pro Person (€)</label><input id="eZpp" inputmode="decimal" value="${e.zahlungProPerson ?? ''}" placeholder="leer = Preis pro Person"></div></div>
+    <p class="klein leise">Zahlung beim Event greift nur, wenn unter Gutscheine → Zahlungen „Zahlungen bei Events“ eingeschaltet ist.</p>
+    <div class="zeile" style="gap:14px;margin-top:8px"><label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="eAktiv" ${e.aktiv !== false ? 'checked' : ''}> sichtbar</label><label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="eBuch" ${e.buchbar !== false ? 'checked' : ''}> online buchbar</label></div>
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px">${e._id ? '<button id="eWeg" style="color:var(--rot)">Löschen</button>' : ''}<button id="eAbbr">Abbrechen</button><button class="primaer" id="eOk">Speichern</button></div>`);
+  const nachUtc = (v) => { if (!v) return null; const [d, z] = v.split('T'); const [h, mi] = z.split(':').map(Number); return zeitAm(d, h * 60 + mi); };
+  $('#eAbbr', m).onclick = () => m.remove();
+  $('#eOk', m).onclick = async () => {
+    await sicher(() => rpc('events.speichern', { _id: e._id, titel: dreiLesen(m, 'etitel'), beschreibung: dreiLesen(m, 'ebeschr'), beginn: nachUtc($('#eVon', m).value), ende: nachUtc($('#eBis', m).value), plaetze: $('#ePl', m).value, preisProPerson: $('#ePreis', m).value.replace(',', '.'), maxProBuchung: $('#eMax', m).value, bild: $('#eBild', m).value, zahlungsart: $('#eZart', m).value, zahlungProPerson: $('#eZpp', m).value.replace(',', '.'), aktiv: $('#eAktiv', m).checked, buchbar: $('#eBuch', m).checked }), 'Gespeichert');
+    m.remove(); eventsLaden();
+  };
+  if ($('#eWeg', m)) $('#eWeg', m).onclick = async () => { if (!confirm('Event löschen?')) return; await sicher(() => rpc('events.entfernen', e._id), 'Gelöscht'); m.remove(); eventsLaden(); };
+}
+
+/* =====================================================================
+   GARTEN – Wetter-Umschichtung ansehen und auslösen (Tischplan)
+   ===================================================================== */
+async function gartenDialog() {
+  const m = modal(`<div class="zeile" style="justify-content:space-between"><b style="font-size:16px">☀ Garten & Wetter · ${datumText(T.datum + 'T12:00:00Z')}</b><button id="gZu">Schliessen</button></div><div id="gInhalt" class="klein">Prognose wird geladen …</div>`);
+  $('#gZu', m).onclick = () => m.remove();
+  try {
+    const v = await rpc('verwaltung.gartenVorschau', T.datum);
+    const BEW = (b) => `${b.tauglich ? '✅' : '❌'} <b>${esc(b.name)}</b> ${b.punkte}/100 – ${esc((b.gruende || []).join(' '))}`;
+    $('#gInhalt', m).innerHTML = `
+      ${v.hinweis ? `<p>${esc(v.hinweis)}</p>` : ''}
+      ${(v.bewertung || []).map((s) => `<div style="margin:6px 0"><div class="fett">${esc(s.service)}</div>${s.gaerten.map((g) => `<div>${BEW(g)}</div>`).join('') || '<div class="leise">Keine Gartentische angelegt – im Plan-Editor Tische dem Bereich „vordergarten“ bzw. „hintergarten“ zuordnen.</div>'}</div>`).join('')}
+      <h4 style="margin:10px 0 4px">Geplante Änderungen (${(v.aenderungen || []).length})</h4>
+      ${(v.aenderungen || []).length ? `<table class="liste"><tr><th>Zeit</th><th>Gast</th><th>Von → Nach</th><th>Grund</th></tr>${v.aenderungen.map((a) => `<tr><td>${uhr(a.zeit)}</td><td>${esc(a.gast)} · ${a.personen} P.</td><td>${esc(bereichName(a.vorher || '–'))} → <b>${esc(bereichName(a.bereich || 'ÜBERBUCHT'))}</b> ${esc((a.tische || []).join('+'))}</td><td class="klein">${esc(a.grund)}</td></tr>`).join('')}</table>` : '<p class="leise">Nichts zu verschieben.</p>'}
+      <p class="leise">Automatisch läuft das täglich um 09:00 und 15:00 für die nächsten ${v.horizont || 4} Tage. Buchungen in den nächsten ${v.sperrfrist || 18} Stunden, fixierte Buchungen und ausdrückliche Gastwünsche werden nicht verschoben.</p>
+      ${(v.aenderungen || []).length ? '<div class="zeile" style="justify-content:flex-end"><button class="primaer" id="gJetzt">Jetzt umschichten</button></div>' : ''}`;
+    if ($('#gJetzt', m)) $('#gJetzt', m).onclick = async () => { const r = await sicher(() => rpc('verwaltung.gartenUmschichten', T.datum)); melden(`${r.geaendert} Reservierung(en) umgesetzt`); m.remove(); T.verlauf = []; laden(); };
+  } catch (f) { $('#gInhalt', m).textContent = f.message; }
+}
+
+/* =====================================================================
+   GÄSTE-SEITEN: Speisekarte (/karte), Events, Abmelden
+   ===================================================================== */
+const KG = { karte: null, events: [], veg: false };
+async function karteStart() {
+  document.body.insertAdjacentHTML('beforeend', spracheKnopf().replace('sprachwahl', 'sprachwahl schwebend'));
+  $('#wurzel').innerHTML = '<div class="gast leise">Lädt …</div>';
+  try {
+    [KG.karte, KG.events] = await Promise.all([rpc('speisekarte.karte', SPRACHE).catch(() => null), rpc('events.liste', SPRACHE).catch(() => [])]);
+  } catch (f) { /* unten behandelt */ }
+  if (INIT.ansicht === 'gutschein') return gutscheinGastStart();
+  if (INIT.ansicht === 'events') eventsGastZeichnen(); else karteGastZeichnen();
+  rpc('zahlung.einstellungenOeffentlich').then((z) => { ZO = z; if (z?.gutscheine && $('#mGut')) $('#mGut').classList.remove('versteckt'); }).catch(() => {});
+}
+const chili = (n) => (n ? `<span class="chili" title="scharf">${'🌶'.repeat(n)}</span>` : '');
+function karteGastZeichnen() {
+  const k = KG.karte;
+  const kat = k ? k.kategorien : [];
+  const ev = KG.events.slice(0, 2);
+  $('#wurzel').innerHTML = `<div class="gast menue">
+    <div class="leise">Restaurant Sichuan · Wien</div><h1>Speisekarte</h1>${INIT.tisch ? `<div class="klein leise">Tisch ${esc(INIT.tisch)}</div>` : ''}
+    ${ev.length ? `<div class="ev-teaser">${ev.map((e) => `<a class="ev-mini" href="#" data-evlink="${e.id}"><b>${esc(e.titel)}</b><span>${datumText(e.beginn)} · ${uhr(e.beginn)}</span></a>`).join('')}</div>` : ''}
+    <nav class="menue-nav">${kat.map((c) => `<a href="#kat-${c.id}" class="chip">${esc(c.name)}</a>`).join('')}</nav>
+    <label class="zeile klein" style="gap:6px;margin:6px 0"><input type="checkbox" id="mVeg" ${KG.veg ? 'checked' : ''}> nur vegetarisch</label>
+    ${kat.length ? kat.map((c) => {
+      const g = c.gerichte.filter((x) => !KG.veg || x.vegetarisch || x.vegan);
+      return g.length ? `<section id="kat-${c.id}"><h2>${esc(c.name)}</h2>${c.hinweis ? `<p class="klein leise">${esc(c.hinweis)}</p>` : ''}
+      ${g.map((x) => `<div class="gericht ${x.ausverkauft ? 'aus' : ''}">${x.bild ? `<img src="${esc(x.bild)}" alt="" loading="lazy">` : ''}<div class="g-text">
+        <div class="g-kopf"><span>${x.nummer ? `<span class="g-nr">${esc(x.nummer)}</span>` : ''}<b>${esc(x.name)}</b>${x.empfehlung ? ' <span class="badge s-angefragt">★</span>' : ''}</span><span class="g-preis">${x.ausverkauft ? '<span class="badge">ausverkauft</span>' : euro(x.preis)}</span></div>
+        ${x.originalName ? `<div class="klein leise">${esc(x.originalName)}</div>` : ''}
+        ${x.beschreibung ? `<div class="klein">${esc(x.beschreibung)}</div>` : ''}
+        <div class="klein leise">${chili(x.schaerfe)}${x.vegan ? ' <span>🌱 vegan</span>' : x.vegetarisch ? ' <span>🥬 vegetarisch</span>' : ''}${x.allergene.length ? ` · <span>${x.allergene.join(' ')}</span>` : ''}${x.preisHinweis ? ` · <span>${esc(x.preisHinweis)}</span>` : ''}</div></div></div>`).join('')}</section>` : '';
+    }).join('') : '<div class="karte">Die Speisekarte wird gerade vorbereitet.</div>'}
+    ${k && k.allergene.length ? `<div class="karte klein" style="margin-top:16px"><b>Allergene</b><br>${k.allergene.map((a) => `<b>${a.code}</b> ${esc(a.name)}`).join(' · ')}<br><span class="leise">Fragen Sie gerne unser Team nach Details.</span></div>` : ''}
+    <button class="primaer" id="mRes" style="width:100%;margin-top:16px;padding:12px">Tisch reservieren</button>
+    <button id="mGut" class="${ZO?.gutscheine ? '' : 'versteckt'}" style="width:100%;margin-top:8px;padding:12px">🎁 Gutschein verschenken</button>
+    <div class="marke">Eigenes Reservierungssystem · Test</div></div>`;
+  $('#mVeg').onchange = (e) => { KG.veg = e.target.checked; karteGastZeichnen(); };
+  $('#mRes').onclick = () => seiteOeffnen('/reservieren');
+  $('#mGut').onclick = () => gutscheinKaufZeichnen();
+  document.querySelectorAll('[data-evlink]').forEach((a) => { a.onclick = (e) => { e.preventDefault(); seiteOeffnen('/reservieren?event=' + encodeURIComponent(a.dataset.evlink)); }; });
+}
+function eventsGastZeichnen() {
+  const l = KG.events;
+  $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan · Wien</div><h1>Events</h1>
+    ${l.length ? l.map((e) => `<div class="karte ev-karte">${e.bild ? `<img src="${esc(e.bild)}" alt="" loading="lazy">` : ''}
+      <div class="fett" style="font-size:17px">${esc(e.titel)}</div><div class="leise">${datumText(e.beginn)} · ${uhr(e.beginn)}–${uhr(e.ende)} Uhr</div>
+      ${e.preisProPerson != null ? `<div>${euro(e.preisProPerson)} pro Person</div>` : ''}
+      ${e.beschreibung ? `<p class="klein" style="white-space:pre-wrap">${esc(e.beschreibung)}</p>` : ''}
+      ${e.rest === 0 ? '<span class="badge s-noShow">Ausgebucht</span>' : e.buchbar ? `<button class="primaer" data-evbuch="${e.id}">Plätze reservieren</button>${e.rest != null && e.rest <= 10 ? ` <span class="klein">Nur noch ${e.rest} Plätze frei.</span>` : ''}` : '<span class="klein leise">Reservierung telefonisch: 01 263 37 13</span>'}
+    </div>`).join('') : '<div class="karte">Derzeit sind keine Events geplant.</div>'}
+    <p><a href="#" id="evKarte">→ Speisekarte</a></p><div class="marke">Eigenes Reservierungssystem · Test</div></div>`;
+  document.querySelectorAll('[data-evbuch]').forEach((b) => { b.onclick = () => seiteOeffnen('/reservieren?event=' + encodeURIComponent(b.dataset.evbuch)); });
+  $('#evKarte').onclick = (e) => { e.preventDefault(); karteGastZeichnen(); };
+}
+
+/** Buchungswidget: Event-Buchung (/reservieren?event=…). */
+const EB = { event: null, personen: 2 };
+async function eventBuchungStart(id) {
+  let l = [];
+  try { l = await rpc('events.liste', SPRACHE); } catch (f) { /* leer */ }
+  EB.event = l.find((e) => e.id === id) || null;
+  if (!EB.event) { B.eventHinweis = 'Dieses Event ist nicht mehr buchbar.'; buchungZeichnen(); tageLaden(); return; }
+  eventBuchungZeichnen();
+}
+function eventBuchungZeichnen() {
+  const e = EB.event;
+  const max = Math.min(e.maxProBuchung || 8, e.rest ?? 99);
+  $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan · Wien</div><h1>${esc(e.titel)}</h1>
+    <div class="karte"><div class="fett">${datumText(e.beginn)} · ${uhr(e.beginn)}–${uhr(e.ende)} Uhr</div>${e.preisProPerson != null ? `<div>${euro(e.preisProPerson)} pro Person</div>` : ''}${e.beschreibung ? `<p class="klein" style="white-space:pre-wrap">${esc(e.beschreibung)}</p>` : ''}</div>
+    ${max < 1 ? '<div class="karte">Dieses Event ist ausgebucht.</div>' : `<h2>Wie viele Personen?</h2>
+    <div class="raster">${Array.from({ length: max }, (_, i) => i + 1).map((n) => `<button data-ep="${n}" class="${n === EB.personen ? 'an' : ''}">${n}</button>`).join('')}</div>
+    <h2>Ihre Daten</h2>
+    <div class="zeile" style="flex-wrap:nowrap"><div style="flex:1"><label>Vorname *</label><input id="fVor"></div><div style="flex:1"><label>Nachname *</label><input id="fNach"></div></div>
+    <label>Mobilnummer *</label><input id="fTel" type="tel" placeholder="0664 1234567"><label>E-Mail</label><input id="fMail" type="email">
+    <label>Wünsche (Allergien, Anlass …)</label><textarea id="fWunschText" rows="2"></textarea>
+    ${zahlungsHinweisHtml(EB.personen, isoTag(e.beginn), e)}
+    <button class="primaer" id="eOk" style="width:100%;margin-top:14px;padding:12px">Reservieren · ${EB.personen} Pers.${e.preisProPerson != null ? ' · ' + euro(e.preisProPerson * EB.personen) : ''}</button>`}
+    <p><a href="#" id="eZurueck">← Normale Reservierung</a></p><div class="marke">Eigenes Reservierungssystem · Test</div></div>`;
+  document.querySelectorAll('[data-ep]').forEach((b) => { b.onclick = () => { const w = { v: $('#fVor').value, n: $('#fNach').value, t: $('#fTel').value, m: $('#fMail').value, x: $('#fWunschText').value }; EB.personen = +b.dataset.ep; eventBuchungZeichnen(); $('#fVor').value = w.v; $('#fNach').value = w.n; $('#fTel').value = w.t; $('#fMail').value = w.m; $('#fWunschText').value = w.x; }; });
+  $('#eZurueck').onclick = (ev) => { ev.preventDefault(); EB.event = null; buchungZeichnen(); tageLaden(); };
+  const ok = $('#eOk'); if (ok) ok.onclick = async () => {
+    ok.disabled = true;
+    try {
+      const r = await rpc('events.buchen', { eventId: e.id, personen: EB.personen, vorname: $('#fVor').value, nachname: $('#fNach').value, telefon: $('#fTel').value, email: $('#fMail').value, gastWunsch: $('#fWunschText').value, sprache: SPRACHE });
+      if (r.zahlung?.darfZahlen) { zahlungAusstehendZeigen(r, e.titel); return; }
+      $('#wurzel').innerHTML = `<div class="gast"><h1>${r.status === 'angefragt' ? 'Danke für Ihre Anfrage!' : 'Ihr Tisch ist reserviert'}</h1>
+        <div class="karte"><div class="fett" style="font-size:17px">${esc(e.titel)}</div><div>${datumText(r.zeit)} · ${uhr(r.zeit)} Uhr · ${r.personen} Pers.</div><div class="leise">${r.status === 'angefragt' ? 'Wir bestätigen in Kürze.' : 'Die Bestätigung kommt per SMS.'}</div></div>
+        <p><button id="verwalten">Reservierung ansehen oder ändern</button></p></div>`;
+      $('#verwalten').onclick = () => seiteOeffnen('/meine-reservierung?t=' + encodeURIComponent(r.verwaltungsToken));
+    } catch (f) { melden(f.message, true); ok.disabled = false; }
+  };
+}
+
+/** Gastseite: Abmelden vom Newsletter. */
+async function abmeldenStart() {
+  try {
+    const r = await rpc('kampagnen.abmelden', INIT.token);
+    $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan</div><h1>Abgemeldet</h1><div class="karte"><p>Sie bekommen keine Neuigkeiten mehr per E-Mail.</p><p class="klein leise">Reservierungsbestätigungen bekommen Sie weiterhin.</p></div></div>`;
+  } catch (f) { $('#wurzel').innerHTML = `<div class="gast"><h1>Link ungültig</h1><p>${esc(f.message)}</p></div>`; }
+}
+
+const B = { events: [], eventHinweis: '', bereich: '', personen: 2, datum: null, tage: [], slots: [], slot: null, hinweis: '', warteliste: false, zurWarte: false };
+function buchungStart() {
+  document.body.insertAdjacentHTML('beforeend', spracheKnopf().replace('sprachwahl', 'sprachwahl schwebend'));
+  B.datum = isoTag(new Date());
+  rpc('zahlung.einstellungenOeffentlich').then((z) => { ZO = z; }).catch(() => {});
+  if (INIT.event) { eventBuchungStart(INIT.event); return; }
+  buchungZeichnen(); tageLaden();
+  rpc('events.liste', SPRACHE).then((l) => { B.events = l || []; if (!EB.event && !B.slot) buchungZeichnen(); }).catch(() => {});
+}
 
 async function tageLaden() {
   B.hinweis = 'lädt …'; buchungZeichnen();
@@ -1431,7 +1889,7 @@ async function slotsLaden() {
   B.slot = null; B.slots = []; B.hinweis = 'lädt …'; buchungZeichnen();
   try {
     const r = await rpc('verfuegbarkeit.freieZeiten', B.datum, B.personen, B.bereich ? { bereich: B.bereich } : {});
-    B.slots = r.slots; B.hinweis = r.hinweis || ''; B.warteliste = r.wartelisteMoeglich;
+    B.slots = r.slots || []; B.hinweis = r.hinweis || ''; B.warteliste = r.wartelisteMoeglich;
   } catch (f) { B.hinweis = f.message; }
   buchungZeichnen();
 }
@@ -1441,13 +1899,15 @@ function buchungZeichnen() {
   const tage = B.tage.length ? B.tage : [{ datum: B.datum, frei: true }];
   $('#wurzel').innerHTML = `<div class="gast">
     <div class="leise">Restaurant Sichuan · Wien</div><h1>Tisch reservieren</h1>
+    ${B.eventHinweis ? `<div class="karte klein">${esc(B.eventHinweis)}</div>` : ''}
+    ${(B.events || []).length ? `<div class="ev-teaser">${B.events.slice(0, 3).map((e) => `<a class="ev-mini" href="#" data-bev="${e.id}"><b>${esc(e.titel)}</b><span>${datumText(e.beginn)} · ${uhr(e.beginn)}${e.rest === 0 ? ' · ausgebucht' : ''}</span></a>`).join('')}</div>` : ''}
     <h2>Wie viele Personen?</h2>
     <div class="raster">${[1, 2, 3, 4, 5, 6, 7, 8].map((n) => `<button data-p="${n}" class="${n === B.personen ? 'an' : ''}">${n}</button>`).join('')}</div>
     <p class="klein leise">Ab 9 Personen nehmen wir Ihre Reservierung gerne telefonisch entgegen: 01 263 37 13</p>
     <h2>Wann?</h2>
     <div class="tage">${tage.map((t) => `<div class="tag ${t.datum === B.datum ? 'an' : ''} ${t.frei ? '' : 'voll'}" data-d="${t.datum}"><div class="wt">${wt(t.datum)}</div><div class="nr">${+t.datum.slice(8)}</div><div class="klein">${t.frei ? '' : 'voll'}</div></div>`).join('')}</div>
     <h2>Wo möchten Sie sitzen?</h2>
-    <div class="bereichwahl">${[['', 'Egal'], ['innen', 'Drinnen'], ['terrasse', 'Terrasse']].map(([k, v]) => `<span class="chip ${B.bereich === k ? 'an' : ''}" data-ber="${k}">${v}</span>`).join('')}</div>
+    <div class="bereichwahl">${[['', 'Egal'], ['innen', 'Drinnen'], ['garten', 'Garten']].map(([k, v]) => `<span class="chip ${B.bereich === k ? 'an' : ''}" data-ber="${k}">${v}</span>`).join('')}</div>
     <h2>Uhrzeit</h2>
     ${['mittag', 'abend'].map((s) => (nachSchicht(s).length ? `<div class="leise klein" style="margin:6px 0">${s === 'mittag' ? 'Mittag' : 'Abend'}</div><div class="raster">${nachSchicht(s).map((x) => `<button data-z="${x.zeit}" class="${B.slot === x.zeit ? 'an' : ''}">${uhr(x.zeit)}</button>`).join('')}</div>` : '')).join('')}
     ${!B.slots.length ? `<div class="karte"><div>${esc(B.hinweis)}</div>${B.warteliste ? `<button class="primaer" id="zurWarte" style="margin-top:10px">Auf die Warteliste setzen</button><p class="klein leise">Wird ein Tisch frei, bekommen Sie ihn per SMS angeboten – reserviert nur für Sie.</p>` : ''}</div>` : ''}
@@ -1457,11 +1917,13 @@ function buchungZeichnen() {
       <div class="zeile" style="flex-wrap:nowrap"><div style="flex:1"><label>Vorname *</label><input id="fVor"></div><div style="flex:1"><label>Nachname *</label><input id="fNach"></div></div>
       <label>Mobilnummer *</label><input id="fTel" type="tel" placeholder="0664 1234567"><label>E-Mail</label><input id="fMail" type="email">
       ${B.zurWarte ? '' : `<label>Wünsche (Allergien, Anlass …)</label><textarea id="fWunschText" rows="2"></textarea>`}
+      ${!B.zurWarte && B.slot ? zahlungsHinweisHtml(B.personen, isoTag(B.slot)) : ''}
       <button class="primaer" id="fOk" style="width:100%;margin-top:14px;padding:12px">${B.zurWarte ? 'Auf die Warteliste' : `Reservieren · ${B.slot ? datumText(B.slot) + ', ' + uhr(B.slot) : ''} · ${B.personen} Pers.`}</button>
     </div>
     <div class="marke">Eigenes Reservierungssystem · Test</div></div>`;
   document.querySelectorAll('[data-p]').forEach((k) => { k.onclick = () => { B.personen = +k.dataset.p; B.zurWarte = false; tageLaden(); }; });
   document.querySelectorAll('[data-d]').forEach((k) => { k.onclick = () => { B.datum = k.dataset.d; B.zurWarte = false; slotsLaden(); }; });
+  document.querySelectorAll('[data-bev]').forEach((a) => { a.onclick = (e) => { e.preventDefault(); EB.event = (B.events || []).find((x) => x.id === a.dataset.bev); if (EB.event) eventBuchungZeichnen(); }; });
   document.querySelectorAll('[data-ber]').forEach((k) => { k.onclick = () => { B.bereich = k.dataset.ber; B.zurWarte = false; slotsLaden(); }; });
   document.querySelectorAll('[data-z]').forEach((k) => { k.onclick = () => { B.slot = k.dataset.z; B.zurWarte = false; buchungZeichnen(); $('#formular').scrollIntoView({ behavior: 'smooth' }); }; });
   const w = $('#zurWarte'); if (w) w.onclick = () => { B.zurWarte = true; buchungZeichnen(); };
@@ -1477,6 +1939,7 @@ async function buchungAbsenden() {
       $('#wurzel').innerHTML = `<div class="gast"><h1>Sie stehen auf der Warteliste</h1><p>Wird ein Tisch frei, bekommen Sie eine SMS mit einem Link – der Tisch ist dann kurz nur für Sie reserviert.</p></div>`;
     } else {
       const r = await rpc('reservierungen.anlegen', { ...daten, zeit: B.slot, gastWunsch: $('#fWunschText').value, ...(B.bereich ? { bereich: B.bereich, bereichWunsch: B.bereich } : {}) });
+      if (r.zahlung?.darfZahlen) { zahlungAusstehendZeigen(r); return; }
       $('#wurzel').innerHTML = `<div class="gast"><h1>${r.status === 'angefragt' ? 'Danke für Ihre Anfrage!' : 'Ihr Tisch ist reserviert'}</h1>
         <div class="karte"><div class="fett" style="font-size:17px">${datumText(r.zeit)} · ${uhr(r.zeit)} Uhr · ${r.personen} Pers.</div><div class="leise">${r.status === 'angefragt' ? 'Wir bestätigen in Kürze.' : 'Die Bestätigung kommt per SMS.'}</div></div>
         <p><button id="verwalten">Reservierung ansehen oder ändern</button></p></div>`;
@@ -1493,6 +1956,8 @@ async function gastStart() {
   document.body.insertAdjacentHTML('beforeend', spracheKnopf().replace('sprachwahl', 'sprachwahl schwebend'));
   if (!INIT.token) { $('#wurzel').innerHTML = `<div class="gast"><h1>Link unvollständig</h1><p>Bitte öffnen Sie den Link aus Ihrer SMS oder E-Mail.</p></div>`; return; }
   if ((INIT.absicht || INIT.ansicht) === 'feedback') return feedbackStart();
+  if ((INIT.absicht || INIT.ansicht) === 'abmelden') return abmeldenStart();
+  if (INIT.absicht === 'bezahlt' && INIT.sitzung) { try { await rpc('zahlung.buchungZahlungPruefen', INIT.token, INIT.sitzung); } catch (f) { melden(f.message, true); } }
   try { G.stand = await rpc('gastverwaltung.laden', INIT.token); } catch (f) { $('#wurzel').innerHTML = `<div class="gast"><h1>Link ungültig</h1><p>${esc(f.message)}</p></div>`; return; }
   if (INIT.absicht === 'rueckbestaetigen' && G.stand.darfRueckbestaetigen) { await gastAktion('rueckbestaetigen', 'Danke! Wir haben Ihren Tisch fest eingeplant.'); return; }
   gastZeichnen();
@@ -1505,6 +1970,7 @@ function gastZeichnen() {
   $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan</div><h1>${s.vorname ? 'Hallo ' + esc(s.vorname) : 'Ihre Reservierung'}</h1>
     <div class="karte"><div class="fett" style="font-size:18px">${datumText(s.zeit)} · ${uhr(s.zeit)} Uhr</div><div>${s.personen} ${s.personen === 1 ? 'Person' : 'Personen'}</div><div style="margin-top:6px">${badge(s.status)}</div>
     ${s.angebotOffen ? `<p><b>Für Sie reserviert bis ${uhr(s.angebotBis)} Uhr.</b></p><div class="zeile"><button class="primaer" id="annehmen">Annehmen</button><button id="ablehnen">Nein danke</button></div>` : ''}</div>
+    ${zahlungGastHtml(s.zahlung)}
     ${s.darfRueckbestaetigen ? `<button class="primaer" id="rueck" style="width:100%;margin-top:14px;padding:12px">Ich komme ✓</button>` : ''}
     ${s.stornoGiltAlsSpaet && s.darfStornieren && s.status !== 'warteliste' ? `<div class="karte" style="margin-top:14px;background:#fffbeb"><b>Ihr Termin ist in weniger als ${s.stornofristStunden} Stunden.</b><br>Eine Absage jetzt lässt den Tisch meist leer. Kommen Sie mit weniger Personen? Dann passen Sie lieber die Anzahl an.${s.personen > 1 ? `<div style="margin-top:8px"><button id="weniger">Personenzahl verringern</button></div>` : ''}</div>` : ''}
     <div class="zeile" style="margin-top:14px">${s.darfAendern ? `<button id="aendern">Ändern</button>` : ''}${s.darfStornieren ? `<button id="storno">${s.status === 'warteliste' ? 'Von der Warteliste nehmen' : 'Stornieren'}</button>` : ''}</div>
@@ -1520,6 +1986,7 @@ function gastZeichnen() {
   an('annehmen', () => gastAktion('angebotAnnehmen', 'Wunderbar – Ihr Tisch ist bestätigt.'));
   an('ablehnen', () => gastAktion('angebotAblehnen', 'Schade. Wir geben den Tisch weiter.'));
   an('rueck', () => gastAktion('rueckbestaetigen', 'Danke! Wir freuen uns auf Sie.'));
+  an('zahlen', () => zahlungStarten(INIT.token));
   an('storno', () => { if (confirm(s.stornoGiltAlsSpaet ? 'Die Frist ist abgelaufen – die Absage zählt als spät. Trotzdem stornieren?' : 'Reservierung wirklich stornieren?')) gastAktion('stornieren', 'Storniert.'); });
   an('aendern', () => { G.aendern = true; G.nurWeniger = false; gastZeichnen(); gastSlots(); });
   an('weniger', () => { G.aendern = true; G.nurWeniger = true; gastZeichnen(); });
@@ -1540,6 +2007,314 @@ async function gastSlots() {
   liste.sort((a, b) => new Date(a.zeit) - new Date(b.zeit));
   $('#aSlots').innerHTML = liste.map((x) => `<button data-z="${x.zeit}" class="${x.zeit === G.wahl ? 'an' : ''}">${uhr(x.zeit)}${x.bisher ? '*' : ''}</button>`).join('') || `<span class="leise">${esc(r.hinweis || 'nichts frei')}</span>`;
   document.querySelectorAll('#aSlots [data-z]').forEach((k) => { k.onclick = () => { G.wahl = k.dataset.z; document.querySelectorAll('#aSlots [data-z]').forEach((x) => x.classList.toggle('an', x === k)); }; });
+}
+
+/* =====================================================================
+   ZAHLUNG (Stripe) – Gutscheine, Tickets, Anzahlung, Reservierungsgarantie
+   ===================================================================== */
+let ZO = null; // öffentliche Zahlungseinstellungen
+const ZART_TEXT = { ticket: 'Ticket vorab', anzahlung: 'Anzahlung', garantie: 'Reservierungsgarantie' };
+const ZSTATUS_TEXT = { offen: 'offen', bezahlt: 'bezahlt', garantiert: 'Karte hinterlegt', abgebucht: 'Gebühr abgebucht', erstattet: 'erstattet', abgelaufen: 'abgelaufen' };
+const euroC = (c) => euro((Number(c) || 0) / 100);
+const L3 = (o) => o[SPRACHE] || o.de;
+
+/** Welche Zahlung käme auf den Gast zu? Gleiche Reihenfolge wie im Backend (nur Anzeige). */
+function zahlungVorschau(personen, datum, ev) {
+  if (!ZO || !ZO.bereit) return null;
+  if (ev) {
+    if (!ZO.events || !ev.zahlungsart || ev.zahlungsart === 'keine') return null;
+    const pp = ev.zahlungsart === 'ticket' ? ev.preisProPerson : (ev.zahlungProPerson ?? ev.preisProPerson);
+    return pp > 0 ? { art: ev.zahlungsart, pp } : null;
+  }
+  const tag = (ZO.sondertage || []).find((t) => t.datum === datum && personen >= t.abPersonen);
+  if (tag) return { art: tag.art, pp: tag.proPerson, titel: tag.titel };
+  if (ZO.anzahlung && personen >= ZO.anzahlung.abPersonen) return { art: 'anzahlung', pp: ZO.anzahlung.proPerson };
+  if (ZO.garantie && personen >= ZO.garantie.abPersonen) return { art: 'garantie', pp: ZO.garantie.proPerson };
+  return null;
+}
+function zahlungsHinweisHtml(personen, datum, ev) {
+  const z = zahlungVorschau(personen, datum, ev); if (!z) return '';
+  const pp = euro(z.pp), ges = euro(z.pp * personen), anlass = z.titel ? `${esc(z.titel)}: ` : '';
+  const text = z.art === 'garantie'
+    ? L3({ de: `${anlass}Für diese Reservierung hinterlegen Sie im nächsten Schritt Ihre Karte als Garantie. Sie wird nicht belastet – nur bei Nichterscheinen oder später Absage berechnen wir ${pp} pro Person.`, en: `${anlass}For this reservation you will leave your card as a guarantee in the next step. It will not be charged – only for a no-show or late cancellation we charge ${pp} per person.`, zh: `${anlass}此预订需在下一步提供信用卡担保，不会扣款——仅在未到店或迟取消时每人收取 ${pp}。` })
+    : z.art === 'ticket'
+      ? L3({ de: `Im nächsten Schritt bezahlen Sie das Ticket: ${personen} × ${pp} = ${ges}.`, en: `In the next step you pay for the ticket: ${personen} × ${pp} = ${ges}.`, zh: `下一步支付门票：${personen} × ${pp} = ${ges}。` })
+      : L3({ de: `${anlass}Für diese Reservierung bitten wir um eine Anzahlung von ${pp} pro Person (${ges}), die wir auf Ihre Rechnung anrechnen.`, en: `${anlass}For this reservation we ask for a deposit of ${pp} per person (${ges}), deducted from your bill.`, zh: `${anlass}此预订需支付每人 ${pp} 的订金（共 ${ges}），将从账单中扣除。` });
+  return `<div class="karte klein" style="margin-top:12px;background:#f8fafc">💳 ${text}</div>`;
+}
+async function zahlungStarten(token, knopf) {
+  if (knopf) knopf.disabled = true;
+  try { const r = await rpc('zahlung.buchungZahlungStarten', token); urlOeffnen(r.url); }
+  catch (f) { melden(f.message, true); if (knopf) knopf.disabled = false; }
+}
+/** Nach dem Buchen: Tisch ist gehalten, Zahlung fehlt noch. */
+function zahlungAusstehendZeigen(r, titel) {
+  const z = r.zahlung;
+  $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan · Wien</div><h1>${L3({ de: 'Fast geschafft', en: 'Almost done', zh: '即将完成' })}</h1>
+    <div class="karte">${titel ? `<div class="fett" style="font-size:17px">${esc(titel)}</div>` : ''}<div class="fett">${datumText(r.zeit)} · ${uhr(r.zeit)} Uhr · ${r.personen} Pers.</div>
+      <p>${esc(z.text)}</p>
+      <p class="klein leise">${L3({ de: `Ihr Tisch ist bis ${uhr(z.frist)} Uhr für Sie gehalten. Ohne Abschluss geben wir ihn danach wieder frei.`, en: `Your table is held for you until ${uhr(z.frist)}. Without completion it will be released afterwards.`, zh: `您的座位保留至 ${uhr(z.frist)}，逾时未完成将释放。` })}</p></div>
+    <button class="primaer" id="zWeiter" style="width:100%;margin-top:14px;padding:12px">${z.art === 'garantie' ? L3({ de: 'Karte hinterlegen', en: 'Add card', zh: '提供信用卡' }) : L3({ de: `Weiter zur Zahlung · ${euroC(z.betragCent)}`, en: `Continue to payment · ${euroC(z.betragCent)}`, zh: `去付款 · ${euroC(z.betragCent)}` })}</button>
+    <p class="klein leise" style="text-align:center">${L3({ de: 'Sichere Zahlung über Stripe', en: 'Secure payment via Stripe', zh: '通过 Stripe 安全支付' })}</p></div>`;
+  $('#zWeiter').onclick = (e) => zahlungStarten(r.verwaltungsToken, e.target);
+}
+/** Gastseite: Zahlungsstand. */
+function zahlungGastHtml(z) {
+  if (!z) return '';
+  if (z.darfZahlen) return `<div class="karte" style="margin-top:14px;background:#fffbeb"><b>${z.art === 'garantie' ? L3({ de: 'Reservierungsgarantie offen', en: 'Card guarantee pending', zh: '待提供信用卡担保' }) : L3({ de: 'Zahlung offen', en: 'Payment pending', zh: '待付款' })}</b><p class="klein">${esc(z.text)}</p>
+    <button class="primaer" id="zahlen">${z.art === 'garantie' ? L3({ de: 'Karte hinterlegen', en: 'Add card', zh: '提供信用卡' }) : L3({ de: `Jetzt bezahlen · ${euroC(z.betragCent)}`, en: `Pay now · ${euroC(z.betragCent)}`, zh: `立即付款 · ${euroC(z.betragCent)}` })}</button>
+    ${z.frist ? `<div class="klein leise" style="margin-top:6px">${L3({ de: 'Möglich bis', en: 'Possible until', zh: '截止' })} ${datumText(z.frist)} · ${uhr(z.frist)}</div>` : ''}</div>`;
+  const T3 = {
+    bezahlt: L3({ de: `✓ Bezahlt: ${euroC(z.betragCent)}`, en: `✓ Paid: ${euroC(z.betragCent)}`, zh: `✓ 已付款：${euroC(z.betragCent)}` }),
+    garantiert: L3({ de: '✓ Karte als Garantie hinterlegt – sie wird nur bei Nichterscheinen belastet.', en: '✓ Card on file as guarantee – charged only for a no-show.', zh: '✓ 已提供信用卡担保——仅在未到店时扣款。' }),
+    erstattet: L3({ de: 'Der Betrag wurde erstattet.', en: 'The amount has been refunded.', zh: '款项已退还。' }),
+    abgebucht: L3({ de: 'Die Gebühr wurde abgebucht.', en: 'The fee has been charged.', zh: '费用已扣除。' }),
+    abgelaufen: L3({ de: 'Die Zahlung wurde nicht abgeschlossen.', en: 'The payment was not completed.', zh: '付款未完成。' }),
+    offen: L3({ de: 'Die Zahlungsfrist ist abgelaufen – bitte rufen Sie uns an: 01 263 37 13', en: 'The payment deadline has passed – please call us: +43 1 263 37 13', zh: '付款期限已过——请致电 01 263 37 13' })
+  };
+  return `<div class="karte klein" style="margin-top:14px">💳 ${esc(T3[z.status] || z.status)}</div>`;
+}
+
+/* ------------------------- Team: Zahlung im Detail ------------------------- */
+function zahlungDetailHtml(b) {
+  const kommend = ['angefragt', 'bestaetigt', 'rueckbestaetigt'].includes(b.status);
+  const z = b.zahlungStatus;
+  const knoepfe = [];
+  if (kommend && !['bezahlt', 'garantiert'].includes(z)) knoepfe.push(`<button class="klein" id="zLink">${z === 'offen' ? 'Zahlungslink erneut senden' : 'Zahlungslink senden'}</button>`);
+  if (z === 'garantiert' && ['noShow', 'spaet_storniert'].includes(b.status)) knoepfe.push(`<button class="klein" id="zGebuehr" style="color:var(--rot)">Gebühr abbuchen</button>`);
+  if (['bezahlt', 'abgebucht'].includes(z)) knoepfe.push('<button class="klein" id="zErst">Erstatten</button>');
+  if (!z && !knoepfe.length) return '';
+  return `<label>Zahlung</label><div class="karte" style="padding:8px 10px">
+    ${z ? `<div><span class="badge ${z === 'offen' || z === 'abgelaufen' ? 's-angefragt' : z === 'erstattet' ? '' : 's-abgeschlossen'}">${esc(ZSTATUS_TEXT[z] || z)}</span> ${esc(ZART_TEXT[b.zahlungArt] || '')} · ${euroC(b.zahlungBetragCent)}${b.zahlungArt === 'garantie' ? ' max.' : ''}${b.zahlungProPersonCent ? ` <span class="klein leise">(${euroC(b.zahlungProPersonCent)} p. P.)</span>` : ''}</div>
+    ${z === 'offen' && b.zahlungFrist ? `<div class="klein leise">Frist ${datumText(b.zahlungFrist)} · ${uhr(b.zahlungFrist)}${b.zahlungAutoStorno ? ' – danach wird die Buchung freigegeben' : ''}</div>` : ''}
+    ${z === 'abgebucht' ? `<div class="klein">Abgebucht: ${euroC(b.zahlungAbgebuchtCent)}</div>` : ''}` : '<div class="klein leise">Keine Zahlung hinterlegt.</div>'}
+    <div class="zeile" style="margin-top:6px">${knoepfe.join('')}</div></div>`;
+}
+function zahlungDetailEreignisse(b) {
+  const an = (id, fn) => { const e = $('#' + id); if (e) e.onclick = fn; };
+  an('zLink', () => {
+    const m = modal(`<b style="font-size:16px">Zahlungslink senden</b>
+      <p class="klein leise">Der Gast bekommt per SMS (sonst Mail) einen Link zu seiner Reservierung und zahlt dort über Stripe. Frist: 48 Stunden bzw. bis zum Termin.</p>
+      <label>Art</label><select id="zArt"><option value="">Nach den Einstellungen (Sondertag, Gruppe, Event)</option><option value="garantie">Reservierungsgarantie (Karte hinterlegen)</option><option value="anzahlung">Anzahlung</option><option value="ticket">Ticket / Menüpreis vorab</option></select>
+      <label>Betrag pro Person (€)</label><input id="zPP" inputmode="decimal" placeholder="z. B. 30">
+      <div id="zErg" class="klein"></div>
+      <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button id="zAbbr">Schliessen</button><button class="primaer" id="zOk">Senden</button></div>`);
+    $('#zAbbr', m).onclick = () => m.remove();
+    $('#zOk', m).onclick = async () => {
+      const r = await sicher(() => rpc('zahlung.zahlungslinkSenden', b._id, { art: $('#zArt', m).value, proPerson: $('#zPP', m).value.replace(',', '.') }));
+      if (!r) return;
+      $('#zErg', m).innerHTML = `<p>${r.kanal === 'keiner' ? '⚠ Nicht gesendet (Testmodus oder keine Kontaktdaten) – Link zum Weitergeben:' : `✓ Per ${esc(r.kanal)} gesendet.`}</p><input readonly value="${esc(r.link)}" onclick="this.select()">`;
+      $('#zOk', m).classList.add('versteckt'); T.verlauf = []; laden(true);
+    };
+  });
+  an('zGebuehr', async () => {
+    const max = (b.zahlungBetragCent || 0) / 100;
+    const w = prompt(`Gebühr abbuchen (höchstens ${euro(max)} laut Garantie). Betrag in €:`, String(max).replace('.', ','));
+    if (!w) return;
+    if (!confirm(`${euro(Number(w.replace(',', '.')))} von der hinterlegten Karte abbuchen?`)) return;
+    await sicher(() => rpc('zahlung.gebuehrAbbuchen', b._id, w.replace(',', '.')), 'Gebühr abgebucht'); T.verlauf = []; laden();
+  });
+  an('zErst', async () => { if (!confirm(`${euroC(b.zahlungAbgebuchtCent || b.zahlungBetragCent)} an den Gast erstatten?`)) return; await sicher(() => rpc('zahlung.erstatten', b._id), 'Erstattet'); T.verlauf = []; laden(); });
+}
+
+/* ---------------------------- Team: Gutscheine ---------------------------- */
+const GS = { daten: null, einst: null, laedt: false, treffer: null };
+const GZUSTAND = { aktiv: 'gültig', eingeloest: 'eingelöst', abgelaufen: 'abgelaufen', storniert: 'storniert', offen: 'unbezahlt' };
+async function gutscheineLaden() {
+  GS.laedt = true;
+  try { [GS.daten, GS.einst] = await Promise.all([rpc('zahlung.gutscheineListe'), rpc('zahlung.einstellungenTeam')]); } catch (f) { melden(f.message, true); GS.daten = GS.daten || { gutscheine: [], offenCent: 0 }; }
+  GS.laedt = false; if (T.ansicht === 'gutscheine') gutscheineZeichnen();
+}
+function gutscheineZeichnen() {
+  if (!GS.daten && !GS.laedt) gutscheineLaden();
+  const d = GS.daten || { gutscheine: [], offenCent: 0 }, e = GS.einst;
+  const an = (x) => (x ? '<b style="color:#15803d">an</b>' : '<span class="leise">aus</span>');
+  const g = GS.treffer;
+  $('#inhalt').innerHTML = `<div class="karte">
+    <div class="zeile" style="justify-content:space-between;flex-wrap:wrap"><b style="font-size:16px">Gutscheine &amp; Zahlungen</b>
+      <span class="zeile" style="gap:4px"><button class="klein" id="gsSeite">Verkaufsseite ansehen</button><button class="klein" id="gsEinst">⚙ Zahlungen einstellen</button><button class="primaer" id="gsNeu">+ Gutschein ausstellen</button></span></div>
+    ${e ? `<p class="klein">${e.stripe.bereit ? `Stripe verbunden${e.stripe.testmodus ? ' <span class="badge s-angefragt">Testmodus</span>' : ''}` : '⚠ <b>Stripe ist noch nicht eingerichtet</b> – Secret „stripe_geheim“ im Wix Secrets Manager eintragen. Bis dahin ist jede Zahlung aus.'}
+      · Online-Gutscheine ${an(e.gutscheine.aktiv)} · Events ${an(e.events.aktiv)} · Anzahlung ${an(e.anzahlung.aktiv)}${e.anzahlung.aktiv ? ` (ab ${e.anzahlung.abPersonen} P., ${euro(e.anzahlung.proPerson)})` : ''} · Garantie ${an(e.garantie.aktiv)}${e.garantie.aktiv ? ` (ab ${e.garantie.abPersonen} P., ${euro(e.garantie.proPerson)})` : ''} · Sondertage: ${e.sondertage.length ? e.sondertage.map((t) => esc(t.titel || t.datum)).join(', ') : '–'}</p>` : ''}
+    <div class="karte" style="background:#fafaf8"><b>Einlösen</b>
+      <div class="zeile" style="margin-top:6px"><input id="gsCode" placeholder="SICH-XXXX-XXXX" style="flex:1;min-width:160px;text-transform:uppercase;font-family:ui-monospace,monospace" value="${esc(g?.code || '')}"><button id="gsPruef">Prüfen</button></div>
+      ${g ? `<div style="margin-top:8px"><span class="badge ${g.zustand === 'aktiv' ? 's-abgeschlossen' : 's-noShow'}">${esc(GZUSTAND[g.zustand] || g.zustand)}</span> Wert ${euroC(g.betragCent)} · <b>Rest ${euroC(g.restCent)}</b>${g.gueltigBis ? ` · gültig bis ${new Intl.DateTimeFormat('de-AT', { timeZone: TZ }).format(new Date(g.gueltigBis))}` : ''}${g.empfaengerName ? ` · für ${esc(g.empfaengerName)}` : ''}
+        ${g.zustand === 'aktiv' ? `<div class="zeile" style="margin-top:6px"><input id="gsBetrag" inputmode="decimal" placeholder="Betrag €" style="width:110px" value="${String(g.restCent / 100).replace('.', ',')}"><input id="gsNotiz" placeholder="Notiz (Tisch, Rechnung)" style="flex:1"><button class="primaer" id="gsEinl">Einlösen</button></div>` : ''}
+        ${g.einloesungen.length ? `<div class="klein leise" style="margin-top:6px">${g.einloesungen.map((x) => `${new Intl.DateTimeFormat('de-AT', { timeZone: TZ, dateStyle: 'short', timeStyle: 'short' }).format(new Date(x.am))}: ${euroC(x.betragCent)}${x.notiz ? ' · ' + esc(x.notiz) : ''}`).join('<br>')}</div>` : ''}</div>` : ''}
+    </div>
+    <div class="zeile" style="justify-content:space-between;margin-top:12px"><b>Ausgestellt</b><span class="klein">Offener Gutscheinwert: <b>${euroC(d.offenCent)}</b></span></div>
+    ${GS.laedt && !d.gutscheine.length ? '<p class="leise">Lädt …</p>' : d.gutscheine.length ? `<table class="liste"><tr><th>Code</th><th>Wert</th><th>Rest</th><th>Status</th><th>Für / von</th><th>Datum</th><th></th></tr>
+      ${d.gutscheine.map((x) => `<tr><td style="font-family:ui-monospace,monospace">${esc(x.code)}</td><td>${euroC(x.betragCent)}</td><td>${euroC(x.restCent)}</td><td><span class="badge ${x.zustand === 'aktiv' ? 's-abgeschlossen' : ''}">${esc(GZUSTAND[x.zustand] || x.zustand)}</span><div class="klein leise">${x.quelle === 'online' ? 'online' : 'im Haus'}</div></td>
+        <td class="klein">${esc(x.empfaengerName || '')}${x.kaeuferName ? `<div class="leise">von ${esc(x.kaeuferName)}</div>` : ''}</td><td class="klein">${x.bezahltAm ? datumText(x.bezahltAm) : ''}</td>
+        <td style="white-space:nowrap"><button class="klein" data-gsw="${x._id}">Wählen</button> <button class="klein" data-gsl="${x._id}">Drucken</button>${x.kaeuferEmail ? ` <button class="klein" data-gsm="${x._id}">Mail</button>` : ''}${x.zustand === 'aktiv' ? ` <button class="klein" data-gss="${x._id}">Storno</button>` : ''}</td></tr>`).join('')}</table>` : '<p class="leise">Noch keine Gutscheine.</p>'}
+  </div>`;
+  $('#gsSeite').onclick = () => seiteOeffnen('/karte?a=gutschein');
+  $('#gsEinst').onclick = () => zahlungEinstellungenDialog();
+  $('#gsNeu').onclick = () => gutscheinAusstellenDialog();
+  const pruefen = async () => { const r = await sicher(() => rpc('zahlung.gutscheinSuchen', $('#gsCode').value)); if (r) { GS.treffer = r; gutscheineZeichnen(); } };
+  $('#gsPruef').onclick = pruefen;
+  $('#gsCode').onkeydown = (ev) => { if (ev.key === 'Enter') pruefen(); };
+  if ($('#gsEinl')) $('#gsEinl').onclick = async () => {
+    const betrag = $('#gsBetrag').value;
+    if (!confirm(`${euro(Number(betrag.replace(',', '.')))} von ${g.code} einlösen?`)) return;
+    const r = await sicher(() => rpc('zahlung.gutscheinEinloesen', g.code, betrag, $('#gsNotiz').value), 'Eingelöst');
+    if (r) { GS.treffer = r; gutscheineLaden(); }
+  };
+  const finde = (id) => d.gutscheine.find((x) => x._id === id);
+  document.querySelectorAll('[data-gsw]').forEach((k) => { k.onclick = () => { GS.treffer = finde(k.dataset.gsw); gutscheineZeichnen(); }; });
+  document.querySelectorAll('[data-gsl]').forEach((k) => { k.onclick = async () => { const r = await sicher(() => rpc('zahlung.gutscheinLink', k.dataset.gsl, false)); if (r) urlOeffnen(r.link); }; });
+  document.querySelectorAll('[data-gsm]').forEach((k) => { k.onclick = async () => { const r = await sicher(() => rpc('zahlung.gutscheinLink', k.dataset.gsm, true)); if (r) melden(r.gesendet ? 'Mail gesendet' : 'Nicht gesendet (Testmodus)', !r.gesendet); }; });
+  document.querySelectorAll('[data-gss]').forEach((k) => { k.onclick = async () => {
+    const x = finde(k.dataset.gss);
+    const erst = x.quelle === 'online' && !x.einloesungen.length && confirm('Online bezahlt: Betrag über Stripe an den Käufer erstatten? (OK = erstatten, Abbrechen = nur stornieren)');
+    if (!erst && !confirm(`Gutschein ${x.code} stornieren?`)) return;
+    await sicher(() => rpc('zahlung.gutscheinStornieren', x._id, erst), 'Storniert'); gutscheineLaden();
+  }; });
+}
+function gutscheinAusstellenDialog() {
+  const m = modal(`<b style="font-size:16px">Gutschein ausstellen</b>
+    <p class="klein leise">Für Gutscheine, die im Restaurant bezahlt oder verschenkt werden. Code und Druckseite entstehen sofort.</p>
+    <div class="ka-raster"><div><label>Betrag (€) *</label><input id="gaB" inputmode="decimal" value="50"></div><div><label>Für (Empfänger)</label><input id="gaE"></div>
+      <div><label>Käufer</label><input id="gaK"></div><div><label>E-Mail Käufer (für Versand)</label><input id="gaM" type="email"></div></div>
+    <label>Persönliche Nachricht</label><textarea id="gaN" rows="2"></textarea>
+    <label>Interne Notiz (bar/Karte, Rechnung …)</label><input id="gaI">
+    <div id="gaErg"></div>
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button id="gaZu">Schliessen</button><button class="primaer" id="gaOk">Ausstellen</button></div>`);
+  $('#gaZu', m).onclick = () => m.remove();
+  $('#gaOk', m).onclick = async () => {
+    const r = await sicher(() => rpc('zahlung.gutscheinAnlegen', { betrag: $('#gaB', m).value, empfaengerName: $('#gaE', m).value, kaeuferName: $('#gaK', m).value, kaeuferEmail: $('#gaM', m).value, nachricht: $('#gaN', m).value, notiz: $('#gaI', m).value }), 'Ausgestellt');
+    if (!r) return;
+    $('#gaOk', m).classList.add('versteckt');
+    $('#gaErg', m).innerHTML = `<div class="karte" style="margin-top:10px;text-align:center"><div class="klein leise">Code</div><div style="font:600 22px ui-monospace,monospace">${esc(r.code)}</div><div>${euroC(r.betragCent)}</div><button class="primaer" id="gaDruck" style="margin-top:8px">Druckseite öffnen</button></div>`;
+    $('#gaDruck', m).onclick = () => urlOeffnen(r.link);
+    gutscheineLaden();
+  };
+}
+/** Nächstes Datum eines Monatstags (für Silvester/Valentinstag). */
+function naechster(monatTag) { const heute = isoTag(new Date()); const j = +heute.slice(0, 4); const d = `${j}-${monatTag}`; return d >= heute ? d : `${j + 1}-${monatTag}`; }
+async function zahlungEinstellungenDialog(o = {}) {
+  let e;
+  try { e = await rpc('zahlung.einstellungenTeam'); } catch (f) { melden(f.message, true); return; }
+  const tage = e.sondertage.map((t) => ({ ...t }));
+  // Aus der Tagesansicht: gewählten Tag gleich als Sondertag vormerken (falls noch nicht da).
+  if (o.tag && !tage.some((t) => t.datum === o.tag)) tage.push({ datum: o.tag, titel: '', art: 'garantie', proPerson: e.garantie.proPerson || 50, abPersonen: 1 });
+  const schalter = (id, wert, text) => `<label class="zeile" style="gap:6px;margin:0"><input type="checkbox" id="${id}" ${wert ? 'checked' : ''}> <b>${text}</b></label>`;
+  const m = modal(`<div class="zeile" style="justify-content:space-between"><b style="font-size:16px">Zahlungen (Stripe)</b><button id="zeZu">Schliessen</button></div>
+    <p class="klein ${e.stripe.bereit ? 'leise' : ''}">${e.stripe.bereit ? `Stripe ist verbunden${e.stripe.testmodus ? ' (Testmodus – es fliesst kein echtes Geld)' : ''}.` : '⚠ Stripe ist noch nicht eingerichtet. Die Schalter lassen sich setzen, wirken aber erst mit dem Secret „stripe_geheim“.'} Jede Funktion ist einzeln schaltbar.</p>
+    <div class="karte" style="background:#fafaf8">${schalter('zeG', e.gutscheine.aktiv, 'Gutscheine online verkaufen')}
+      <div class="ka-raster"><div><label>Feste Beträge (€, Komma)</label><input id="zeGB" value="${e.gutscheine.betraege.join(', ')}"></div><div><label>Gültigkeit (Jahre)</label><input id="zeGJ" type="number" min="1" max="30" value="${e.gutscheine.gueltigJahre}"></div>
+      <div><label>Freier Betrag ab (€)</label><input id="zeGmin" type="number" value="${e.gutscheine.freiMin}"></div><div><label>bis (€)</label><input id="zeGmax" type="number" value="${e.gutscheine.freiMax}"></div></div></div>
+    <div class="karte" style="background:#fafaf8">${schalter('zeE', e.events.aktiv, 'Zahlungen bei Events')}<div class="klein leise">Was bezahlt wird (Ticket, Anzahlung, Garantie), legst du je Event im Event-Dialog fest.</div></div>
+    <div class="karte" style="background:#fafaf8">${schalter('zeA', e.anzahlung.aktiv, 'Anzahlung für Gruppen')}
+      <div class="ka-raster"><div><label>ab Personen</label><input id="zeAP" type="number" min="1" value="${e.anzahlung.abPersonen}"></div><div><label>€ pro Person</label><input id="zeAB" inputmode="decimal" value="${e.anzahlung.proPerson}"></div></div>
+      <label class="zeile" style="gap:6px"><input type="checkbox" id="zeAS" ${e.anzahlung.erstattenBeiStorno ? 'checked' : ''}> bei rechtzeitiger Absage automatisch erstatten</label></div>
+    <div class="karte" style="background:#fafaf8">${schalter('zeK', e.garantie.aktiv, 'Reservierungsgarantie (Karte hinterlegen) für Gruppen')}
+      <div class="ka-raster"><div><label>ab Personen</label><input id="zeKP" type="number" min="1" value="${e.garantie.abPersonen}"></div><div><label>No-Show-Gebühr € pro Person</label><input id="zeKB" inputmode="decimal" value="${e.garantie.proPerson}"></div></div>
+      <div class="klein leise">Die Karte wird nie automatisch belastet: bei No-Show oder später Absage entscheidest du in der Reservierung („Gebühr abbuchen“).</div></div>
+    <div class="karte" style="background:#fafaf8"><b>Sondertage</b> <span class="klein leise">– z. B. Silvester, Valentinstag: gilt für alle Online-Buchungen an diesem Tag</span>
+      <div id="zeT"></div>
+      <div class="zeile" style="margin-top:6px"><button class="klein" id="zeT1">+ Tag</button><button class="klein" id="zeSilv">+ Silvester</button><button class="klein" id="zeVal">+ Valentinstag</button><button class="klein" id="zeMutter">+ Muttertag</button></div></div>
+    <div class="zeile" style="justify-content:flex-end;margin-top:12px"><button class="primaer" id="zeOk">Speichern</button></div>`);
+  const tageZeichnen = () => {
+    $('#zeT', m).innerHTML = tage.length ? `<div style="overflow-x:auto"><table class="liste" style="min-width:0"><tr><th>Datum</th><th>Name</th><th>Art</th><th>€ p. P.</th><th>ab P.</th><th></th></tr>${tage.map((t, i) => `<tr>
+      <td><input type="date" data-t="${i}" data-f="datum" value="${esc(t.datum)}" style="width:140px"></td><td><input data-t="${i}" data-f="titel" value="${esc(t.titel)}" style="width:100px"></td>
+      <td><select data-t="${i}" data-f="art" style="width:110px"><option value="garantie" ${t.art === 'garantie' ? 'selected' : ''}>Garantie</option><option value="anzahlung" ${t.art === 'anzahlung' ? 'selected' : ''}>Anzahlung</option></select></td>
+      <td><input data-t="${i}" data-f="proPerson" inputmode="decimal" value="${t.proPerson}" style="width:60px"></td><td><input data-t="${i}" data-f="abPersonen" type="number" min="1" value="${t.abPersonen}" style="width:50px"></td>
+      <td><button class="klein" data-tweg="${i}">✕</button></td></tr>`).join('')}</table></div>` : '<p class="klein leise">Keine Sondertage.</p>';
+    m.querySelectorAll('[data-t]').forEach((x) => { x.onchange = () => { tage[+x.dataset.t][x.dataset.f] = x.value; }; });
+    m.querySelectorAll('[data-tweg]').forEach((x) => { x.onclick = () => { tage.splice(+x.dataset.tweg, 1); tageZeichnen(); }; });
+  };
+  const neu = (datum, titel) => { if (tage.some((t) => t.datum === datum)) { melden(`${titel || datum} ist schon eingetragen`); return; } tage.push({ datum, titel, art: 'garantie', proPerson: 50, abPersonen: 1 }); tageZeichnen(); };
+  tageZeichnen();
+  if (o.tag) setTimeout(() => { const x = m.querySelector(`[data-f="titel"][data-t="${tage.findIndex((t) => t.datum === o.tag)}"]`); if (x) { x.scrollIntoView({ block: 'center' }); x.focus(); } }, 50);
+  $('#zeT1', m).onclick = () => neu(isoTag(new Date()), '');
+  $('#zeSilv', m).onclick = () => neu(naechster('12-31'), 'Silvester');
+  $('#zeVal', m).onclick = () => neu(naechster('02-14'), 'Valentinstag');
+  $('#zeMutter', m).onclick = () => { // 2. Sonntag im Mai
+    const j = +naechster('05-14').slice(0, 4); const d = new Date(Date.UTC(j, 4, 1)); const s = 1 + ((7 - d.getUTCDay()) % 7) + 7;
+    neu(`${j}-05-${String(s).padStart(2, '0')}`, 'Muttertag');
+  };
+  $('#zeZu', m).onclick = () => m.remove();
+  $('#zeOk', m).onclick = async () => {
+    const w = (id) => $(id, m).value.replace(',', '.');
+    const r = await sicher(() => rpc('zahlung.einstellungenSpeichern', {
+      gutscheine: { aktiv: $('#zeG', m).checked, betraege: $('#zeGB', m).value, gueltigJahre: $('#zeGJ', m).value, freiMin: $('#zeGmin', m).value, freiMax: $('#zeGmax', m).value },
+      events: { aktiv: $('#zeE', m).checked },
+      anzahlung: { aktiv: $('#zeA', m).checked, abPersonen: $('#zeAP', m).value, proPerson: w('#zeAB'), erstattenBeiStorno: $('#zeAS', m).checked },
+      garantie: { aktiv: $('#zeK', m).checked, abPersonen: $('#zeKP', m).value, proPerson: w('#zeKB') },
+      sondertage: tage.map((t) => ({ ...t, proPerson: String(t.proPerson).replace(',', '.') }))
+    }), 'Gespeichert');
+    if (r) { m.remove(); gutscheineLaden(); }
+  };
+}
+
+/* --------------------------- Gast: Gutschein --------------------------- */
+async function gutscheinGastStart() {
+  $('#wurzel').innerHTML = '<div class="gast leise">Lädt …</div>';
+  if (INIT.gutschein) {
+    try { gutscheinGastZeichnen(await rpc('zahlung.gutscheinAnsehen', INIT.gutschein, INIT.sitzung || '')); }
+    catch (f) { $('#wurzel').innerHTML = `<div class="gast"><h1>${L3({ de: 'Link ungültig', en: 'Invalid link', zh: '链接无效' })}</h1><p>${esc(f.message)}</p></div>`; }
+    return;
+  }
+  try { ZO = await rpc('zahlung.einstellungenOeffentlich'); } catch (f) { ZO = null; }
+  gutscheinKaufZeichnen();
+}
+const GK = { betrag: null };
+function gutscheinKaufZeichnen() {
+  const g = ZO?.gutscheine;
+  if (!g) { $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan · Wien</div><h1>${L3({ de: 'Gutscheine', en: 'Gift vouchers', zh: '礼券' })}</h1><div class="karte">${L3({ de: 'Gutscheine bekommen Sie gerne direkt bei uns im Restaurant.', en: 'Gift vouchers are available directly at our restaurant.', zh: '礼券可直接在餐厅购买。' })}</div></div>`; return; }
+  if (GK.betrag == null) GK.betrag = g.betraege[1] ?? g.betraege[0] ?? g.freiMin;
+  $('#wurzel').innerHTML = `<div class="gast"><div class="leise">Restaurant Sichuan · Wien</div><h1>${L3({ de: 'Gutschein verschenken', en: 'Give a gift voucher', zh: '赠送礼券' })}</h1>
+    <h2>${L3({ de: 'Betrag', en: 'Amount', zh: '金额' })}</h2>
+    <div class="raster">${g.betraege.map((b) => `<button data-gb="${b}" class="${GK.betrag === b ? 'an' : ''}">${euro(b)}</button>`).join('')}</div>
+    <label>${L3({ de: `Anderer Betrag (${g.freiMin}–${g.freiMax} €)`, en: `Other amount (€${g.freiMin}–${g.freiMax})`, zh: `其他金额（${g.freiMin}–${g.freiMax} 欧元）` })}</label><input id="gkFrei" type="number" min="${g.freiMin}" max="${g.freiMax}" value="${g.betraege.includes(GK.betrag) ? '' : GK.betrag}">
+    <h2>${L3({ de: 'Für wen?', en: 'For whom?', zh: '赠送给谁？' })}</h2>
+    <label>${L3({ de: 'Name der/des Beschenkten (erscheint auf dem Gutschein)', en: 'Recipient name (shown on the voucher)', zh: '受赠人姓名（显示在礼券上）' })}</label><input id="gkE">
+    <label>${L3({ de: 'Persönliche Nachricht', en: 'Personal message', zh: '祝福语' })}</label><textarea id="gkN" rows="2" maxlength="300"></textarea>
+    <h2>${L3({ de: 'Ihre Daten', en: 'Your details', zh: '您的信息' })}</h2>
+    <label>${L3({ de: 'Ihr Name *', en: 'Your name *', zh: '您的姓名 *' })}</label><input id="gkK"><label>${L3({ de: 'E-Mail * (dorthin schicken wir den Gutschein)', en: 'Email * (we send the voucher there)', zh: '电子邮箱 *（礼券将发送至此）' })}</label><input id="gkM" type="email">
+    <p class="klein leise">${L3({ de: `Gültig ${g.gueltigJahre} Jahre ab Kauf, auch in Teilbeträgen einlösbar. Sie bekommen den Gutschein per E-Mail und können ihn ausdrucken oder weiterleiten.`, en: `Valid for ${g.gueltigJahre} years from purchase, redeemable in parts. You receive the voucher by email and can print or forward it.`, zh: `自购买起 ${g.gueltigJahre} 年内有效，可分次使用。礼券将通过电子邮件发送，可打印或转发。` })}</p>
+    <button class="primaer" id="gkOk" style="width:100%;margin-top:10px;padding:12px">${L3({ de: 'Weiter zur Zahlung', en: 'Continue to payment', zh: '去付款' })} · ${euro(GK.betrag)}</button>
+    <p class="klein leise" style="text-align:center">${L3({ de: 'Sichere Zahlung über Stripe', en: 'Secure payment via Stripe', zh: '通过 Stripe 安全支付' })}</p>
+    <p><a href="#" id="gkKarte">→ ${L3({ de: 'Speisekarte', en: 'Menu', zh: '菜单' })}</a></p></div>`;
+  const merken = () => ({ e: $('#gkE').value, n: $('#gkN').value, k: $('#gkK').value, m: $('#gkM').value });
+  const setzen = (w) => { $('#gkE').value = w.e; $('#gkN').value = w.n; $('#gkK').value = w.k; $('#gkM').value = w.m; };
+  document.querySelectorAll('[data-gb]').forEach((b) => { b.onclick = () => { const w = merken(); GK.betrag = +b.dataset.gb; gutscheinKaufZeichnen(); setzen(w); }; });
+  $('#gkFrei').onchange = (ev) => { const v = Math.round(+ev.target.value); if (v) { const w = merken(); GK.betrag = v; gutscheinKaufZeichnen(); setzen(w); } };
+  $('#gkKarte').onclick = (ev) => { ev.preventDefault(); if (KG.karte) karteGastZeichnen(); else seiteOeffnen('/karte'); };
+  $('#gkOk').onclick = async (ev) => {
+    ev.target.disabled = true;
+    try { const r = await rpc('zahlung.gutscheinKaufen', { betrag: GK.betrag, empfaengerName: $('#gkE').value, nachricht: $('#gkN').value, kaeuferName: $('#gkK').value, kaeuferEmail: $('#gkM').value, sprache: SPRACHE }); urlOeffnen(r.url); }
+    catch (f) { melden(f.message, true); ev.target.disabled = false; }
+  };
+}
+function gutscheinHtml(g) {
+  const bis = g.gueltigBis ? new Intl.DateTimeFormat(LOC, { timeZone: TZ, dateStyle: 'long' }).format(new Date(g.gueltigBis)) : '';
+  return `<div class="gutschein">
+    <div class="gs-kopf">四川 · RESTAURANT SICHUAN</div>
+    <div class="gs-titel">${L3({ de: 'Gutschein', en: 'Gift Voucher', zh: '礼券' })}</div>
+    <div class="gs-wert">${euroC(g.betragCent)}</div>
+    ${g.empfaengerName ? `<div class="gs-fuer">${L3({ de: 'für', en: 'for', zh: '赠予' })} <b>${esc(g.empfaengerName)}</b></div>` : ''}
+    ${g.nachricht ? `<div class="gs-nachricht">„${esc(g.nachricht)}“${g.kaeuferName ? `<div class="klein">— ${esc(g.kaeuferName)}</div>` : ''}</div>` : ''}
+    <div class="gs-code">${esc(g.code)}</div>
+    <div class="gs-fuss">${bis ? `${L3({ de: 'Gültig bis', en: 'Valid until', zh: '有效期至' })} ${bis} · ` : ''}${L3({ de: 'Bitte bei der Reservierung erwähnen.', en: 'Please mention it when booking.', zh: '预订时请告知。' })}<br>Restaurant Sichuan · Wien · 01 263 37 13 · thesichuan.com</div>
+  </div>`;
+}
+function gutscheinGastZeichnen(g) {
+  if (g.zustand === 'offen') {
+    $('#wurzel').innerHTML = `<div class="gast"><h1>${L3({ de: 'Zahlung wird geprüft …', en: 'Checking payment …', zh: '正在确认付款 …' })}</h1><div class="karte">${L3({ de: 'Sobald die Zahlung bestätigt ist, erscheint hier Ihr Gutschein und Sie bekommen ihn per E-Mail.', en: 'As soon as the payment is confirmed, your voucher appears here and is sent by email.', zh: '付款确认后，礼券将显示在此并通过邮件发送。' })}</div><button class="primaer" id="gNeu" style="margin-top:12px">${L3({ de: 'Neu laden', en: 'Reload', zh: '刷新' })}</button></div>`;
+    $('#gNeu').onclick = () => setTimeout(gutscheinGastStart, 300);
+    return;
+  }
+  const hinweis = g.zustand === 'aktiv' ? (g.restCent < g.betragCent ? `${L3({ de: 'Restwert', en: 'Remaining value', zh: '余额' })}: <b>${euroC(g.restCent)}</b>` : '')
+    : L3({ de: { eingeloest: 'Dieser Gutschein ist vollständig eingelöst.', abgelaufen: 'Dieser Gutschein ist abgelaufen.', storniert: 'Dieser Gutschein wurde storniert.' }[g.zustand] || '', en: { eingeloest: 'This voucher has been fully redeemed.', abgelaufen: 'This voucher has expired.', storniert: 'This voucher was cancelled.' }[g.zustand] || '', zh: { eingeloest: '此礼券已全部使用。', abgelaufen: '此礼券已过期。', storniert: '此礼券已作废。' }[g.zustand] || '' });
+  $('#wurzel').innerHTML = `<div class="gast">${INIT.sitzung ? `<div class="karte" style="background:#f0fdf4">✓ ${L3({ de: 'Danke! Der Gutschein ist bezahlt und unterwegs in Ihr Postfach.', en: 'Thank you! The voucher is paid and on its way to your inbox.', zh: '谢谢！礼券已付款并已发送至您的邮箱。' })}</div>` : ''}
+    ${gutscheinHtml(g)}${hinweis ? `<p class="klein" style="text-align:center">${hinweis}</p>` : ''}
+    <div class="zeile" style="justify-content:center;margin-top:12px"><button class="primaer" id="gDruck">${L3({ de: 'Drucken / als PDF speichern', en: 'Print / save as PDF', zh: '打印 / 保存为 PDF' })}</button></div></div>`;
+  $('#gDruck').onclick = () => {
+    let d = document.getElementById('druck');
+    if (!d) { d = document.createElement('div'); d.id = 'druck'; document.body.appendChild(d); }
+    d.innerHTML = gutscheinHtml(g); window.print();
+  };
 }
 </script>
 </body>
